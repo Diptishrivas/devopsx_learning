@@ -10,8 +10,23 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/testing_db';
 
-// Middleware
-app.use(cors());
+// AWS Credentials & Configuration from Environment Variables
+export const awsConfig = {
+  region: process.env.AWS_REGION || 'us-east-1',
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  bucketName: process.env.AWS_S3_BUCKET || '',
+};
+
+// CORS Middleware — Whitelist all domains/origins, methods, and headers
+app.use(
+  cors({
+    origin: (origin, callback) => callback(null, true), // Whitelist all requesting origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Routes

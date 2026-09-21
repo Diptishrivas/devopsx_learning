@@ -1,0 +1,8 @@
+# Environment files
+.env
+.env*.local
+
+# Node modules & Logs
+node_modules/
+*.log
+npm-debug.log*
