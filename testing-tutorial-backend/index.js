@@ -18,10 +18,23 @@ export const awsConfig = {
   bucketName: process.env.AWS_S3_BUCKET || '',
 };
 
-// CORS Middleware — Whitelist all domains/origins, methods, and headers
+// Universal CORS Middleware — Guarantees CORS & preflight (OPTIONS) headers on ALL requests
+app.use((req, res, next) => {
+  const origin = req.headers.origin || '*';
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+  next();
+});
+
 app.use(
   cors({
-    origin: (origin, callback) => callback(null, true), // Whitelist all requesting origins
+    origin: (origin, callback) => callback(null, true),
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
     credentials: true,
@@ -54,3 +67,5 @@ mongoose
   .catch((err) => {
     console.error('❌ MongoDB Connection Error:', err);
   });
+
+export default app;
