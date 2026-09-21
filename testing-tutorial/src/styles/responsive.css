@@ -1,0 +1,579 @@
+/* ============================================================
+   DevOpsX Learning — Global Mobile Responsive Layer
+   ------------------------------------------------------------
+   WHY THIS FILE EXISTS
+   The pages build their layouts with inline `style={{ ... }}`
+   objects (129 inline `gridTemplateColumns` across 55 files).
+   An inline style beats any stylesheet rule, so the class-based
+   media queries in index.css could never actually take effect —
+   which is why mobile kept breaking no matter how many times the
+   individual pages were patched.
+
+   This layer overrides those inline styles from one place.
+
+   TWO RULES THIS FILE FOLLOWS, ALWAYS:
+   1. Every declaration lives inside a `max-width` media query, so
+      the desktop / web view is left byte-for-byte untouched.
+   2. Collapsed columns use `minmax(0, 1fr)`, never plain `1fr`.
+      `1fr` is short for `minmax(auto, 1fr)`, and `auto` floors the
+      track at its content's min-content width — so a wide child
+      still pushes the column off-screen. `minmax(0, 1fr)` is what
+      actually lets a column shrink.
+
+   ESCAPE HATCH
+   Add `keep-grid` to any element's className to opt it out of the
+   automatic single-column collapse.
+   ============================================================ */
+
+/* ───────────────────────── ≤ 900px ─────────────────────────
+   Phones and small tablets: the main mobile layer.           */
+@media (max-width: 900px) {
+
+  /* ── 1. Nothing may be pushed past the right edge ───────── */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #root {
+    max-width: 100%;
+  }
+
+  /* ── 2. Let flex and grid children shrink.
+        Without `min-width: 0`, a grid/flex child refuses to go
+        below its min-content width and blows the track out past
+        the screen. This single rule is why `1fr !important`
+        alone never fixed anything.
+
+        Elements that opt into `white-space: nowrap` are excluded:
+        their text cannot reflow, so shrinking their box would make
+        the text spill out and overlap whatever sits next to it.  */
+  [style*="display: grid"] > *,
+  [style*="display: flex"] > *:not([style*="white-space: nowrap"]),
+  .grid > *,
+  .flex > *:not([style*="white-space: nowrap"]) {
+    min-width: 0;
+  }
+
+  /* ── 2a. …but never squeeze a text run narrower than its longest
+        word. `min-width: min-content` is exactly one word wide, so
+        the item can still shrink and reflow, yet a label can never
+        be chopped in half ("Cour / ses", "Abo / ut").
+
+        `!important` is needed here only to outrank rule 2 above,
+        whose `:not(...)` gives it the higher specificity.         */
+  /* ── 2a. …but never squeeze interactive controls (buttons, links)
+        narrower than their content. Buttons and links keep max-content.
+        Spans are excluded so body text/subtitles inside flex containers
+        can wrap naturally without overflowing.                    */
+  [style*="display: flex"] > a[href],
+  [style*="display: flex"] > button,
+  .flex > a[href],
+  .flex > button {
+    min-width: max-content !important;
+    white-space: nowrap;
+  }
+
+  button {
+    white-space: nowrap;
+  }
+
+  /* ── 2b. FAQ Accordion questions must reflow cleanly on mobile ── */
+  .faq-row-button,
+  .faq-question-text {
+    min-width: 0 !important;
+    white-space: normal !important;
+  }
+
+  /* ── 2b1. Subscription hero buttons stay side-by-side and equal width ── */
+  .subscription-hero-btn-row {
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .subscription-hero-btn-row > a,
+  .subscription-hero-btn-row > button,
+  .subscription-hero-btn-row > .hero-action-btn {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    padding: 12px 6px !important;
+    font-size: clamp(0.74rem, 3.1vw, 0.84rem) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ── 2b2. Course/Book page search & sort controls side-by-side on mobile ── */
+  .courses-header-controls,
+  .books-controls {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  .courses-search-wrapper,
+  .books-search {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  .courses-sort-select,
+  .books-controls select {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .category-pills-bar {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .category-pills-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* ── 2b3. Pagination buttons: arrow & text locked in 1 single horizontal line ── */
+  .pagination-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+  }
+
+  .pagination-btn svg {
+    flex-shrink: 0 !important;
+  }
+
+  /* ── 2b4. Book & Course key spec boxes: 2x2 symmetrical grid on mobile ── */
+  .book-specs-grid,
+  .course-specs-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px 10px !important;
+    align-items: start !important;
+  }
+
+  /* ── 2c. A horizontal scroller's items keep their natural width,
+        otherwise there is nothing left to scroll and the labels
+        collapse on top of each other.                          */
+  [style*="overflow-x: auto"] > *,
+  [style*="overflow-x: scroll"] > *,
+  .books-cats > *,
+  .category-pills-bar > * {
+    flex-shrink: 0;
+  }
+
+  /* ── 3. Hard multi-column grids collapse to one column.
+        Fluid `auto-fit` / `auto-fill` grids are handled in 4.  */
+  [style*="grid-template-columns"]:not([style*="auto-fit"]):not([style*="auto-fill"]):not(.keep-grid):not(.books-grid):not(.textbooks-grid) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* ── 4. Fluid grids must never demand more width than exists.
+        `min(100%, 190px)` lets the floor drop to the container
+        width on narrow screens instead of forcing a second
+        column off-screen.                                     */
+  [style*="auto-fit"]:not(.keep-grid):not(.books-grid):not(.textbooks-grid),
+  [style*="auto-fill"]:not(.keep-grid):not(.books-grid):not(.textbooks-grid) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)) !important;
+  }
+
+  /* ── 5. Named grids defined in index.css that still use the
+        unshrinkable plain `1fr`.                              */
+  .settings-inner-grid,
+  .settings-layout,
+  .course-details-grid,
+  .orders-grid,
+  .curriculum-grid,
+  .resources-grid,
+  .checkout-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* ── 5b. Rows of standalone controls (buttons, pills, chips) wrap
+        onto the next line rather than running off the edge.
+        Deliberately NOT applied to every flex row: a wrapping row
+        moves an item to a new line *before* it shrinks, which would
+        drop the text of an icon+text pair onto its own line. Those
+        rows are handled by rule 2 instead, which lets the text
+        reflow inside its own box.                              */
+  [style*="display: flex"][style*="flex-wrap: wrap"] {
+    flex-wrap: wrap;
+  }
+
+  .settings-row [style*="display: flex"]:not([style*="flex-direction: column"]):not([style*="overflow"]) {
+    flex-wrap: wrap;
+  }
+
+  /* ── 5c. An inline `min-width` on a flex/grid child is a desktop
+        assumption; on a narrow screen it is exactly what forces
+        the row past the edge.                                  */
+  [style*="display: flex"] > [style*="min-width"],
+  [style*="display: grid"] > [style*="min-width"] {
+    min-width: 0 !important;
+  }
+
+  /* ── 5d. Tab strips swipe sideways instead of wrapping or being
+        cut off — the same treatment the category pills already
+        get on the books page.                                  */
+  .tab-strip {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-strip > * {
+    flex-shrink: 0;
+  }
+
+  /* ── 6. Desktop sidebars stop sticking and just stack. ───── */
+  [style*="position: sticky"] {
+    position: static !important;
+    top: auto !important;
+  }
+
+  /* ── 7. Media never exceeds its container.
+        No `!important`, so explicitly sized avatars and icons
+        keep their inline dimensions.                          */
+  img,
+  svg,
+  video,
+  iframe,
+  canvas,
+  table {
+    max-width: 100%;
+  }
+
+  img,
+  video {
+    height: auto;
+  }
+
+  /* ── 8. Long words, emails and URLs wrap instead of forcing
+        their container wider than the screen.                 */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  span,
+  div,
+  a,
+  li,
+  td,
+  th,
+  label,
+  button {
+    overflow-wrap: break-word;
+  }
+
+  /* ── 9. Decorative blobs must never generate layout width. */
+  [style*="border-radius: 50%"][style*="filter: blur"],
+  [style*="position: absolute"][style*="border-radius: 50%"] {
+    pointer-events: none;
+  }
+}
+
+/* ───────────────────────── ≤ 760px ─────────────────────────
+   Settings pages put a fixed-width label beside its control
+   ("Font Size" ─ [Small|Medium|Large]). On a phone the label
+   eats the row and the control gets squeezed off the edge, so
+   the two stack instead.                                      */
+@media (max-width: 760px) {
+
+  .settings-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .settings-row-label {
+    flex: 1 1 auto !important;
+  }
+
+  /* A saved-card row packs a logo, the card number, the holder name, a
+     toggle and a menu into one line. On a phone the fixed-width items eat
+     the row and crush the card number to a few pixels, so it wraps: logo +
+     number on the first line, the rest on the second. */
+  .pay-card-row {
+    flex-wrap: wrap !important;
+  }
+
+  .pay-card-info {
+    flex: 1 1 150px !important;
+  }
+}
+
+/* ───────────────────────── ≤ 620px ─────────────────────────
+   Phones: tighten spacing that was designed for desktop.     */
+@media (max-width: 620px) {
+
+  /* Truncating a value to a single line with an ellipsis is a
+     desktop convenience; in a narrow column it can push the value
+     entirely off-screen, so nothing is left to read. Let it wrap.
+
+     `overflow` is deliberately left as-is: making it visible would let the
+     text paint on top of whatever sits beside it. Keeping it hidden while
+     the text reflows lets the box grow downwards instead.               */
+  [style*="text-overflow: ellipsis"][style*="white-space: nowrap"] {
+    white-space: normal !important;
+    text-overflow: clip !important;
+  }
+
+
+  /* Page gutters — desktop uses 24–32px, too much on a phone. */
+  .page-container,
+  .page-wrapper {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  /* Oversized display headings scale down with the viewport. */
+  h1 {
+    font-size: clamp(1.45rem, 6.4vw, 2.1rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 5.2vw, 1.65rem) !important;
+    line-height: 1.25 !important;
+  }
+}
+
+/* ───────────────────────── ≤ 700px ─────────────────────────
+   `stack-row` — opt-in for a desktop row whose two halves cannot
+   both fit on a phone. Without it, the rigid half (a select, a
+   button cluster, a fixed-width sidebar) keeps its width and
+   crushes the text column beside it down to 50–120px, which
+   reads as one word per line.
+
+   Applied by hand rather than globally: a blanket rule would also
+   catch icon+text rows, where wrapping drops the text onto its own
+   line even though it would have fitted.                       */
+@media (max-width: 700px) {
+
+  .stack-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .stack-row > * {
+    width: 100% !important;
+    flex-shrink: 1 !important;
+  }
+
+  /* An icon leading the row stays its own size. */
+  .stack-row > svg,
+  .stack-row > .stack-row-icon {
+    width: auto !important;
+  }
+
+  .curriculum-spec-box {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 12px 10px !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+  }
+
+  .curriculum-spec-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+  }
+
+  .curriculum-spec-item span {
+    font-size: 0.64rem !important;
+    white-space: nowrap !important;
+  }
+
+  .curriculum-spec-item strong {
+    font-size: 0.74rem !important;
+    white-space: nowrap !important;
+  }
+}
+
+.trust-banner-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 16px 0 24px;
+  align-items: stretch;
+}
+
+.trust-banner-grid > div {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  overflow: hidden !important;
+}
+
+.trust-banner-grid > div strong,
+.trust-banner-grid > div span {
+  white-space: normal !important;
+  min-width: 0 !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  text-align: center !important;
+}
+
+@media (max-width: 768px) {
+  .trust-banner-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+  }
+
+  .resources-category-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+}
+
+/* ───────────────────────── Course Player Mobile ─────────────────────────
+   Video player + sidebar playlist full mobile responsiveness.             */
+
+@media (max-width: 900px) {
+
+  /* Outer page padding tighten karo */
+  .course-player-page-wrapper {
+    padding: 10px 0 48px !important;
+  }
+
+  /* Max width container remove karo on mobile — let it be full width */
+  .course-player-page-wrapper > div {
+    padding: 0 12px !important;
+  }
+
+  /* ── Video box: full-width edge-to-edge on mobile ── */
+  .course-player-video-box {
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    /* Negative margin to escape the 12px page padding */
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+    width: calc(100% + 24px) !important;
+  }
+
+  /* ── Header: previous/next + progress stack vertically ── */
+  .course-player-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .course-player-header-left {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .course-player-header-right {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    justify-content: space-between !important;
+  }
+
+  /* ── 2-col grid → single column (video on top, playlist below) ── */
+  .course-player-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* ── Right sidebar (playlist) becomes full-width below video ── */
+  .course-player-right-sidebar {
+    max-height: 420px !important;
+    overflow-y: auto !important;
+    border-radius: 12px !important;
+  }
+
+  /* ── Playlist scroll area — prevent double scrollbars ── */
+  .course-player-right-sidebar > div[style*="max-height"] {
+    max-height: 340px !important;
+  }
+
+  /* ── Video info/action bar below video ── */
+  .course-player-video-infobar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .course-player-video-infobar > button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ── Tabs bar: horizontal scroll so tabs don't wrap ── */
+  .course-player-tabs-bar {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 8px !important;
+  }
+
+  .course-player-tabs-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .course-player-tabs-bar > button {
+    flex-shrink: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Tighter page padding on small phones */
+  .course-player-page-wrapper {
+    padding: 8px 8px 40px !important;
+  }
+
+  /* Playlist sidebar shorter so video stays prominent */
+  .course-player-right-sidebar {
+    max-height: 320px !important;
+  }
+
+  /* Header back-button + title stay compact */
+  .course-player-header-left h1 {
+    font-size: 0.95rem !important;
+  }
+
+  /* Left column gap tighten */
+  .course-player-left-col {
+    gap: 12px !important;
+  }
+}
+
+/* ───────────────────────── ≤ 380px ─────────────────────────
+   Small phones.                                              */
+@media (max-width: 380px) {
+
+  .page-container,
+  .page-wrapper {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
