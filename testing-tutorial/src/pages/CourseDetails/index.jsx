@@ -165,11 +165,12 @@ export default function CourseDetails() {
             }}
           >
             {isPlayingVideo ? (
-              <iframe
-                src="https://www.youtube.com/embed/Nftif8BrGMo?autoplay=1"
-                style={{ width: '100%', height: '100%', border: 'none' }}
-                allow="autoplay; fullscreen"
-                title="Course Preview"
+              <video
+                src={course.videoUrl || 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4'}
+                controls
+                autoPlay
+                playsInline
+                style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#000' }}
               />
             ) : (
               <div

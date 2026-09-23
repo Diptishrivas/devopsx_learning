@@ -24,6 +24,7 @@ export const courses = [
     badge: 'Bestseller',
     isTrending: true,
     isFeatured: true,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['Machine Learning', 'Python', 'R', 'Scikit-Learn'],
   },
   {
