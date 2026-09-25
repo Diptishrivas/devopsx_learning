@@ -8,7 +8,7 @@ export const courses = [
     title: 'Introduction to Artificial Intelligence for Kids',
     slug: 'machine-learning-az',
     description: 'Discover the world of Artificial Intelligence through simple explanations, fun examples, and everyday technology. Learn what AI is, how it works, and how it is changing the way we live, learn, and interact with technology.',
-    thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop',
+    thumbnail: '/ai-kids-thumbnail.png',
     instructor: { id: 1, name: 'Jordan Smith', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jordan' },
     category: 'Machine Learning',
     level: 'Beginner',
