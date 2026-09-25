@@ -5,9 +5,9 @@
 export const courses = [
   {
     id: 1,
-    title: 'Machine Learning A-Z™ Hands-On Python & R',
+    title: 'Introduction to Artificial Intelligence for Kids',
     slug: 'machine-learning-az',
-    description: 'Learn to create Machine Learning Algorithms in Python and R from two Data Science experts.',
+    description: 'Discover the world of Artificial Intelligence through simple explanations, fun examples, and everyday technology. Learn what AI is, how it works, and how it is changing the way we live, learn, and interact with technology.',
     thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop',
     instructor: { id: 1, name: 'Jordan Smith', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jordan' },
     category: 'Machine Learning',
@@ -48,6 +48,7 @@ export const courses = [
     badge: 'Popular',
     isTrending: true,
     isFeatured: true,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['Python', 'Data Science', 'Pandas', 'NumPy'],
   },
   {
@@ -71,6 +72,7 @@ export const courses = [
     badge: 'Top Rated',
     isTrending: true,
     isFeatured: true,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['Deep Learning', 'TensorFlow', 'Neural Networks', 'Keras'],
   },
   {
@@ -94,6 +96,7 @@ export const courses = [
     badge: 'New',
     isTrending: true,
     isFeatured: true,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['ChatGPT', 'Prompt Engineering', 'Generative AI'],
   },
   {
@@ -117,6 +120,7 @@ export const courses = [
     badge: null,
     isTrending: false,
     isFeatured: false,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['Computer Vision', 'OpenCV', 'YOLO', 'Object Detection'],
   },
   {
@@ -140,6 +144,7 @@ export const courses = [
     badge: null,
     isTrending: false,
     isFeatured: false,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['NLP', 'BERT', 'Transformers', 'Text Analysis'],
   },
   {
@@ -163,6 +168,7 @@ export const courses = [
     badge: 'Bestseller',
     isTrending: true,
     isFeatured: true,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['Generative AI', 'LangChain', 'RAG', 'LLMs'],
   },
   {
@@ -186,6 +192,7 @@ export const courses = [
     badge: null,
     isTrending: true,
     isFeatured: true,
+    videoUrl: 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4',
     tags: ['Data Science', 'SQL', 'Python', 'Tableau'],
   },
 ];

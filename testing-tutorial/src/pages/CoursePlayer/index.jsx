@@ -38,72 +38,18 @@ const FEATURED_VIDEO_URL = 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazo
 const MOCK_SECTIONS = [
   {
     id: 's0',
-    title: 'Section 0: Machine Learning — AWS S3 Hosted Video',
-    duration: '—',
+    title: 'Introduction to Artificial Intelligence for Kids',
+    duration: '0:29',
     completedCount: 0,
     totalCount: 1,
     lessons: [
       {
         id: 'l0',
-        title: 'Final Chapter 1 Video — Machine Learning Lecture',
-        duration: '—',
+        title: 'Introduction to Artificial Intelligence for Kids — Preview',
+        duration: '0:29',
         videoUrl: FEATURED_VIDEO_URL,
         completed: false,
       },
-    ],
-  },
-  {
-    id: 's1',
-    title: 'Section 1: Introduction & Environment Setup',
-    duration: '45 mins',
-    completedCount: 3,
-    totalCount: 3,
-    lessons: [
-      { id: 'l1', title: '1. Welcome to the Course & Roadmap', duration: '08:20', youtubeId: 'Nftif8BrGMo', completed: true },
-      { id: 'l2', title: '2. Installing Python & Anaconda Navigator', duration: '14:15', youtubeId: 'rfscVS0vtbw', completed: true },
-      { id: 'l3', title: '3. VS Code Setup & Python Extensions', duration: '22:25', youtubeId: 'YYXdXT2l-Gg', completed: true },
-    ],
-  },
-  {
-    id: 's2',
-    title: 'Section 2: Python Essentials & Data Structures',
-    duration: '1h 20m',
-    completedCount: 2,
-    totalCount: 4,
-    lessons: [
-      { id: 'l4', title: '4. Variables, Data Types & Operations', duration: '16:40', youtubeId: 'kqtD5dpn9C8', completed: true },
-      { id: 'l5', title: '5. Lists, Tuples, Dictionaries & Sets', duration: '24:10', youtubeId: 'W8KRzm-HUcc', completed: true },
-      { id: 'l6', title: '6. Conditional Logic & Loops', duration: '20:15', youtubeId: 'PqFKRqpHrjw', completed: false },
-      { id: 'l7', title: '7. Functions & Lambda Expressions', duration: '18:50', youtubeId: 'u-OmVr_fT4s', completed: false },
-    ],
-  },
-  {
-    id: 's3',
-    title: 'Section 3: Data Analysis with NumPy & Pandas',
-    duration: '2h 10m',
-    completedCount: 0,
-    totalCount: 5,
-    lessons: [
-      { id: 'l8', title: '8. NumPy Array Operations & Indexing', duration: '25:30', youtubeId: 'QUT1VHiLg5w', completed: false },
-      { id: 'l9', title: '9. Pandas DataFrames & Data Cleaning', duration: '32:15', youtubeId: 'vmEHCJofslg', completed: false },
-      { id: 'l10', title: '10. Handling Missing Data & Outliers', duration: '22:40', youtubeId: 'EaGbS7eacCW', completed: false },
-      { id: 'l11', title: '11. GroupBy, Pivot Tables & Merging', duration: '28:10', youtubeId: 'txM29kyfQZu', completed: false },
-      { id: 'l12', title: '12. Real-World Data Analysis Project', duration: '21:25', youtubeId: 'eMOA1pPVucU', completed: false },
-    ],
-  },
-  {
-    id: 's4',
-    title: 'Section 4: Machine Learning Algorithms',
-    duration: '3h 15m',
-    completedCount: 0,
-    totalCount: 6,
-    lessons: [
-      { id: 'l13', title: '13. Supervised vs Unsupervised Learning (ML Video)', duration: '18:00', videoUrl: FEATURED_VIDEO_URL, completed: false },
-      { id: 'l14', title: '14. Linear & Logistic Regression', duration: '35:20', youtubeId: 'C7M-f7m3s2w', completed: false },
-      { id: 'l15', title: '15. Decision Trees & Random Forests', duration: '40:10', youtubeId: 'J4Wdy0Wc_xQ', completed: false },
-      { id: 'l16', title: '16. Support Vector Machines (SVM)', duration: '28:45', youtubeId: 'efR1C6BUdn8', completed: false },
-      { id: 'l17', title: '17. K-Means Clustering & PCA', duration: '32:10', youtubeId: 'FgakZw6K1QQ', completed: false },
-      { id: 'l18', title: '18. Model Evaluation & Cross-Validation', duration: '41:15', youtubeId: 'fSytzGwwBVw', completed: false },
     ],
   },
 ];
@@ -119,7 +65,7 @@ export default function CoursePlayer() {
   const [sections, setSections] = useState(MOCK_SECTIONS);
   // Open on the featured video so it is the first thing a visitor sees.
   const [activeLesson, setActiveLesson] = useState(MOCK_SECTIONS[0].lessons[0]);
-  const [openSections, setOpenSections] = useState({ s0: true, s1: true, s2: true, s3: true });
+  const [openSections, setOpenSections] = useState({ s0: true });
   const [activeTab, setActiveTab] = useState('overview');
 
   const border = isDark ? 'rgba(255,255,255,.08)' : '#eaecf0';
@@ -431,16 +377,20 @@ export default function CoursePlayer() {
                       About this Lesson
                     </h4>
                     <p style={{ margin: '0 0 14px' }}>
-                      In this lecture, we dive into practical implementation, writing clean Python code step by step.
-                      Make sure to follow along in VS Code or Jupyter Notebooks to solidify your understanding.
+                      In this lesson, we explore <strong>what Artificial Intelligence (AI) is, how it works, and
+                      how it is becoming a part of our everyday lives</strong>. Students will discover how AI helps
+                      machines learn from information, recognize voices, answer questions, and make smart
+                      decisions through simple, real-life examples.
                     </p>
                     <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, margin: '0 0 8px' }}>
                       Key Learning Takeaways:
                     </h4>
                     <ul style={{ paddingLeft: '20px', margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <li>Understand core syntax and execution flow</li>
-                      <li>Write reusable modular functions with clean comments</li>
-                      <li>Handle edge cases and debug errors efficiently</li>
+                      <li>Understand <strong>what Artificial Intelligence (AI) is</strong></li>
+                      <li>Learn <strong>how AI works</strong> in a simple way</li>
+                      <li>Discover how machines <strong>learn from information and examples</strong></li>
+                      <li>Explore how AI is used in <strong>everyday life</strong></li>
+                      <li>Understand the <strong>role of AI in today's world and the future</strong></li>
                     </ul>
                   </div>
                 )}

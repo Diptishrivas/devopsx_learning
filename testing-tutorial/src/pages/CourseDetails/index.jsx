@@ -31,6 +31,7 @@ import {
   User,
   Calendar,
   BarChart2,
+  Sparkles,
 } from 'lucide-react';
 import { getCourseBySlug, courses } from '../../data/courses';
 import { useAuth } from '../../context/AuthContext';
@@ -81,14 +82,14 @@ export default function CourseDetails() {
   const discountPercent = Math.round(((originalPrice - course.price) / originalPrice) * 100);
 
   const whatYoullLearn = [
-    'Build machine learning models from scratch',
-    'Deploy ML models in real-world applications',
-    'Implement regression, classification & clustering',
-    'Understand model evaluation techniques',
-    'Work with Python and R for ML projects',
-    'Build and evaluate recommendation systems',
-    'Handle real-world datasets and missing data',
-    'Create end-to-end ML projects',
+    'Understand what Artificial Intelligence (AI) is in a simple and fun way',
+    'Learn how AI works using examples from everyday life',
+    'Discover how machines can learn from information and examples',
+    'Explore how AI can recognize voices, answer questions, and understand preferences',
+    'Identify AI in everyday technology such as smart assistants and recommendations',
+    'Understand the role of AI in today\'s world and future technology',
+    'Develop curiosity about how smart machines work',
+    'Learn the basics of AI through real-life examples and activities',
   ];
 
   const studentsAlsoBought = courses
@@ -235,7 +236,7 @@ export default function CourseDetails() {
                   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <Play size={12} fill="#fff" /> Preview this course
                   </span>
-                  <span>Watch Trailer &nbsp; 02:35</span>
+                  <span>Watch Trailer &nbsp; 0:29</span>
                 </div>
               </div>
             )}
@@ -622,31 +623,27 @@ export default function CourseDetails() {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <Video size={14} color="#6366f1" />
-                  <span>{course.duration} on-demand video</span>
+                  <span>Beginner-friendly video lessons</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <FileText size={14} color="#6366f1" />
-                  <span>{course.lessons || 352} lectures</span>
+                  <Sparkles size={14} color="#6366f1" />
+                  <span>Introduction to Artificial Intelligence</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Code2 size={14} color="#6366f1" />
-                  <span>25 coding exercises</span>
+                  <Layers size={14} color="#6366f1" />
+                  <span>Simple explanation of how AI works</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Folder size={14} color="#6366f1" />
-                  <span>15 real-world projects</span>
+                  <Globe size={14} color="#6366f1" />
+                  <span>Real-world AI examples</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <Download size={14} color="#6366f1" />
-                  <span>Downloadable resources</span>
+                  <span>Downloadable learning resources</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <ShieldCheck size={14} color="#6366f1" />
                   <span>Full lifetime access</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Monitor size={14} color="#6366f1" />
-                  <span>Access on mobile and TV</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <Award size={14} color="#6366f1" />
@@ -778,9 +775,10 @@ export default function CourseDetails() {
                       margin: 0,
                     }}
                   >
-                    This course is your complete guide to Machine Learning using Python and R. You
-                    will learn all the essential algorithms, build real-world projects, and gain
-                    the skills needed to become a Machine Learning expert.
+                    Welcome to the exciting world of Artificial Intelligence! In this beginner-friendly
+                    course, children will discover what AI is, how it works, and how it is already being
+                    used in everyday life. Through simple explanations and relatable examples, students
+                    will learn how machines can recognize voices, answer questions, and make smart decisions.
                   </p>
                   {showFullDesc && (
                     <motion.div
@@ -796,10 +794,9 @@ export default function CourseDetails() {
                           margin: 0,
                         }}
                       >
-                        Covering Supervised Learning (Linear Regression, Logistic Regression, Decision
-                        Trees, Random Forests, SVMs) and Unsupervised Learning (K-Means Clustering,
-                        Hierarchical Clustering, PCA), this course combines deep theoretical intuition
-                        with hands-on Python &amp; R code templates you can use in your own portfolio!
+                        The course is designed to make AI easy and interesting for young learners while
+                        encouraging curiosity, creativity, and an understanding of the technology shaping
+                        our world. No prior knowledge needed — just bring your curiosity!
                       </p>
                     </motion.div>
                   )}

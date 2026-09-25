@@ -228,19 +228,7 @@ function HeroBook() {
               <AiHeadArt />
             </div>
 
-            {/* Author */}
-            <div
-              style={{
-                fontSize: 'clamp(0.6rem, 1.4vw, 0.745rem)',
-                fontWeight: 500,
-                color: 'rgba(226,232,240,.85)',
-                letterSpacing: '0.03em',
-                position: 'relative',
-                zIndex: 1,
-              }}
-            >
-              Shailendra Kumar
-            </div>
+
           </div>
         </div>
       </motion.div>
