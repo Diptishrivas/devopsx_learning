@@ -3,12 +3,15 @@
 // [ copy + stats + CTA ]   [ 3D book on pedestal ]   [ 4 feature cards ]
 // ============================================================
 
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight, BookOpen, Users, Clock, Award, Blocks, RotateCcw,
+  Play, PlayCircle,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
 const featureCards = [
   { icon: BookOpen, title: 'Beginner Friendly',  subtitle: 'Start from Scratch' },
@@ -233,6 +236,178 @@ function HeroBook() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+// ── Preview Video Section ──
+function PreviewVideo({ isDark }) {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
+
+  const PREVIEW_URL =
+    'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4';
+
+  const handlePlayPause = () => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    if (vid.paused) {
+      vid.play();
+      setIsPlaying(true);
+      setShowOverlay(false);
+    } else {
+      vid.pause();
+      setIsPlaying(false);
+      setShowOverlay(true);
+    }
+  };
+
+  const handleFullVideo = () => {
+    if (user) {
+      navigate('/courses/machine-learning-az');
+    } else {
+      navigate('/register');
+    }
+  };
+
+  const cardBg  = isDark ? 'rgba(15,25,41,0.92)' : '#ffffff';
+  const cardBorder = isDark ? 'rgba(255,255,255,.08)' : 'rgba(15,23,42,.08)';
+
+  return (
+    <motion.div
+      className="hero-video-section"
+      initial={{ opacity: 0, y: 32 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.65, ease: 'easeOut', delay: 0.3 }}
+      style={{ width: '100%', maxWidth: '1120px', margin: '0 auto' }}
+    >
+      {/* Section label */}
+      <div style={{ textAlign: 'center', marginBottom: '18px' }}>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', gap: '7px',
+          padding: '6px 14px', borderRadius: '8px',
+          background: isDark ? 'rgba(99,102,241,.15)' : '#eeecfd',
+          color: isDark ? '#a5b4fc' : '#4f46e5',
+          fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.03em',
+          textTransform: 'uppercase',
+        }}>
+          <PlayCircle size={14} />
+          Course Preview
+        </span>
+      </div>
+
+      {/* Video wrapper */}
+      <div
+        className="hero-video-wrapper"
+        style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '820px',
+          margin: '0 auto',
+          borderRadius: '18px',
+          overflow: 'hidden',
+          boxShadow: isDark
+            ? '0 24px 64px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06)'
+            : '0 24px 64px rgba(15,23,42,.18), 0 0 0 1px rgba(15,23,42,.07)',
+          background: '#0a0f1e',
+          aspectRatio: '16 / 9',
+          cursor: 'pointer',
+        }}
+        onClick={handlePlayPause}
+      >
+        <video
+          ref={videoRef}
+          src={PREVIEW_URL}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          preload="metadata"
+          playsInline
+          onEnded={() => { setIsPlaying(false); setShowOverlay(true); }}
+        />
+
+        {/* Play overlay */}
+        {showOverlay && (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(160deg, rgba(10,15,30,.62) 0%, rgba(10,15,30,.38) 100%)',
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+            gap: '14px',
+          }}>
+            {/* Glow ring + play button */}
+            <motion.div
+              animate={{ scale: [1, 1.07, 1] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                width: '72px', height: '72px', borderRadius: '50%',
+                background: 'linear-gradient(135deg, #5b4fe0, #7c3aed)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 0 0 12px rgba(91,79,224,.22), 0 8px 28px rgba(91,79,224,.45)',
+              }}
+            >
+              <Play size={28} color="#fff" style={{ marginLeft: '4px' }} />
+            </motion.div>
+            <span style={{
+              color: '#fff', fontSize: '0.82rem', fontWeight: 600,
+              letterSpacing: '0.02em', opacity: 0.92,
+              textShadow: '0 1px 6px rgba(0,0,0,.4)',
+            }}>
+              Click to play preview
+            </span>
+          </div>
+        )}
+
+        {/* Pause icon when playing */}
+        {isPlaying && (
+          <div
+            style={{
+              position: 'absolute', top: '14px', right: '14px',
+              background: 'rgba(0,0,0,.45)', borderRadius: '8px',
+              padding: '6px 10px',
+              color: '#fff', fontSize: '0.7rem', fontWeight: 600,
+              backdropFilter: 'blur(6px)',
+            }}
+          >
+            29s Preview
+          </div>
+        )}
+      </div>
+
+      {/* Full Video Button */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+        <motion.button
+          onClick={handleFullVideo}
+          whileHover={{ scale: 1.035, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '10px',
+            padding: '15px 36px', borderRadius: '12px',
+            background: 'linear-gradient(135deg, #5b4fe0 0%, #7c3aed 100%)',
+            color: '#fff', fontSize: '0.97rem', fontWeight: 700,
+            border: 'none', cursor: 'pointer',
+            boxShadow: '0 10px 28px rgba(91,79,224,.40)',
+            letterSpacing: '0.01em',
+            transition: 'box-shadow 0.2s',
+          }}
+        >
+          <PlayCircle size={20} />
+          Watch Full Video
+          <ArrowRight size={17} />
+        </motion.button>
+      </div>
+
+      {/* Sub-note under button */}
+      <p style={{
+        textAlign: 'center', marginTop: '12px',
+        fontSize: '0.73rem', color: 'var(--text-muted)',
+        letterSpacing: '0.01em',
+      }}>
+        {user
+          ? 'Continue to course page →'
+          : 'Free sign-up required to watch the full video'}
+      </p>
+    </motion.div>
   );
 }
 
@@ -536,6 +711,11 @@ export default function Hero() {
         </motion.div>
       </div>
 
+      {/* ── Preview Video (below grid) ── */}
+      <div style={{ marginTop: '52px' }}>
+        <PreviewVideo isDark={isDark} />
+      </div>
+
       <style>{`
         .hero-grid {
           position: relative;
@@ -662,6 +842,16 @@ export default function Hero() {
           .hero-title { font-size: clamp(1.18rem, 5.4vw, 1.5rem) !important; }
           .hero-subtitle { font-size: 0.78rem !important; }
           .hero-stats > * { padding: 9px 8px !important; }
+        }
+
+        /* ── Video section responsive ── */
+        .hero-video-section { padding: 0 4px; }
+        @media (max-width: 900px) {
+          .hero-video-section { padding: 0; }
+          .hero-video-wrapper { border-radius: 12px !important; }
+        }
+        @media (max-width: 560px) {
+          .hero-video-wrapper { border-radius: 10px !important; }
         }
       `}</style>
     </section>
