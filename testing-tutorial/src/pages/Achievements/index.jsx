@@ -17,13 +17,14 @@ import { toast } from 'react-hot-toast';
 
 export default function Achievements() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState('all');
 
-  // Achievements Data List matching Reference Image
+  // Static mock achievements — commented out until achievements come from the backend.
   const achievementsList = [
+    /*
     {
       id: 1,
       title: 'First Course Completed',
@@ -94,16 +95,31 @@ export default function Achievements() {
       iconBg: '#f1f5f9',
       iconColor: '#64748b',
     },
+    */
   ];
 
-  // Recent Badges
+  // Static mock badges — commented out until badges come from the backend.
   const recentBadges = [
+    /*
     { id: 1, title: 'First Course Completed', date: 'May 24, 2024', points: '+100', icon: '🎓', bg: '#fef3c7' },
     { id: 2, title: 'Consistent Learner', date: 'May 20, 2024', points: '+150', icon: '🚀', bg: '#f3e8ff' },
     { id: 3, title: 'Quick Learner', date: 'May 18, 2024', points: '+80', icon: '⚡', bg: '#e0f2fe' },
     { id: 4, title: 'Active Participant', date: 'May 15, 2024', points: '+70', icon: '👥', bg: '#ffedd5' },
     { id: 5, title: 'Note Taker', date: 'May 10, 2024', points: '+50', icon: '📝', bg: '#dbeafe' },
+    */
   ];
+
+  // Stats — static values (15, 880, 12, 3, 10, 5, 60%) commented out; derived from the list instead.
+  const completedCount = achievementsList.filter((a) => a.status === 'completed').length;
+  const inProgressCount = achievementsList.filter((a) => a.status === 'in_progress').length;
+  const lockedCount = achievementsList.filter((a) => a.status === 'locked').length;
+  const totalPoints = achievementsList
+    .filter((a) => a.status === 'completed')
+    .reduce((sum, a) => sum + a.points, 0);
+  const dayStreak = 0;
+  const overallProgress = achievementsList.length
+    ? Math.round((completedCount / achievementsList.length) * 100)
+    : 0;
 
   // Sidebar Menu Items
   const sidebarMenuItems = [
@@ -192,19 +208,22 @@ export default function Achievements() {
                 );
               })}
 
-              <button
-                onClick={() => { logout(); navigate('/login'); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: '10px',
-                  fontSize: '0.82rem', fontWeight: 500,
-                  color: '#ef4444', background: 'transparent',
-                  border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
-                }}
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button
+                  onClick={() => { logout(); navigate('/login'); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    padding: '10px 12px', borderRadius: '10px',
+                    fontSize: '0.82rem', fontWeight: 500,
+                    color: '#ef4444', background: 'transparent',
+                    border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
+                  }}
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Bottom Sidebar Promo Banner ("Celebrate Your Learning Journey!") */}
@@ -285,7 +304,7 @@ export default function Achievements() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--text-primary)', fontSize: '1.25rem', fontWeight: 800, lineHeight: 1 }}>
-                      15
+                      {achievementsList.length}
                     </div>
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', marginTop: '2px' }}>
                       Total Achievements
@@ -304,7 +323,7 @@ export default function Achievements() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--text-primary)', fontSize: '1.25rem', fontWeight: 800, lineHeight: 1 }}>
-                      880
+                      {totalPoints}
                     </div>
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', marginTop: '2px' }}>
                       Total Points
@@ -323,7 +342,7 @@ export default function Achievements() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--text-primary)', fontSize: '1.25rem', fontWeight: 800, lineHeight: 1 }}>
-                      12
+                      {dayStreak}
                     </div>
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', marginTop: '2px' }}>
                       Day Streak
@@ -342,7 +361,7 @@ export default function Achievements() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--text-primary)', fontSize: '1.25rem', fontWeight: 800, lineHeight: 1 }}>
-                      3
+                      {inProgressCount}
                     </div>
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', marginTop: '2px' }}>
                       In Progress
@@ -373,10 +392,10 @@ export default function Achievements() {
               paddingBottom: '10px',
             }}>
               {[
-                { id: 'all', label: 'All Achievements (15)' },
-                { id: 'completed', label: 'Completed (10)' },
-                { id: 'in_progress', label: 'In Progress (3)' },
-                { id: 'locked', label: 'Locked (5)' },
+                { id: 'all', label: `All Achievements (${achievementsList.length})` },
+                { id: 'completed', label: `Completed (${completedCount})` },
+                { id: 'in_progress', label: `In Progress (${inProgressCount})` },
+                { id: 'locked', label: `Locked (${lockedCount})` },
               ].map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -405,6 +424,11 @@ export default function Achievements() {
               display: 'flex', flexDirection: 'column', gap: '12px',
               boxShadow: '0 1px 3px rgba(16, 24, 40, 0.04)',
             }}>
+              {filteredAchievements.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '24px 0 8px', margin: 0 }}>
+                  No achievements yet.
+                </p>
+              )}
               {filteredAchievements.map((item) => (
                 <div
                   key={item.id}
@@ -510,7 +534,7 @@ export default function Achievements() {
               {/* Bottom Action */}
               <div style={{ textAlign: 'center', padding: '10px 0 6px' }}>
                 <button
-                  onClick={() => toast.success('Showing all 15 achievements...')}
+                  onClick={() => toast.success(`Showing all ${achievementsList.length} achievements...`)}
                   style={{
                     padding: '8px 20px', borderRadius: '8px',
                     background: 'transparent', border: `1px solid ${isDark ? 'rgba(255,255,255,0.12)' : '#d0d5dd'}`,
@@ -556,7 +580,7 @@ export default function Achievements() {
                       fill="none"
                       stroke="#4f46e5"
                       strokeWidth="3.8"
-                      strokeDasharray="60, 100"
+                      strokeDasharray={`${overallProgress}, 100`}
                     />
                   </svg>
                   <div style={{
@@ -565,7 +589,7 @@ export default function Achievements() {
                     textAlign: 'center',
                   }}>
                     <strong style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
-                      60%
+                      {overallProgress}%
                     </strong>
                     <span style={{ fontSize: '0.58rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                       Overall Progress
@@ -580,7 +604,7 @@ export default function Achievements() {
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16a34a' }} />
                       Completed
                     </span>
-                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>10</strong>
+                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{completedCount}</strong>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -588,7 +612,7 @@ export default function Achievements() {
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ea580c' }} />
                       In Progress
                     </span>
-                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>3</strong>
+                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{inProgressCount}</strong>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -596,7 +620,7 @@ export default function Achievements() {
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#94a3b8' }} />
                       Locked
                     </span>
-                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>5</strong>
+                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{lockedCount}</strong>
                   </div>
                 </div>
               </div>
@@ -612,7 +636,7 @@ export default function Achievements() {
                   <Star size={18} color="#4f46e5" fill="#4f46e5" />
                   <div>
                     <strong style={{ color: isDark ? '#ffffff' : '#1e1b4b', fontSize: '0.9rem', display: 'block', fontWeight: 800, lineHeight: 1 }}>
-                      880
+                      {totalPoints}
                     </strong>
                     <span style={{ fontSize: '0.68rem', color: isDark ? '#cbd5e1' : '#5b21b6' }}>
                       Total Points Earned
@@ -644,6 +668,9 @@ export default function Achievements() {
 
               {/* Recent Badges List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {recentBadges.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.74rem', margin: 0 }}>No badges yet.</p>
+                )}
                 {recentBadges.map((badge) => (
                   <div key={badge.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>

@@ -17,85 +17,89 @@ import { toast } from 'react-hot-toast';
 
 export default function LiveClasses() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState('upcoming');
   const [remindersEnabled, setRemindersEnabled] = useState(false);
 
   // Live Classes Data
-  const upcomingClasses = [
-    {
-      id: 1,
-      title: 'Introduction to Deep Learning',
-      instructor: 'Neha Sharma',
-      description: 'Understand the fundamentals of Deep Learning and its real-world applications.',
-      date: 'Tue, May 28, 2024',
-      time: '7:00 PM - 8:30 PM',
-      duration: '90 mins',
-      registeredCount: 256,
-      startsIn: 'Starts in 2 Days',
-      graphicTitle: 'DEEP LEARNING',
-      graphicIcon: '🌌',
-      bgGradient: 'linear-gradient(135deg, #090d16, #1e1b4b, #311b92)',
-    },
-    {
-      id: 2,
-      title: 'NLP with Transformers',
-      instructor: 'Ronak Patel',
-      description: 'Explore transformer architecture and build powerful NLP models.',
-      date: 'Thu, May 30, 2024',
-      time: '7:00 PM - 8:30 PM',
-      duration: '90 mins',
-      registeredCount: 198,
-      startsIn: 'Starts in 4 Days',
-      graphicTitle: 'NLP with Transformers',
-      graphicIcon: '🧠',
-      bgGradient: 'linear-gradient(135deg, #090d16, #0c4a6e, #0369a1)',
-    },
-    {
-      id: 3,
-      title: 'Data Visualization with Python',
-      instructor: 'Ankit Jain',
-      description: 'Learn data visualization techniques using Matplotlib, Seaborn and Plotly.',
-      date: 'Sun, Jun 2, 2024',
-      time: '6:00 PM - 7:30 PM',
-      duration: '90 mins',
-      registeredCount: 142,
-      startsIn: 'Starts in 7 Days',
-      graphicTitle: 'Data Vis with Python',
-      graphicIcon: '📊',
-      bgGradient: 'linear-gradient(135deg, #090d16, #1e293b, #4338ca)',
-    },
-  ];
+  // TODO: Replace with API call — fetch upcoming live classes from backend
+  // const upcomingClasses = [
+  //   {
+  //     id: 1,
+  //     title: 'Introduction to Deep Learning',
+  //     instructor: 'Neha Sharma',
+  //     description: 'Understand the fundamentals of Deep Learning and its real-world applications.',
+  //     date: 'Tue, May 28, 2024',
+  //     time: '7:00 PM - 8:30 PM',
+  //     duration: '90 mins',
+  //     registeredCount: 256,
+  //     startsIn: 'Starts in 2 Days',
+  //     graphicTitle: 'DEEP LEARNING',
+  //     graphicIcon: '🌌',
+  //     bgGradient: 'linear-gradient(135deg, #090d16, #1e1b4b, #311b92)',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'NLP with Transformers',
+  //     instructor: 'Ronak Patel',
+  //     description: 'Explore transformer architecture and build powerful NLP models.',
+  //     date: 'Thu, May 30, 2024',
+  //     time: '7:00 PM - 8:30 PM',
+  //     duration: '90 mins',
+  //     registeredCount: 198,
+  //     startsIn: 'Starts in 4 Days',
+  //     graphicTitle: 'NLP with Transformers',
+  //     graphicIcon: '🧠',
+  //     bgGradient: 'linear-gradient(135deg, #090d16, #0c4a6e, #0369a1)',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Data Visualization with Python',
+  //     instructor: 'Ankit Jain',
+  //     description: 'Learn data visualization techniques using Matplotlib, Seaborn and Plotly.',
+  //     date: 'Sun, Jun 2, 2024',
+  //     time: '6:00 PM - 7:30 PM',
+  //     duration: '90 mins',
+  //     registeredCount: 142,
+  //     startsIn: 'Starts in 7 Days',
+  //     graphicTitle: 'Data Vis with Python',
+  //     graphicIcon: '📊',
+  //     bgGradient: 'linear-gradient(135deg, #090d16, #1e293b, #4338ca)',
+  //   },
+  // ];
+  const upcomingClasses = []; // TODO: populate from API
 
   // Past Classes Data
-  const pastClasses = [
-    {
-      id: 101,
-      title: 'Python for Data Analysis',
-      instructor: 'Neha Sharma',
-      date: 'May 21, 2024',
-      icon: '🐍',
-      bgGradient: 'linear-gradient(135deg, #0f172a, #1e3a8a)',
-    },
-    {
-      id: 102,
-      title: 'Machine Learning Basics',
-      instructor: 'Ronak Patel',
-      date: 'May 19, 2024',
-      icon: '🤖',
-      bgGradient: 'linear-gradient(135deg, #0f172a, #065f46)',
-    },
-    {
-      id: 103,
-      title: 'EDA with Pandas',
-      instructor: 'Ankit Jain',
-      date: 'May 16, 2024',
-      icon: '📈',
-      bgGradient: 'linear-gradient(135deg, #0f172a, #581c87)',
-    },
-  ];
+  // TODO: Replace with API call — fetch past live classes / recordings from backend
+  // const pastClasses = [
+  //   {
+  //     id: 101,
+  //     title: 'Python for Data Analysis',
+  //     instructor: 'Neha Sharma',
+  //     date: 'May 21, 2024',
+  //     icon: '🐍',
+  //     bgGradient: 'linear-gradient(135deg, #0f172a, #1e3a8a)',
+  //   },
+  //   {
+  //     id: 102,
+  //     title: 'Machine Learning Basics',
+  //     instructor: 'Ronak Patel',
+  //     date: 'May 19, 2024',
+  //     icon: '🤖',
+  //     bgGradient: 'linear-gradient(135deg, #0f172a, #065f46)',
+  //   },
+  //   {
+  //     id: 103,
+  //     title: 'EDA with Pandas',
+  //     instructor: 'Ankit Jain',
+  //     date: 'May 16, 2024',
+  //     icon: '📈',
+  //     bgGradient: 'linear-gradient(135deg, #0f172a, #581c87)',
+  //   },
+  // ];
+  const pastClasses = []; // TODO: populate from API
 
   // Sidebar Menu Items
   const sidebarMenuItems = [
@@ -143,12 +147,18 @@ export default function LiveClasses() {
     { day: 25, isCurrentMonth: true },
     { day: 26, isCurrentMonth: true },
     { day: 27, isCurrentMonth: true },
-    { day: 28, isCurrentMonth: true, isLiveClass: true }, // May 28 Live Class
+    // TODO: Replace with API call — derive live-class / registered markers from backend schedule
+    // { day: 28, isCurrentMonth: true, isLiveClass: true }, // May 28 Live Class
+    { day: 28, isCurrentMonth: true },
     { day: 29, isCurrentMonth: true },
-    { day: 30, isCurrentMonth: true, isRegistered: true }, // May 30 Registered
+    // { day: 30, isCurrentMonth: true, isRegistered: true }, // May 30 Registered
+    { day: 30, isCurrentMonth: true },
     { day: 31, isCurrentMonth: true },
     { day: 1, isCurrentMonth: false },
   ];
+
+  const registeredCount = 0; // static: 1 — TODO: populate from API
+  const myBookingsCount = 0; // TODO: populate from API
 
   const handleJoinClass = (title) => {
     toast.success(`Joining live classroom for "${title}"...`);
@@ -229,19 +239,22 @@ export default function LiveClasses() {
                 );
               })}
 
-              <button
-                onClick={() => { logout(); navigate('/login'); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: '10px',
-                  fontSize: '0.82rem', fontWeight: 500,
-                  color: '#ef4444', background: 'transparent',
-                  border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
-                }}
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button
+                  onClick={() => { logout(); navigate('/login'); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    padding: '10px 12px', borderRadius: '10px',
+                    fontSize: '0.82rem', fontWeight: 500,
+                    color: '#ef4444', background: 'transparent',
+                    border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
+                  }}
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Bottom Sidebar Promo Banner ("Never Miss a Class!") */}
@@ -329,9 +342,9 @@ export default function LiveClasses() {
               }}
             >
               {[
-                { id: 'upcoming', label: 'Upcoming Classes (3)' },
-                { id: 'registered', label: 'Registered (1)' },
-                { id: 'my_bookings', label: 'My Bookings (0)' },
+                { id: 'upcoming', label: `Upcoming Classes (${upcomingClasses.length})` }, // static: 'Upcoming Classes (3)'
+                { id: 'registered', label: `Registered (${registeredCount})` }, // static: 'Registered (1)'
+                { id: 'my_bookings', label: `My Bookings (${myBookingsCount})` },
               ].map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -354,6 +367,9 @@ export default function LiveClasses() {
 
             {/* UPCOMING LIVE CLASS CARDS LIST (3 Detailed Cards) */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {upcomingClasses.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No upcoming classes.</p>
+              )}
               {upcomingClasses.map((item) => (
                 <div
                   key={item.id}
@@ -590,6 +606,9 @@ export default function LiveClasses() {
 
               {/* List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {pastClasses.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No past classes yet.</p>
+                )}
                 {pastClasses.map((item) => (
                   <div key={item.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>

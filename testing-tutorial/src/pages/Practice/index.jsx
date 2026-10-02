@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code2, CheckCircle, Circle, Target, Trophy, ChevronRight } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { practiceQuestions } from '../../data/assignments';
+// Static mock data — commented out until questions come from the backend.
+// import { practiceQuestions } from '../../data/assignments';
 import PageWrapper, { PageHeader, FilterPill } from '../../components/ui/PageWrapper';
 
 const diffColor = { Easy: '#10b981', Medium: '#f59e0b', Hard: '#ef4444' };
+const practiceQuestions = [];
 const allCategories = ['All', ...new Set(practiceQuestions.map((q) => q.category))];
 
 export default function Practice() {
@@ -35,7 +37,7 @@ export default function Practice() {
         {[
           { emoji: '✅', label: 'Solved',       value: `${solved}/${practiceQuestions.length}`, color: '#059669' },
           { emoji: '🏆', label: 'Points Earned', value: totalPts,                               color: '#d97706' },
-          { emoji: '🔥', label: 'Day Streak',    value: '3 days',                               color: '#3b82f6' },
+          { emoji: '🔥', label: 'Day Streak',    value: '0 days', /* was static '3 days' */      color: '#3b82f6' },
         ].map(({ emoji, label, value, color }) => (
           <div key={label} style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: '14px', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: isDark ? 'none' : '0 2px 8px rgba(15,23,42,.04)' }}>
             <span style={{ fontSize: '22px' }}>{emoji}</span>
@@ -66,6 +68,11 @@ export default function Practice() {
 
       {/* Questions */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {filtered.length === 0 && (
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center', padding: '32px 0', margin: 0 }}>
+            No practice questions yet.
+          </p>
+        )}
         {filtered.map((q, i) => (
           <motion.div
             key={q.id}

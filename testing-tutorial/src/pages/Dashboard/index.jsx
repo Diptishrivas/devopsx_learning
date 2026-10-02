@@ -22,145 +22,153 @@ import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 
-const MY_COURSES = [
-  {
-    id: 1,
-    title: 'Deep Learning with TensorFlow 2.0',
-    cover: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop',
-    progress: 43,
-    status: 'in_progress',
-    buttonText: 'Resume',
-  },
-  {
-    id: 2,
-    title: 'Artificial Intelligence for Beginners',
-    cover: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&auto=format&fit=crop',
-    progress: 100,
-    status: 'completed',
-    statusText: 'Completed',
-    buttonText: 'Review',
-  },
-  {
-    id: 3,
-    title: 'Data Science & Analytics Bootcamp',
-    cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop',
-    progress: 25,
-    status: 'in_progress',
-    buttonText: 'Resume',
-  },
-  {
-    id: 4,
-    title: 'Generative AI with ChatGPT',
-    cover: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop',
-    progress: 0,
-    status: 'not_started',
-    statusText: 'Not Started',
-    buttonText: 'Start',
-  },
-];
+// TODO: Replace with API call — fetch enrolled courses for the current user from backend
+// const MY_COURSES = [
+//   {
+//     id: 1,
+//     title: 'Deep Learning with TensorFlow 2.0',
+//     cover: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop',
+//     progress: 43,
+//     status: 'in_progress',
+//     buttonText: 'Resume',
+//   },
+//   {
+//     id: 2,
+//     title: 'Artificial Intelligence for Beginners',
+//     cover: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&auto=format&fit=crop',
+//     progress: 100,
+//     status: 'completed',
+//     statusText: 'Completed',
+//     buttonText: 'Review',
+//   },
+//   {
+//     id: 3,
+//     title: 'Data Science & Analytics Bootcamp',
+//     cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop',
+//     progress: 25,
+//     status: 'in_progress',
+//     buttonText: 'Resume',
+//   },
+//   {
+//     id: 4,
+//     title: 'Generative AI with ChatGPT',
+//     cover: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop',
+//     progress: 0,
+//     status: 'not_started',
+//     statusText: 'Not Started',
+//     buttonText: 'Start',
+//   },
+// ];
+const MY_COURSES = []; // TODO: populate from API
 
-const UPCOMING_CLASSES = [
-  {
-    id: 1,
-    month: 'MAY',
-    day: '28',
-    title: 'Introduction to Deep Learning',
-    instructor: 'Neha Sharma',
-    time: 'Tomorrow, 7:00 PM',
-  },
-  {
-    id: 2,
-    month: 'MAY',
-    day: '30',
-    title: 'NLP with Transformers',
-    instructor: 'Ronak Patel',
-    time: 'Thu, 7:00 PM',
-  },
-  {
-    id: 3,
-    month: 'JUN',
-    day: '02',
-    title: 'Data Visualization with Python',
-    instructor: 'Ankit Jain',
-    time: 'Sun, 6:00 PM',
-  },
-];
+// TODO: Replace with API call — fetch upcoming live classes from backend
+// const UPCOMING_CLASSES = [
+//   {
+//     id: 1,
+//     month: 'MAY',
+//     day: '28',
+//     title: 'Introduction to Deep Learning',
+//     instructor: 'Neha Sharma',
+//     time: 'Tomorrow, 7:00 PM',
+//   },
+//   {
+//     id: 2,
+//     month: 'MAY',
+//     day: '30',
+//     title: 'NLP with Transformers',
+//     instructor: 'Ronak Patel',
+//     time: 'Thu, 7:00 PM',
+//   },
+//   {
+//     id: 3,
+//     month: 'JUN',
+//     day: '02',
+//     title: 'Data Visualization with Python',
+//     instructor: 'Ankit Jain',
+//     time: 'Sun, 6:00 PM',
+//   },
+// ];
+const UPCOMING_CLASSES = []; // TODO: populate from API
 
-const ACHIEVEMENTS = [
-  {
-    id: 1,
-    Icon: Shield,
-    iconBg: 'rgba(99,102,241,.12)',
-    iconColor: '#6366f1',
-    title: 'Course Completed',
-    desc: 'Completed Artificial Intelligence for Beginners',
-    date: 'May 24, 2024',
-    points: '+200 Points',
-  },
-  {
-    id: 2,
-    Icon: Star,
-    iconBg: 'rgba(245,158,11,.12)',
-    iconColor: '#f59e0b',
-    title: 'Streak Milestone',
-    desc: 'Maintained a 7-day learning streak',
-    date: 'May 22, 2024',
-    points: '+100 Points',
-  },
-  {
-    id: 3,
-    Icon: Award,
-    iconBg: 'rgba(16,185,129,.12)',
-    iconColor: '#10b981',
-    title: 'Certificate Earned',
-    desc: 'Earned "AI Basics" Certificate',
-    date: 'May 20, 2024',
-    points: '+150 Points',
-  },
-];
+// TODO: Replace with API call — fetch recent achievements for the current user from backend
+// const ACHIEVEMENTS = [
+//   {
+//     id: 1,
+//     Icon: Shield,
+//     iconBg: 'rgba(99,102,241,.12)',
+//     iconColor: '#6366f1',
+//     title: 'Course Completed',
+//     desc: 'Completed Artificial Intelligence for Beginners',
+//     date: 'May 24, 2024',
+//     points: '+200 Points',
+//   },
+//   {
+//     id: 2,
+//     Icon: Star,
+//     iconBg: 'rgba(245,158,11,.12)',
+//     iconColor: '#f59e0b',
+//     title: 'Streak Milestone',
+//     desc: 'Maintained a 7-day learning streak',
+//     date: 'May 22, 2024',
+//     points: '+100 Points',
+//   },
+//   {
+//     id: 3,
+//     Icon: Award,
+//     iconBg: 'rgba(16,185,129,.12)',
+//     iconColor: '#10b981',
+//     title: 'Certificate Earned',
+//     desc: 'Earned "AI Basics" Certificate',
+//     date: 'May 20, 2024',
+//     points: '+150 Points',
+//   },
+// ];
+const ACHIEVEMENTS = []; // TODO: populate from API
 
-const RECOMMENDED_COURSES = [
-  {
-    id: 101,
-    title: 'Machine Learning A-Z™: Hands-On',
-    cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&auto=format&fit=crop',
-    rating: 4.6,
-    reviewsCount: '8.2K',
-    price: 1299,
-    originalPrice: 2499,
-    discountPct: 48,
-  },
-  {
-    id: 102,
-    title: 'Natural Language Processing in Python',
-    cover: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&auto=format&fit=crop',
-    rating: 4.5,
-    reviewsCount: '5.6K',
-    price: 999,
-    originalPrice: 1999,
-    discountPct: 50,
-  },
-  {
-    id: 103,
-    title: 'Statistics for Data Science',
-    cover: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&auto=format&fit=crop',
-    rating: 4.7,
-    reviewsCount: '7.1K',
-    price: 799,
-    originalPrice: 1499,
-    discountPct: 47,
-  },
-  {
-    id: 104,
-    title: 'Deep Reinforcement Learning',
-    cover: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&auto=format&fit=crop',
-    rating: 4.6,
-    reviewsCount: '3.9K',
-    price: 1199,
-    originalPrice: 2399,
-    discountPct: 50,
-  },
-];
+// TODO: Replace with API call — fetch recommended courses from backend
+// const RECOMMENDED_COURSES = [
+//   {
+//     id: 101,
+//     title: 'Machine Learning A-Z™: Hands-On',
+//     cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&auto=format&fit=crop',
+//     rating: 4.6,
+//     reviewsCount: '8.2K',
+//     price: 1299,
+//     originalPrice: 2499,
+//     discountPct: 48,
+//   },
+//   {
+//     id: 102,
+//     title: 'Natural Language Processing in Python',
+//     cover: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&auto=format&fit=crop',
+//     rating: 4.5,
+//     reviewsCount: '5.6K',
+//     price: 999,
+//     originalPrice: 1999,
+//     discountPct: 50,
+//   },
+//   {
+//     id: 103,
+//     title: 'Statistics for Data Science',
+//     cover: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&auto=format&fit=crop',
+//     rating: 4.7,
+//     reviewsCount: '7.1K',
+//     price: 799,
+//     originalPrice: 1499,
+//     discountPct: 47,
+//   },
+//   {
+//     id: 104,
+//     title: 'Deep Reinforcement Learning',
+//     cover: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&auto=format&fit=crop',
+//     rating: 4.6,
+//     reviewsCount: '3.9K',
+//     price: 1199,
+//     originalPrice: 2399,
+//     discountPct: 50,
+//   },
+// ];
+const RECOMMENDED_COURSES = []; // TODO: populate from API
 
 export default function Dashboard() {
   const { isDark } = useTheme();
@@ -171,7 +179,12 @@ export default function Dashboard() {
   const border = isDark ? 'rgba(255,255,255,.08)' : '#eaecf0';
   const cardBg = isDark ? 'var(--bg-card)' : '#ffffff';
 
-  const userName = user?.name || 'Shailendra';
+  const userName = user?.name || ''; // static fallback was 'Shailendra'
+  // Stats below — TODO: populate from API
+  const dayStreak = 0; // static: 12
+  const totalPoints = 0; // static: 1250
+  // static: hardcoded 'Complete Python for AI & Data Science' 65% hero card — now derived from MY_COURSES
+  const continueCourse = MY_COURSES.find((c) => c.status === 'in_progress') ?? null;
 
   const scrollRecLeft = () => recScrollRef.current?.scrollBy({ left: -300, behavior: 'smooth' });
   const scrollRecRight = () => recScrollRef.current?.scrollBy({ left: 300, behavior: 'smooth' });
@@ -202,7 +215,7 @@ export default function Dashboard() {
                 letterSpacing: '-0.02em',
               }}
             >
-              Welcome back, {userName}! 👋
+              Welcome back{userName ? `, ${userName}` : ''}! 👋
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', margin: 0 }}>
               Continue your learning journey and achieve your goals.
@@ -239,7 +252,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1 }}>
-                  12
+                  {dayStreak}{/* was static '12' */}
                 </div>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                   Day Streak
@@ -275,7 +288,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1 }}>
-                  1250
+                  {totalPoints}{/* was static '1250' */}
                 </div>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                   Total Points
@@ -322,6 +335,10 @@ export default function Dashboard() {
                 </Link>
               </div>
 
+              {!continueCourse && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No course in progress.</p>
+              )}
+              {continueCourse && (
               <div
                 style={{
                   display: 'flex',
@@ -342,8 +359,8 @@ export default function Dashboard() {
                   }}
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&auto=format&fit=crop"
-                    alt="Python Course"
+                    src={continueCourse.cover}
+                    alt={continueCourse.title}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                   <div
@@ -366,7 +383,7 @@ export default function Dashboard() {
                         borderRadius: '4px',
                       }}
                     >
-                      65%
+                      {continueCourse.progress ?? 0}%{/* was static '65%' */}
                     </span>
                   </div>
                 </div>
@@ -383,17 +400,17 @@ export default function Dashboard() {
                       lineHeight: 1.3,
                     }}
                   >
-                    Complete Python for AI &amp; Data Science
+                    {continueCourse.title}{/* was static 'Complete Python for AI & Data Science' */}
                   </h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', margin: '0 0 16px' }}>
-                    Section 7: Machine Learning with Python
+                    {continueCourse.sectionText ?? ''}{/* was static 'Section 7: Machine Learning with Python' */}
                   </p>
 
                   {/* Progress Bar Row */}
                   <div style={{ marginBottom: '16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', marginBottom: '6px', fontWeight: 700 }}>
-                      <span style={{ color: '#6366f1' }}>65% Complete</span>
-                      <span style={{ color: 'var(--text-muted)' }}>8h 15m left</span>
+                      <span style={{ color: '#6366f1' }}>{continueCourse.progress ?? 0}% Complete</span>{/* was static '65% Complete' */}
+                      <span style={{ color: 'var(--text-muted)' }}>{continueCourse.timeLeft ?? ''}</span>{/* was static '8h 15m left' */}
                     </div>
                     <div
                       style={{
@@ -406,7 +423,7 @@ export default function Dashboard() {
                     >
                       <div
                         style={{
-                          width: '65%',
+                          width: `${continueCourse.progress ?? 0}%`, // static: '65%'
                           height: '100%',
                           borderRadius: '999px',
                           background: 'linear-gradient(90deg,#6366f1,#8b5cf6)',
@@ -416,7 +433,7 @@ export default function Dashboard() {
                   </div>
 
                   <button
-                    onClick={() => navigate('/courses/complete-python-ai')}
+                    onClick={() => navigate(`/courses/${continueCourse.slug ?? ''}`)} // static: '/courses/complete-python-ai'
                     style={{
                       padding: '10px 22px',
                       borderRadius: '8px',
@@ -434,6 +451,7 @@ export default function Dashboard() {
                   </button>
                 </div>
               </div>
+              )}
             </div>
 
             {/* 2. MY COURSES SECTION */}
@@ -459,6 +477,9 @@ export default function Dashboard() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {MY_COURSES.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No courses yet.</p>
+                )}
                 {MY_COURSES.map((course) => (
                   <div
                     key={course.id}
@@ -592,6 +613,9 @@ export default function Dashboard() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {UPCOMING_CLASSES.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No upcoming classes.</p>
+                )}
                 {UPCOMING_CLASSES.map((cls) => (
                   <div
                     key={cls.id}
@@ -693,6 +717,9 @@ export default function Dashboard() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {ACHIEVEMENTS.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No achievements yet.</p>
+                )}
                 {ACHIEVEMENTS.map(({ id, Icon, iconBg, iconColor, title, desc, date, points }) => (
                   <div key={id} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                     <div
@@ -803,6 +830,9 @@ export default function Dashboard() {
               width: '100%',
             }}
           >
+            {RECOMMENDED_COURSES.length === 0 && (
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0, gridColumn: '1 / -1' }}>No recommendations yet.</p>
+            )}
             {RECOMMENDED_COURSES.map((course) => (
               <div
                 key={course.id}

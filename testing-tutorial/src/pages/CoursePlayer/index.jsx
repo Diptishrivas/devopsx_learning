@@ -35,6 +35,8 @@ import { toast } from 'react-hot-toast';
 const FEATURED_VIDEO_URL = 'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/Final+Chaptor+1+Video.mp4';
 // ─────────────────────────────────────────────────────────────
 
+// Active S3 course (full chapter-1 video) — keep until API is ready
+// TODO: Replace with API call — fetch course sections & lessons from backend
 const MOCK_SECTIONS = [
   {
     id: 's0',
@@ -47,7 +49,7 @@ const MOCK_SECTIONS = [
         id: 'l0',
         title: 'Introduction to Artificial Intelligence for Kids — Preview',
         duration: '0:29',
-        videoUrl: FEATURED_VIDEO_URL,
+        videoUrl: FEATURED_VIDEO_URL, // S3 video URL preserved above
         completed: false,
       },
     ],

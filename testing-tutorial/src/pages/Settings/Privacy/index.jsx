@@ -79,7 +79,7 @@ function RadioOption({ label, desc, checked, onChange }) {
 
 export default function PrivacyData() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [visibility, setVisibility] = useState('everyone');
@@ -134,12 +134,15 @@ export default function PrivacyData() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{
-                display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
-                fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
-              }}>
-                <LogOut size={16} /><span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{
+                  display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
+                  fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
+                }}>
+                  <LogOut size={16} /><span>Logout</span>
+                </button>
+              )}
             </div>
             <div style={{
               background: isDark ? 'linear-gradient(135deg,#1e1b4b,#311b92)' : 'linear-gradient(135deg,#f5f3ff,#ede9fe)',

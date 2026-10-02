@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast';
 
 export default function Resources() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -26,18 +26,20 @@ export default function Resources() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // 7 Resource Categories
+  // Static file counts (128, 32, 28, 24, 18, 12, 14) commented out — 0 until counts come from the backend.
   const categoryStrip = [
-    { id: 'all', label: 'All Resources', count: 128, icon: '📖', bg: '#f3e8ff', color: '#7e22ce' },
-    { id: 'ebooks', label: 'eBooks', count: 32, icon: '📚', bg: '#dcfce7', color: '#15803d' },
-    { id: 'videos', label: 'Videos', count: 28, icon: '🎥', bg: '#ffedd5', color: '#c2410c' },
-    { id: 'guides', label: 'Guides', count: 24, icon: '📑', bg: '#e0f2fe', color: '#0369a1' },
-    { id: 'templates', label: 'Templates', count: 18, icon: '📝', bg: '#fce7f3', color: '#be185d' },
-    { id: 'cheatsheets', label: 'Cheat Sheets', count: 12, icon: '📊', bg: '#ccfbf1', color: '#0f766e' },
-    { id: 'code', label: 'Source Code', count: 14, icon: '💻', bg: '#e0e7ff', color: '#4338ca' },
+    { id: 'all', label: 'All Resources', count: 0, icon: '📖', bg: '#f3e8ff', color: '#7e22ce' },
+    { id: 'ebooks', label: 'eBooks', count: 0, icon: '📚', bg: '#dcfce7', color: '#15803d' },
+    { id: 'videos', label: 'Videos', count: 0, icon: '🎥', bg: '#ffedd5', color: '#c2410c' },
+    { id: 'guides', label: 'Guides', count: 0, icon: '📑', bg: '#e0f2fe', color: '#0369a1' },
+    { id: 'templates', label: 'Templates', count: 0, icon: '📝', bg: '#fce7f3', color: '#be185d' },
+    { id: 'cheatsheets', label: 'Cheat Sheets', count: 0, icon: '📊', bg: '#ccfbf1', color: '#0f766e' },
+    { id: 'code', label: 'Source Code', count: 0, icon: '💻', bg: '#e0e7ff', color: '#4338ca' },
   ];
 
-  // Popular This Week Featured Cards
+  // Static mock 'Popular This Week' cards — commented out until resources come from the backend.
   const popularResources = [
+    /*
     {
       id: 1,
       title: 'Artificial Intelligence Fundamentals',
@@ -82,10 +84,12 @@ export default function Resources() {
       bgGradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
       icon: '</>',
     },
+    */
   ];
 
-  // Recently Added Resources Table Data
+  // Static mock 'Recently Added' rows — commented out until resources come from the backend.
   const recentResources = [
+    /*
     {
       id: 1,
       name: 'ChatGPT for Students - Ultimate Guide',
@@ -151,6 +155,7 @@ export default function Resources() {
       icon: 'D',
       iconBg: '#0284c7',
     },
+    */
   ];
 
   // Sidebar Menu Items
@@ -248,19 +253,22 @@ export default function Resources() {
                 );
               })}
 
-              <button
-                onClick={() => { logout(); navigate('/login'); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: '10px',
-                  fontSize: '0.82rem', fontWeight: 500,
-                  color: '#ef4444', background: 'transparent',
-                  border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
-                }}
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button
+                  onClick={() => { logout(); navigate('/login'); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    padding: '10px 12px', borderRadius: '10px',
+                    fontSize: '0.82rem', fontWeight: 500,
+                    color: '#ef4444', background: 'transparent',
+                    border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
+                  }}
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Bottom Sidebar Promo Banner ("Access 1000+ Premium Resources") */}
@@ -498,6 +506,11 @@ export default function Resources() {
 
               {/* 4 Cards Grid */}
               <div className="resources-popular-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
+                {popularResources.length === 0 && (
+                  <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '24px 0', margin: 0 }}>
+                    No popular resources yet.
+                  </p>
+                )}
                 {popularResources.map((res) => (
                   <div
                     key={res.id}
@@ -586,6 +599,11 @@ export default function Resources() {
 
               {/* Table Body Rows */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {recentResources.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>
+                    No resources added yet.
+                  </p>
+                )}
                 {recentResources.map((item) => (
                   <div
                     key={item.id}

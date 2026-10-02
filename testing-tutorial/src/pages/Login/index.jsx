@@ -59,7 +59,7 @@ function AppleSvg() {
 
 export default function Login() {
   const { isDark } = useTheme();
-  const { login, logout } = useAuth();
+  const { user, login, logout } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ email: '', password: '' });
@@ -121,12 +121,15 @@ export default function Login() {
               </Link>
             );
           })}
-          <button onClick={() => { logout(); navigate('/login'); }} style={{
-            display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
-            fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
-          }}>
-            <LogOut size={16} /><span>Logout</span>
-          </button>
+          {/* Show Logout only when a user is logged in */}
+          {user && (
+            <button onClick={() => { logout(); navigate('/login'); }} style={{
+              display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
+              fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
+            }}>
+              <LogOut size={16} /><span>Logout</span>
+            </button>
+          )}
 
           {/* Access Your Learning widget */}
           <div style={{

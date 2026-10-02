@@ -81,16 +81,18 @@ export default function CourseDetails() {
   const originalPrice = course.originalPrice || Math.round(course.price * 2);
   const discountPercent = Math.round(((originalPrice - course.price) / originalPrice) * 100);
 
-  const whatYoullLearn = [
-    'Understand what Artificial Intelligence (AI) is in a simple and fun way',
-    'Learn how AI works using examples from everyday life',
-    'Discover how machines can learn from information and examples',
-    'Explore how AI can recognize voices, answer questions, and understand preferences',
-    'Identify AI in everyday technology such as smart assistants and recommendations',
-    'Understand the role of AI in today\'s world and future technology',
-    'Develop curiosity about how smart machines work',
-    'Learn the basics of AI through real-life examples and activities',
-  ];
+  // TODO: Replace with API call — fetch learning outcomes from backend (part of course object)
+  // const whatYoullLearn = [
+  //   'Understand what Artificial Intelligence (AI) is in a simple and fun way',
+  //   'Learn how AI works using examples from everyday life',
+  //   'Discover how machines can learn from information and examples',
+  //   'Explore how AI can recognize voices, answer questions, and understand preferences',
+  //   'Identify AI in everyday technology such as smart assistants and recommendations',
+  //   'Understand the role of AI in today\'s world and future technology',
+  //   'Develop curiosity about how smart machines work',
+  //   'Learn the basics of AI through real-life examples and activities',
+  // ];
+  const whatYoullLearn = []; // TODO: populate from API (course.learningOutcomes)
 
   const studentsAlsoBought = courses
     .filter((c) => c.id !== course.id)

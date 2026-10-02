@@ -28,39 +28,67 @@ export default function RefundDetails() {
   const border = isDark ? 'rgba(255,255,255,0.08)' : '#eaecf0';
   const bg2 = isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc';
 
-  const refund = {
-    requestId: 'RET-2024-0008',
-    orderId: '#AL2024PYO0123',
-    course: 'Complete Python for AI & Data Science',
-    courseIcon: '🐍',
+  // TODO: Replace with API call — fetch refund request by id from backend
+  // const refund = {
+  //   requestId: 'RET-2024-0008',
+  //   orderId: '#AL2024PYO0123',
+  //   course: 'Complete Python for AI & Data Science',
+  //   courseIcon: '🐍',
+  //   courseIconBg: '#1e293b',
+  //   orderDate: 'May 26, 2024, 10:30 AM',
+  //   amountPaid: '₹999',
+  //   requestDate: 'May 29, 2024, 11:20 AM',
+  //   currentStatus: 'Under Review',
+  //   refundMethod: 'UPI (Original Payment)',
+  //   amountPaidSummary: '₹999',
+  //   refundAmount: '₹999',
+  //   expectedResolution: 'Within 24-48 hours',
+  //   reasonForReturn: 'Course not as expected',
+  //   reasonDetail: 'The course content did not meet my expectations. It is too basic and not what was mentioned in the description.',
+  //   additionalDetails: 'The course is too basic. I was expecting more practical examples and in-depth content.',
+  //   attachments: [
+  //     { name: 'Screenshot_20240529_1120.png', size: '245 KB', icon: FileImage },
+  //   ],
+  //   timeline: [
+  //     { step: 'return_requested', label: 'Return Requested', date: 'May 29, 2024', time: '11:20 AM', done: true },
+  //     { step: 'under_review', label: 'Under Review', date: 'May 29, 2024', time: '11:45 AM', done: true },
+  //     { step: 'approved', label: 'Approved', date: null, time: null, done: false },
+  //     { step: 'refund_processed', label: 'Refund Processed', date: null, time: null, done: false },
+  //     { step: 'refund_completed', label: 'Refund Completed', date: null, time: null, done: false },
+  //   ],
+  //   whatHappensNext: [
+  //     'We are reviewing your request.',
+  //     'Once approved, refund will be processed.',
+  //     'Refund will be credited to your original payment method.',
+  //   ],
+  //   email: 'shailendraahirwar@gmail.com',
+  // };
+  const refund = { // TODO: populate from API (placeholder keeps layout)
+    requestId: '—',
+    orderId: '—',
+    course: '—',
+    courseIcon: '',
     courseIconBg: '#1e293b',
-    orderDate: 'May 26, 2024, 10:30 AM',
-    amountPaid: '₹999',
-    requestDate: 'May 29, 2024, 11:20 AM',
-    currentStatus: 'Under Review',
-    refundMethod: 'UPI (Original Payment)',
-    amountPaidSummary: '₹999',
-    refundAmount: '₹999',
-    expectedResolution: 'Within 24-48 hours',
-    reasonForReturn: 'Course not as expected',
-    reasonDetail: 'The course content did not meet my expectations. It is too basic and not what was mentioned in the description.',
-    additionalDetails: 'The course is too basic. I was expecting more practical examples and in-depth content.',
-    attachments: [
-      { name: 'Screenshot_20240529_1120.png', size: '245 KB', icon: FileImage },
-    ],
-    timeline: [
-      { step: 'return_requested', label: 'Return Requested', date: 'May 29, 2024', time: '11:20 AM', done: true },
-      { step: 'under_review', label: 'Under Review', date: 'May 29, 2024', time: '11:45 AM', done: true },
-      { step: 'approved', label: 'Approved', date: null, time: null, done: false },
-      { step: 'refund_processed', label: 'Refund Processed', date: null, time: null, done: false },
-      { step: 'refund_completed', label: 'Refund Completed', date: null, time: null, done: false },
-    ],
+    orderDate: '—',
+    amountPaid: '₹0',
+    requestDate: '—',
+    currentStatus: '—',
+    refundMethod: '—',
+    amountPaidSummary: '₹0',
+    refundAmount: '₹0',
+    expectedResolution: '—',
+    reasonForReturn: '—',
+    reasonDetail: '—',
+    additionalDetails: '—',
+    attachments: [],
+    // Step labels come from STEP_CONFIGS (UI config); dates/done states come from the API
+    timeline: STEP_CONFIGS.map(s => ({ step: s.key, label: s.label, date: null, time: null, done: false })),
     whatHappensNext: [
       'We are reviewing your request.',
       'Once approved, refund will be processed.',
       'Refund will be credited to your original payment method.',
     ],
-    email: 'shailendraahirwar@gmail.com',
+    email: '—',
   };
 
   const STATUS_COLORS = {
@@ -147,7 +175,7 @@ export default function RefundDetails() {
                 {/* Connecting Line */}
                 <div style={{ position: 'absolute', top: '17px', left: '40px', right: '40px', height: '2px', background: isDark ? 'rgba(255,255,255,0.08)' : '#e2e8f0', zIndex: 0 }} />
                 {/* Progress Line */}
-                <div style={{ position: 'absolute', top: '17px', left: '40px', width: `${(refund.timeline.filter(s => s.done).length - 1) / (refund.timeline.length - 1) * 100}%`, height: '2px', background: '#4f46e5', zIndex: 0 }} />
+                <div style={{ position: 'absolute', top: '17px', left: '40px', width: `${refund.timeline.length > 1 ? Math.max(0, (refund.timeline.filter(s => s.done).length - 1) / (refund.timeline.length - 1) * 100) : 0}%`, height: '2px', background: '#4f46e5', zIndex: 0 }} />
 
                 {refund.timeline.map((step, i) => {
                   const Icon = STEP_CONFIGS[i]?.icon || CheckCircle2;
@@ -215,6 +243,9 @@ export default function RefundDetails() {
                   </div>
                 );
               })}
+              {refund.attachments.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No attachments.</p>
+              )}
             </div>
 
             {/* Notice Box */}

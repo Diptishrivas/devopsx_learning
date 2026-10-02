@@ -13,8 +13,23 @@ import { toast } from 'react-hot-toast';
 
 export default function OrderSuccess() {
   const navigate = useNavigate();
-  const orderId = 'AI202600123';
-  const paymentId = 'PAY87234156';
+  // TODO: Replace with API call — fetch placed order / payment confirmation from backend
+  // const orderId = 'AI202600123';
+  // const paymentId = 'PAY87234156';
+  const order = { // TODO: populate from API (placeholder keeps layout)
+    orderId: '—',
+    paymentId: '—',
+    paidAt: '—',
+    itemTitle: '—',
+    itemAuthor: '—',
+    itemImage: '',
+    amountPaid: '₹0',
+    orderDate: '—',
+    deliveryMethod: '—',
+    paymentMethod: '—',
+    estimatedDelivery: '—',
+  };
+  const { orderId, paymentId } = order;
 
   const handleCopyOrderId = () => {
     navigator.clipboard.writeText(orderId);
@@ -98,7 +113,7 @@ export default function OrderSuccess() {
             </div>
             <span>•</span>
             <div>
-              <strong>Date:</strong> <span>20 May 2024, 11:30 AM</span>
+              <strong>Date:</strong> <span>{order.paidAt}</span>{/* was static '20 May 2024, 11:30 AM' */}
             </div>
             <span>•</span>
             <button
@@ -137,18 +152,23 @@ export default function OrderSuccess() {
 
             {/* Product Item Preview */}
             <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-              <img
-                src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop"
-                alt="Book cover"
-                style={{ width: '60px', height: '80px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #eaecf0' }}
-              />
+              {/* Blank box instead of a broken-image icon while there is no image */}
+              {order.itemImage ? (
+                <img
+                  src={order.itemImage} /* was static 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop' */
+                  alt="Book cover"
+                  style={{ width: '60px', height: '80px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #eaecf0' }}
+                />
+              ) : (
+                <div style={{ width: '60px', height: '80px', borderRadius: '8px', border: '1px solid #eaecf0', background: '#f2f4f7', flexShrink: 0 }} />
+              )}
               <div style={{ flex: 1 }}>
                 <h4 style={{ color: '#101828', fontSize: '0.9rem', fontWeight: 700, margin: '0 0 2px' }}>
-                  Artificial Intelligence for Beginners
+                  {order.itemTitle}{/* was static 'Artificial Intelligence for Beginners' */}
                 </h4>
-                <span style={{ fontSize: '0.76rem', color: '#667085' }}>by Shailendra Kumar</span>
+                <span style={{ fontSize: '0.76rem', color: '#667085' }}>by {order.itemAuthor}</span>{/* was static 'by Shailendra Kumar' */}
                 <div style={{ marginTop: '6px', fontSize: '0.78rem', color: '#027a48', fontWeight: 700 }}>
-                  ₹589 Paid ✓
+                  {order.amountPaid} Paid ✓{/* was static '₹589 Paid ✓' */}
                 </div>
               </div>
             </div>
@@ -159,22 +179,22 @@ export default function OrderSuccess() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', fontSize: '0.8rem', color: '#475467' }}>
               <div>
                 <strong style={{ color: '#101828', display: 'block', marginBottom: '2px' }}>📅 Order Date</strong>
-                <span>28 May, 2024</span>
+                <span>{order.orderDate}</span>{/* was static '28 May, 2024' */}
               </div>
 
               <div>
                 <strong style={{ color: '#101828', display: 'block', marginBottom: '2px' }}>🚚 Delivery Method</strong>
-                <span>Standard Express Shipping</span>
+                <span>{order.deliveryMethod}</span>{/* was static 'Standard Express Shipping' */}
               </div>
 
               <div>
                 <strong style={{ color: '#101828', display: 'block', marginBottom: '2px' }}>💳 Payment Method</strong>
-                <span>UPI / Online Payment</span>
+                <span>{order.paymentMethod}</span>{/* was static 'UPI / Online Payment' */}
               </div>
 
               <div>
                 <strong style={{ color: '#101828', display: 'block', marginBottom: '2px' }}>⏱️ Estimated Delivery</strong>
-                <span>2 - 4 Business Days</span>
+                <span>{order.estimatedDelivery}</span>{/* was static '2 - 4 Business Days' */}
               </div>
             </div>
 
@@ -185,7 +205,7 @@ export default function OrderSuccess() {
               alignItems: 'center', marginTop: '6px',
             }}>
               <span style={{ color: '#475467', fontSize: '0.85rem', fontWeight: 600 }}>Total Amount Paid</span>
-              <strong style={{ color: '#101828', fontSize: '1.25rem', fontWeight: 900 }}>₹589</strong>
+              <strong style={{ color: '#101828', fontSize: '1.25rem', fontWeight: 900 }}>{order.amountPaid}</strong>{/* was static '₹589' */}
             </div>
           </div>
 

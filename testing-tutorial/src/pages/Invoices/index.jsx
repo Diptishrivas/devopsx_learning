@@ -13,16 +13,18 @@ import { useTheme } from '../../context/ThemeContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
 
-const INVOICES = [
-  { id: 'INV-2024-0008', orderId: '#AL2024PYO0123', course: 'Complete Python for AI & Data Science', date: 'May 26, 2024', amount: '₹999', status: 'Paid' },
-  { id: 'INV-2024-0007', orderId: '#AL2024DL00087', course: 'Introduction to Deep Learning', date: 'May 28, 2024', amount: '₹1,299', status: 'Paid' },
-  { id: 'INV-2024-0006', orderId: '#AL2024NLP00456', course: 'NLP with Transformers', date: 'May 30, 2024', amount: '₹1,499', status: 'Paid' },
-  { id: 'INV-2024-0005', orderId: '#AL2024AI000074', course: 'Artificial Intelligence for Beginners', date: 'May 24, 2024', amount: '₹699', status: 'Paid' },
-  { id: 'INV-2024-0004', orderId: '#AL2024DVO0211', course: 'Data Visualization with Python', date: 'Jun 2, 2024', amount: '₹799', status: 'Paid' },
-  { id: 'INV-2024-0003', orderId: '#AL2024ML0345', course: 'Machine Learning Bootcamp', date: 'Apr 18, 2024', amount: '₹1,899', status: 'Paid' },
-  { id: 'INV-2024-0002', orderId: '#AL2024DS0210', course: 'Data Science with Python', date: 'Apr 10, 2024', amount: '₹999', status: 'Paid' },
-  { id: 'INV-2024-0001', orderId: '#AL2024AI01101', course: 'AI Fundamentals Course', date: 'Mar 22, 2024', amount: '₹499', status: 'Paid' },
-];
+// TODO: Replace with API call — fetch user's invoices from backend
+// const INVOICES = [
+//   { id: 'INV-2024-0008', orderId: '#AL2024PYO0123', course: 'Complete Python for AI & Data Science', date: 'May 26, 2024', amount: '₹999', status: 'Paid' },
+//   { id: 'INV-2024-0007', orderId: '#AL2024DL00087', course: 'Introduction to Deep Learning', date: 'May 28, 2024', amount: '₹1,299', status: 'Paid' },
+//   { id: 'INV-2024-0006', orderId: '#AL2024NLP00456', course: 'NLP with Transformers', date: 'May 30, 2024', amount: '₹1,499', status: 'Paid' },
+//   { id: 'INV-2024-0005', orderId: '#AL2024AI000074', course: 'Artificial Intelligence for Beginners', date: 'May 24, 2024', amount: '₹699', status: 'Paid' },
+//   { id: 'INV-2024-0004', orderId: '#AL2024DVO0211', course: 'Data Visualization with Python', date: 'Jun 2, 2024', amount: '₹799', status: 'Paid' },
+//   { id: 'INV-2024-0003', orderId: '#AL2024ML0345', course: 'Machine Learning Bootcamp', date: 'Apr 18, 2024', amount: '₹1,899', status: 'Paid' },
+//   { id: 'INV-2024-0002', orderId: '#AL2024DS0210', course: 'Data Science with Python', date: 'Apr 10, 2024', amount: '₹999', status: 'Paid' },
+//   { id: 'INV-2024-0001', orderId: '#AL2024AI01101', course: 'AI Fundamentals Course', date: 'Mar 22, 2024', amount: '₹499', status: 'Paid' },
+// ];
+const INVOICES = []; // TODO: populate from API
 
 export default function Invoices() {
   const { isDark } = useTheme();
@@ -35,12 +37,12 @@ export default function Invoices() {
   const bg2 = isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc';
 
   const filtered = INVOICES.filter(inv =>
-    inv.course.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    inv.id.toLowerCase().includes(searchQuery.toLowerCase())
+    (inv.course || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (inv.id || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const totalAmount = INVOICES.reduce((acc, inv) => {
-    const num = parseInt(inv.amount.replace(/[₹,]/g, ''));
+    const num = parseInt(String(inv.amount || '').replace(/[₹,]/g, '')) || 0;
     return acc + num;
   }, 0);
 
@@ -122,10 +124,13 @@ export default function Invoices() {
                   </button>
                 </div>
               ))}
+              {filtered.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No invoices yet.</p>
+              )}
 
               {/* Pagination */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                <span>Showing 1 to {filtered.length} of {INVOICES.length} invoices</span>
+                <span>Showing {filtered.length ? 1 : 0} to {filtered.length} of {INVOICES.length} invoices</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <button style={{ width: '28px', height: '28px', borderRadius: '6px', background: 'transparent', border: `1px solid ${border}`, color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <ChevronRight size={14} style={{ transform: 'rotate(180deg)' }} />
@@ -148,8 +153,8 @@ export default function Invoices() {
               {[
                 { label: 'Total Invoices', value: INVOICES.length, icon: FileText, color: '#4f46e5', bg: '#f5f3ff' },
                 { label: 'Total Amount', value: `₹${totalAmount.toLocaleString('en-IN')}`, icon: CheckCircle2, color: '#0891b2', bg: '#e0f2fe' },
-                { label: 'Paid Invoices', value: INVOICES.length, icon: CheckCircle2, color: '#16a34a', bg: '#dcfce7' },
-                { label: 'Pending Invoices', value: 0, icon: AlertCircle, color: '#d97706', bg: '#fef3c7' },
+                { label: 'Paid Invoices', value: INVOICES.filter(inv => inv.status === 'Paid').length, icon: CheckCircle2, color: '#16a34a', bg: '#dcfce7' },
+                { label: 'Pending Invoices', value: INVOICES.filter(inv => inv.status === 'Pending').length, icon: AlertCircle, color: '#d97706', bg: '#fef3c7' },
               ].map(item => {
                 const Icon = item.icon;
                 return (

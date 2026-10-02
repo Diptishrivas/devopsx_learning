@@ -22,51 +22,53 @@ import {
 import { useTheme } from '../../context/ThemeContext';
 import { toast } from 'react-hot-toast';
 
-const INITIAL_ITEMS = [
-  {
-    id: 'b1',
-    type: 'Book',
-    title: 'Artificial Intelligence for Beginners',
-    author: 'Shailendra Kumar',
-    cover: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&auto=format&fit=crop',
-    price: 499,
-    originalPrice: 799,
-    discountPct: 38,
-    quantity: 1,
-    selected: true,
-  },
-  {
-    id: 'c1',
-    type: 'Course',
-    title: 'Complete Python for AI & Data Science',
-    author: 'Rounak Patel',
-    cover: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&auto=format&fit=crop',
-    price: 1499,
-    originalPrice: 2099,
-    discountPct: 29,
-    quantity: 1,
-    selected: true,
-  },
-  {
-    id: 'c2',
-    type: 'Course',
-    title: 'Deep Learning with TensorFlow 2.0',
-    author: 'Neha Sharma',
-    cover: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop',
-    price: 1699,
-    originalPrice: 2999,
-    discountPct: 43,
-    quantity: 1,
-    selected: true,
-  },
-];
+// TODO: Replace with API call — fetch user's cart items from backend
+// const INITIAL_ITEMS = [
+//   {
+//     id: 'b1',
+//     type: 'Book',
+//     title: 'Artificial Intelligence for Beginners',
+//     author: 'Shailendra Kumar',
+//     cover: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&auto=format&fit=crop',
+//     price: 499,
+//     originalPrice: 799,
+//     discountPct: 38,
+//     quantity: 1,
+//     selected: true,
+//   },
+//   {
+//     id: 'c1',
+//     type: 'Course',
+//     title: 'Complete Python for AI & Data Science',
+//     author: 'Rounak Patel',
+//     cover: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&auto=format&fit=crop',
+//     price: 1499,
+//     originalPrice: 2099,
+//     discountPct: 29,
+//     quantity: 1,
+//     selected: true,
+//   },
+//   {
+//     id: 'c2',
+//     type: 'Course',
+//     title: 'Deep Learning with TensorFlow 2.0',
+//     author: 'Neha Sharma',
+//     cover: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop',
+//     price: 1699,
+//     originalPrice: 2999,
+//     discountPct: 43,
+//     quantity: 1,
+//     selected: true,
+//   },
+// ];
+const INITIAL_ITEMS = []; // TODO: populate from API
 
 export default function Checkout() {
   const { isDark } = useTheme();
   const navigate = useNavigate();
 
   const [items, setItems] = useState(INITIAL_ITEMS);
-  const [selectAll, setSelectAll] = useState(true);
+  const [selectAll, setSelectAll] = useState(INITIAL_ITEMS.length > 0); // was useState(true)
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(false);
 

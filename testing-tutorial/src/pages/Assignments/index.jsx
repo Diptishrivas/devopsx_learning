@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ClipboardList, Clock, CheckCircle, AlertCircle, Circle, ChevronRight } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { assignments } from '../../data/assignments';
+// Static mock data — commented out until assignments come from the backend.
+// import { assignments } from '../../data/assignments';
 import PageWrapper, { PageHeader, FilterPill } from '../../components/ui/PageWrapper';
 
 const statusConfig = {
@@ -11,6 +12,7 @@ const statusConfig = {
   completed:   { icon: CheckCircle,  color: '#10b981', label: 'Completed',   bg: 'rgba(16,185,129,.12)'  },
 };
 const diffColor = { Easy: '#10b981', Medium: '#f59e0b', Hard: '#ef4444' };
+const assignments = [];
 
 export default function Assignments() {
   const { isDark } = useTheme();
@@ -64,6 +66,11 @@ export default function Assignments() {
 
       {/* Assignment list */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {filtered.length === 0 && (
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center', padding: '32px 0', margin: 0 }}>
+            No assignments yet.
+          </p>
+        )}
         {filtered.map((a, i) => {
           const { icon: StatusIcon, color, label, bg } = statusConfig[a.status];
           return (

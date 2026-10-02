@@ -11,21 +11,32 @@ import { useTheme } from '../../context/ThemeContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
 
-const TIMELINE_STEPS = [
-  { key: 'order_placed', label: 'Order Placed', date: 'May 26, 2024', time: '10:30 AM', done: true },
-  { key: 'payment_successful', label: 'Payment Successful', date: 'May 26, 2024', time: '10:30 AM', done: true },
-  { key: 'processing', label: 'Processing', date: 'May 26, 2024', time: '10:31 AM', done: true },
-  { key: 'completed', label: 'Completed', date: 'May 26, 2024', time: '10:35 AM', done: true },
-  { key: 'course_available', label: 'Course Available', date: 'May 26, 2024', time: '10:36 AM', done: true },
+// TODO: Replace with API call — fetch order timeline (dates/done states) from backend
+// const TIMELINE_STEPS = [
+//   { key: 'order_placed', label: 'Order Placed', date: 'May 26, 2024', time: '10:30 AM', done: true },
+//   { key: 'payment_successful', label: 'Payment Successful', date: 'May 26, 2024', time: '10:30 AM', done: true },
+//   { key: 'processing', label: 'Processing', date: 'May 26, 2024', time: '10:31 AM', done: true },
+//   { key: 'completed', label: 'Completed', date: 'May 26, 2024', time: '10:35 AM', done: true },
+//   { key: 'course_available', label: 'Course Available', date: 'May 26, 2024', time: '10:36 AM', done: true },
+// ];
+// Step labels are UI config; dates/done states come from the API
+const TIMELINE_STEPS = [ // TODO: populate dates/done from API
+  { key: 'order_placed', label: 'Order Placed', date: '', time: '', done: false },
+  { key: 'payment_successful', label: 'Payment Successful', date: '', time: '', done: false },
+  { key: 'processing', label: 'Processing', date: '', time: '', done: false },
+  { key: 'completed', label: 'Completed', date: '', time: '', done: false },
+  { key: 'course_available', label: 'Course Available', date: '', time: '', done: false },
 ];
 
-const ORDER_UPDATES = [
-  { step: 'Order Placed', desc: 'Your order has been placed successfully.', date: 'May 26, 2024 10:30 AM', done: true },
-  { step: 'Payment Successful', desc: 'We have received your payment via UPI.', date: 'May 26, 2024 10:30 AM', done: true },
-  { step: 'Processing', desc: 'Your order is being processed.', date: 'May 26, 2024 10:31 AM', done: true },
-  { step: 'Completed', desc: 'Your order has been completed.', date: 'May 26, 2024 10:35 AM', done: true },
-  { step: 'Course Available', desc: 'You can now access your course.', date: 'May 26, 2024 10:36 AM', done: true },
-];
+// TODO: Replace with API call — fetch order status updates from backend
+// const ORDER_UPDATES = [
+//   { step: 'Order Placed', desc: 'Your order has been placed successfully.', date: 'May 26, 2024 10:30 AM', done: true },
+//   { step: 'Payment Successful', desc: 'We have received your payment via UPI.', date: 'May 26, 2024 10:30 AM', done: true },
+//   { step: 'Processing', desc: 'Your order is being processed.', date: 'May 26, 2024 10:31 AM', done: true },
+//   { step: 'Completed', desc: 'Your order has been completed.', date: 'May 26, 2024 10:35 AM', done: true },
+//   { step: 'Course Available', desc: 'You can now access your course.', date: 'May 26, 2024 10:36 AM', done: true },
+// ];
+const ORDER_UPDATES = []; // TODO: populate from API
 
 export default function OrderTracking() {
   const { isDark } = useTheme();
@@ -36,21 +47,34 @@ export default function OrderTracking() {
   const border = isDark ? 'rgba(255,255,255,0.08)' : '#eaecf0';
   const bg2 = isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc';
 
-  const order = {
-    id: '#AL2024PYO0123',
-    course: 'Complete Python for AI & Data Science',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=120&auto=format&fit=crop',
-    orderDate: 'May 26, 2024 10:30 AM',
-    paymentMethod: 'UPI',
-    paymentStatus: 'Paid',
-    orderStatus: 'Completed',
-    totalAmount: '₹999',
-    items: 1,
+  // TODO: Replace with API call — fetch order by id from backend
+  // const order = {
+  //   id: '#AL2024PYO0123',
+  //   course: 'Complete Python for AI & Data Science',
+  //   type: 'Digital Course',
+  //   thumb: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=120&auto=format&fit=crop',
+  //   orderDate: 'May 26, 2024 10:30 AM',
+  //   paymentMethod: 'UPI',
+  //   paymentStatus: 'Paid',
+  //   orderStatus: 'Completed',
+  //   totalAmount: '₹999',
+  //   items: 1,
+  // };
+  const order = { // TODO: populate from API (placeholder keeps layout)
+    id: '—',
+    course: '—',
+    type: '—',
+    thumb: '',
+    orderDate: '—',
+    paymentMethod: '—',
+    paymentStatus: '—',
+    orderStatus: '—',
+    totalAmount: '₹0',
+    items: 0,
   };
 
   const completedCount = TIMELINE_STEPS.filter(s => s.done).length;
-  const progressPct = ((completedCount - 1) / (TIMELINE_STEPS.length - 1)) * 100;
+  const progressPct = TIMELINE_STEPS.length > 1 ? Math.max(0, ((completedCount - 1) / (TIMELINE_STEPS.length - 1)) * 100) : 0;
 
   return (
     <PageWrapper>
@@ -85,7 +109,12 @@ export default function OrderTracking() {
             {/* Course Info Card */}
             <div style={{ background: card, border: `1px solid ${border}`, borderRadius: '16px', padding: '20px 24px', boxShadow: '0 1px 3px rgba(16,24,40,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <img src={order.thumb} alt={order.course} style={{ width: '64px', height: '64px', borderRadius: '10px', objectFit: 'cover', border: `1px solid ${border}`, flexShrink: 0 }} />
+                {/* Blank box instead of a broken-image icon while there is no image */}
+                {order.thumb ? (
+                  <img src={order.thumb} alt={order.course} style={{ width: '64px', height: '64px', borderRadius: '10px', objectFit: 'cover', border: `1px solid ${border}`, flexShrink: 0 }} />
+                ) : (
+                  <div style={{ width: '64px', height: '64px', borderRadius: '10px', border: `1px solid ${border}`, background: 'var(--bg-secondary, #f2f4f7)', flexShrink: 0 }} />
+                )}
                 <div>
                   <h3 style={{ color: 'var(--text-primary)', fontSize: '1rem', fontWeight: 700, margin: '0 0 4px' }}>{order.course}</h3>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.76rem' }}>Order ID: {order.id}</div>
@@ -151,6 +180,9 @@ export default function OrderTracking() {
                     </div>
                   </div>
                 ))}
+                {ORDER_UPDATES.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No order updates yet.</p>
+                )}
               </div>
             </div>
 

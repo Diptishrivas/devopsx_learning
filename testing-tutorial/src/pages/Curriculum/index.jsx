@@ -24,67 +24,71 @@ import { useTheme } from '../../context/ThemeContext';
 import { courses } from '../../data/courses';
 import { toast } from 'react-hot-toast';
 
-const MOCK_SECTIONS = [
-  {
-    id: 'sec6',
-    title: 'Section 6: Data Preprocessing',
-    completedBadge: '4/4',
-    isCompleted: true,
-    isExpanded: false,
-    lessons: [
-      { id: 'l_sec6_1', title: '1. Feature Scaling & Normalization', duration: '12:10', isCompleted: true },
-      { id: 'l_sec6_2', title: '2. One-Hot Encoding', duration: '09:45', isCompleted: true },
-      { id: 'l_sec6_3', title: '3. Train-Test Split Techniques', duration: '15:20', isCompleted: true },
-      { id: 'l_sec6_4', title: '4. Imputing Missing Values', duration: '11:30', isCompleted: true },
-    ],
-  },
-  {
-    id: 'sec7',
-    title: 'Section 7: Machine Learning with Python',
-    completedBadge: '3/12',
-    isCompleted: false,
-    isExpanded: true,
-    lessons: [
-      { id: 'l1', title: '3. Linear Regression in Python', duration: '8:15', isCompleted: true, youtubeId: 'Nftif8BrGMo' },
-      { id: 'l2', title: '4. Multiple Linear Regression', duration: '10:24', isCompleted: false, youtubeId: 'rfscVS0vtbw' },
-      { id: 'l3', title: '5. Polynomial Regression', duration: '7:48', isCompleted: false, youtubeId: 'YYXdXT2l-Gg' },
-      { id: 'l4', title: '6. Logistic Regression', duration: '9:12', isCompleted: false, youtubeId: 'kqtD5dpn9C8' },
-      { id: 'l5', title: '7. Decision Trees', duration: '11:05', isLocked: true, youtubeId: 'W8KRzm-HUcc' },
-      { id: 'l6', title: '8. Random Forest', duration: '10:18', isLocked: true, youtubeId: 'PqFKRqpHrjw' },
-      { id: 'l7', title: '9. Support Vector Machine', duration: '12:36', isLocked: true, youtubeId: 'u-OmVr_fT4s' },
-      { id: 'l8', title: '10. K-Means Clustering', duration: '8:50', isLocked: true, youtubeId: 'QUT1VHiLg5w' },
-      { id: 'l9', title: '11. Model Evaluation', duration: '7:30', isLocked: true, youtubeId: 'vmEHCJofslg' },
-      { id: 'l10', title: '12. Hands-on Project', duration: '15:40', isLocked: true, youtubeId: 'EaGbS7eacCW' },
-    ],
-  },
-  {
-    id: 'sec8',
-    title: 'Section 8: Deep Learning Basics',
-    completedBadge: '0/8',
-    isCompleted: false,
-    isExpanded: false,
-    lessons: [
-      { id: 'l_sec8_1', title: '1. Neural Network Architecture', duration: '14:20', isLocked: true },
-      { id: 'l_sec8_2', title: '2. Activation Functions', duration: '18:50', isLocked: true },
-    ],
-  },
-  {
-    id: 'sec9',
-    title: 'Section 9: Projects',
-    completedBadge: '0/3',
-    isCompleted: false,
-    isExpanded: false,
-    lessons: [
-      { id: 'l_sec9_1', title: '1. Capstone Project Setup', duration: '20:10', isLocked: true },
-    ],
-  },
-];
+// TODO: Replace with API call — fetch course sections & lessons from backend
+// const MOCK_SECTIONS = [
+//   {
+//     id: 'sec6',
+//     title: 'Section 6: Data Preprocessing',
+//     completedBadge: '4/4',
+//     isCompleted: true,
+//     isExpanded: false,
+//     lessons: [
+//       { id: 'l_sec6_1', title: '1. Feature Scaling & Normalization', duration: '12:10', isCompleted: true },
+//       { id: 'l_sec6_2', title: '2. One-Hot Encoding', duration: '09:45', isCompleted: true },
+//       { id: 'l_sec6_3', title: '3. Train-Test Split Techniques', duration: '15:20', isCompleted: true },
+//       { id: 'l_sec6_4', title: '4. Imputing Missing Values', duration: '11:30', isCompleted: true },
+//     ],
+//   },
+//   {
+//     id: 'sec7',
+//     title: 'Section 7: Machine Learning with Python',
+//     completedBadge: '3/12',
+//     isCompleted: false,
+//     isExpanded: true,
+//     lessons: [
+//       { id: 'l1', title: '3. Linear Regression in Python', duration: '8:15', isCompleted: true, youtubeId: 'Nftif8BrGMo' },
+//       { id: 'l2', title: '4. Multiple Linear Regression', duration: '10:24', isCompleted: false, youtubeId: 'rfscVS0vtbw' },
+//       { id: 'l3', title: '5. Polynomial Regression', duration: '7:48', isCompleted: false, youtubeId: 'YYXdXT2l-Gg' },
+//       { id: 'l4', title: '6. Logistic Regression', duration: '9:12', isCompleted: false, youtubeId: 'kqtD5dpn9C8' },
+//       { id: 'l5', title: '7. Decision Trees', duration: '11:05', isLocked: true, youtubeId: 'W8KRzm-HUcc' },
+//       { id: 'l6', title: '8. Random Forest', duration: '10:18', isLocked: true, youtubeId: 'PqFKRqpHrjw' },
+//       { id: 'l7', title: '9. Support Vector Machine', duration: '12:36', isLocked: true, youtubeId: 'u-OmVr_fT4s' },
+//       { id: 'l8', title: '10. K-Means Clustering', duration: '8:50', isLocked: true, youtubeId: 'QUT1VHiLg5w' },
+//       { id: 'l9', title: '11. Model Evaluation', duration: '7:30', isLocked: true, youtubeId: 'vmEHCJofslg' },
+//       { id: 'l10', title: '12. Hands-on Project', duration: '15:40', isLocked: true, youtubeId: 'EaGbS7eacCW' },
+//     ],
+//   },
+//   {
+//     id: 'sec8',
+//     title: 'Section 8: Deep Learning Basics',
+//     completedBadge: '0/8',
+//     isCompleted: false,
+//     isExpanded: false,
+//     lessons: [
+//       { id: 'l_sec8_1', title: '1. Neural Network Architecture', duration: '14:20', isLocked: true },
+//       { id: 'l_sec8_2', title: '2. Activation Functions', duration: '18:50', isLocked: true },
+//     ],
+//   },
+//   {
+//     id: 'sec9',
+//     title: 'Section 9: Projects',
+//     completedBadge: '0/3',
+//     isCompleted: false,
+//     isExpanded: false,
+//     lessons: [
+//       { id: 'l_sec9_1', title: '1. Capstone Project Setup', duration: '20:10', isLocked: true },
+//     ],
+//   },
+// ];
+const MOCK_SECTIONS = []; // TODO: populate from API
 
-const RESOURCES = [
-  { name: 'Lecture Slides (PDF)', size: '1.2 MB', ext: 'pdf' },
-  { name: 'Code Notebook (.ipynb)', size: '245 KB', ext: 'ipynb' },
-  { name: 'Dataset (CSV)', size: '89 KB', ext: 'csv' },
-];
+// TODO: Replace with API call — fetch lesson resources from backend
+// const RESOURCES = [
+//   { name: 'Lecture Slides (PDF)', size: '1.2 MB', ext: 'pdf' },
+//   { name: 'Code Notebook (.ipynb)', size: '245 KB', ext: 'ipynb' },
+//   { name: 'Dataset (CSV)', size: '89 KB', ext: 'csv' },
+// ];
+const RESOURCES = []; // TODO: populate from API
 
 export default function Curriculum() {
   const { slug } = useParams();
@@ -94,13 +98,22 @@ export default function Curriculum() {
   const course = courses.find((c) => c.slug === slug) || courses[0];
 
   const [sections, setSections] = useState(MOCK_SECTIONS);
-  const [activeLesson, setActiveLesson] = useState(MOCK_SECTIONS[1].lessons[0]); // Lecture 3 active
+  // const [activeLesson, setActiveLesson] = useState(MOCK_SECTIONS[1].lessons[0]); // Lecture 3 active
+  const [activeLesson, setActiveLesson] = useState(MOCK_SECTIONS[1]?.lessons?.[0] ?? null);
   const [activeTab, setActiveTab] = useState('overview');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLessonCompleted, setIsLessonCompleted] = useState(true);
 
   const border = isDark ? 'rgba(255,255,255,.08)' : '#eaecf0';
   const cardBg = isDark ? 'var(--bg-card)' : '#ffffff';
+
+  // Derived from sections/activeLesson (were static: 'Section 7: Machine Learning with Python', 'Lecture 3 of 12', '12 Lectures', etc.)
+  const activeSection = activeLesson
+    ? sections.find((s) => s.lessons?.some((l) => l.id === activeLesson.id)) ?? null
+    : null;
+  const activeLessonIndex = activeSection ? activeSection.lessons.findIndex((l) => l.id === activeLesson.id) : -1;
+  const nextLesson = activeSection && activeLessonIndex >= 0 ? activeSection.lessons[activeLessonIndex + 1] ?? null : null;
+  const totalLectures = sections.reduce((sum, s) => sum + (s.lessons?.length || 0), 0);
 
   const toggleSectionExpand = (secId) => {
     setSections((prev) =>
@@ -122,8 +135,9 @@ export default function Curriculum() {
           <Link to="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Home</Link>
           &nbsp;&gt;&nbsp;
           <Link to="/my-learning" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>My Courses</Link>
-          &nbsp;&gt;&nbsp; Complete Python for AI &amp; Data Science &nbsp;&gt;&nbsp; Section 7 &nbsp;&gt;&nbsp;{' '}
-          <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Machine Learning with Python</span>
+          {/* was static 'Complete Python for AI & Data Science > Section 7 > Machine Learning with Python' */}
+          &nbsp;&gt;&nbsp;{' '}
+          <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{activeSection?.title ?? course?.title ?? ''}</span>
         </div>
 
         {/* SECTION TITLE & HEADER CONTROLS */}
@@ -147,10 +161,13 @@ export default function Curriculum() {
                 margin: '0 0 4px',
               }}
             >
-              Section 7: Machine Learning with Python
+              {activeSection?.title ?? course?.title ?? ''}{/* was static 'Section 7: Machine Learning with Python' */}
             </h1>
             <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              Lecture 3 of 12 &nbsp;•&nbsp; 8 min 15 sec
+              {/* was static 'Lecture 3 of 12 • 8 min 15 sec' */}
+              {activeLesson
+                ? <>Lecture {activeLessonIndex + 1} of {activeSection?.lessons.length ?? 0} &nbsp;•&nbsp; {activeLesson.duration}</>
+                : 'No lesson selected.'}
             </span>
           </div>
 
@@ -247,11 +264,14 @@ export default function Curriculum() {
                 }}
               >
                 <div style={{ fontSize: '0.82rem', color: '#fbbf24', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
-                  Machine Learning with Python
+                  {activeSection?.title ?? ''}{/* was static 'Machine Learning with Python' */}
                 </div>
                 <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: 0 }}>
-                  Linear Regression in Python
+                  {activeLesson?.title ?? ''}{/* was static 'Linear Regression in Python' */}
                 </h2>
+                {!activeLesson && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No lesson selected.</p>
+                )}
               </div>
 
               {/* Bottom Video Control Bar */}
@@ -279,15 +299,15 @@ export default function Curriculum() {
 
                 <Volume2 size={16} />
 
-                <span>02:15 / 08:15</span>
+                <span>00:00 / {activeLesson?.duration ?? '00:00'}</span>{/* was static '02:15 / 08:15' */}
 
                 {/* Progress Scrubbing Bar */}
                 <div style={{ flex: 1, height: '4px', borderRadius: '999px', background: 'rgba(255,255,255,.3)', position: 'relative' }}>
-                  <div style={{ width: '32%', height: '100%', borderRadius: '999px', background: '#8b5cf6' }} />
+                  <div style={{ width: '0%', height: '100%', borderRadius: '999px', background: '#8b5cf6' }} />{/* static: width '32%' */}
                   <div
                     style={{
                       position: 'absolute',
-                      left: '32%',
+                      left: '0%', // static: '32%'
                       top: '50%',
                       transform: 'translate(-50%, -50%)',
                       width: '10px',
@@ -360,26 +380,21 @@ export default function Curriculum() {
               <div className="stack-row" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
                 <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', lineHeight: 1.65, margin: '0 0 16px' }}>
-                    In this lecture, we will understand Linear Regression and how it works in Python using Scikit-learn.
-                    We will build a simple model and evaluate its performance.
+                    {/* was static: 'In this lecture, we will understand Linear Regression and how it works in Python using Scikit-learn. We will build a simple model and evaluate its performance.' */}
+                    {activeLesson?.description ?? ''}
                   </p>
 
                   <h4 style={{ fontSize: '0.84rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 12px' }}>
                     What you'll learn in this lecture:
                   </h4>
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                    <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', lineHeight: 1.45 }}>
+                    {/* was static: 'What is Linear Regression', 'Implement Linear Regression in Python', 'Model Evaluation using Metrics' */}
+                    {(activeLesson?.learnPoints ?? []).map((point) => (
+                    <li key={point} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', lineHeight: 1.45 }}>
                       <CheckCircle2 size={16} color="#6366f1" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <span style={{ flex: 1 }}>What is Linear Regression</span>
+                      <span style={{ flex: 1 }}>{point}</span>
                     </li>
-                    <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', lineHeight: 1.45 }}>
-                      <CheckCircle2 size={16} color="#6366f1" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <span style={{ flex: 1 }}>Implement Linear Regression in Python</span>
-                    </li>
-                    <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', lineHeight: 1.45 }}>
-                      <CheckCircle2 size={16} color="#6366f1" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <span style={{ flex: 1 }}>Model Evaluation using Metrics</span>
-                    </li>
+                    ))}
                   </ul>
                 </div>
 
@@ -403,7 +418,7 @@ export default function Curriculum() {
                     <Clock size={16} color="#6366f1" style={{ flexShrink: 0 }} />
                     <div>
                       <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.68rem', lineHeight: 1.2 }}>Duration</span>
-                      <strong style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.78rem', lineHeight: 1.3 }}>8 min 15 sec</strong>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.78rem', lineHeight: 1.3 }}>{activeLesson?.duration ?? '—'}</strong>{/* was static '8 min 15 sec' */}
                     </div>
                   </div>
 
@@ -411,7 +426,7 @@ export default function Curriculum() {
                     <Play size={16} color="#6366f1" style={{ flexShrink: 0 }} />
                     <div>
                       <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.68rem', lineHeight: 1.2 }}>Watched</span>
-                      <strong style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.78rem', lineHeight: 1.3 }}>60%</strong>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.78rem', lineHeight: 1.3 }}>—</strong>{/* was static '60%' */}
                     </div>
                   </div>
 
@@ -419,7 +434,7 @@ export default function Curriculum() {
                     <Award size={16} color="#6366f1" style={{ flexShrink: 0 }} />
                     <div>
                       <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.68rem', lineHeight: 1.2 }}>Last watched</span>
-                      <strong style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.78rem', lineHeight: 1.3 }}>May 26, 2024</strong>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.78rem', lineHeight: 1.3 }}>—</strong>{/* was static 'May 26, 2024' */}
                     </div>
                   </div>
                 </div>
@@ -443,10 +458,12 @@ export default function Curriculum() {
                       ✏️ Add Note
                     </button>
                   </div>
-                  <p style={{ fontSize: '0.78rem', color: '#713f12', margin: '0 0 8px', lineHeight: 1.4 }}>
+                  {/* TODO: Replace with API call — fetch lesson notes from backend */}
+                  {/* <p style={{ fontSize: '0.78rem', color: '#713f12', margin: '0 0 8px', lineHeight: 1.4 }}>
                     Linear regression is used to predict a continuous value based on one or more predictor variables.
                   </p>
-                  <span style={{ fontSize: '0.68rem', color: '#a16207' }}>May 26, 2024, 10:45 AM</span>
+                  <span style={{ fontSize: '0.68rem', color: '#a16207' }}>May 26, 2024, 10:45 AM</span> */}
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No notes yet.</p>
                 </div>
 
                 {/* Top Discussion */}
@@ -465,7 +482,9 @@ export default function Curriculum() {
                     </button>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '10px' }}>
+                  {/* TODO: Replace with API call — fetch lesson discussions from backend */}
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No discussions yet.</p>
+                  {/* <div style={{ display: 'flex', gap: '10px' }}>
                     <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#475569', color: '#fff', fontSize: '0.68rem', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       RK
                     </div>
@@ -483,7 +502,7 @@ export default function Curriculum() {
                         <span style={{ color: '#6366f1', fontWeight: 700, cursor: 'pointer' }}>Reply</span>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
               </div>
@@ -513,7 +532,10 @@ export default function Curriculum() {
                     Up Next
                   </span>
                   <strong style={{ fontSize: '0.82rem', color: 'var(--text-primary)' }}>
-                    Lecture 4: Multiple Linear Regression &nbsp;•&nbsp; <span style={{ fontWeight: 500, color: 'var(--text-muted)' }}>10 min 24 sec</span>
+                    {/* was static 'Lecture 4: Multiple Linear Regression • 10 min 24 sec' */}
+                    {nextLesson
+                      ? <>{nextLesson.title} &nbsp;•&nbsp; <span style={{ fontWeight: 500, color: 'var(--text-muted)' }}>{nextLesson.duration}</span></>
+                      : '—'}
                   </strong>
                 </div>
               </div>
@@ -562,12 +584,15 @@ export default function Curriculum() {
                   Course Content
                 </h3>
                 <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                  12 Lectures
+                  {totalLectures} Lectures{/* was static '12 Lectures' */}
                 </span>
               </div>
 
               {/* Sections list */}
               <div>
+                {sections.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No lessons yet.</p>
+                )}
                 {sections.map((sec) => (
                   <div key={sec.id} style={{ borderBottom: `1px solid ${border}` }}>
                     <button
@@ -610,7 +635,7 @@ export default function Curriculum() {
                     {sec.isExpanded && (
                       <div style={{ background: isDark ? 'rgba(0,0,0,.2)' : 'rgba(99,102,241,.02)' }}>
                         {sec.lessons.map((lesson) => {
-                          const isActive = activeLesson.id === lesson.id;
+                          const isActive = activeLesson?.id === lesson.id;
                           return (
                             <div
                               key={lesson.id}
@@ -676,6 +701,9 @@ export default function Curriculum() {
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {RESOURCES.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No resources yet.</p>
+                )}
                 {RESOURCES.map((r) => (
                   <div
                     key={r.name}

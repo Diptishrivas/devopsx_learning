@@ -17,15 +17,16 @@ import { toast } from 'react-hot-toast';
 
 export default function Downloads() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Mock Downloads Data matching Reference Image
+  // Static mock downloads — commented out until downloads come from the backend.
   const allDownloads = [
+    /*
     {
       id: 1,
       title: 'Complete Python for AI & Data Science',
@@ -122,17 +123,27 @@ export default function Downloads() {
       iconBg: '#1e293b',
       category: 'notes',
     },
+    */
   ];
 
   // Category Filter Pills definition
+  // Static counts (26, 8, 7, 5, 3, 3) commented out — counts now come from the downloads list.
   const filterCategories = [
-    { id: 'all', label: 'All', count: 26 },
-    { id: 'courses', label: 'Courses', count: 8 },
-    { id: 'notes', label: 'Lecture Notes', count: 7 },
-    { id: 'ebooks', label: 'E-books', count: 5 },
-    { id: 'datasets', label: 'Datasets', count: 3 },
-    { id: 'others', label: 'Others', count: 3 },
-  ];
+    { id: 'all', label: 'All' },
+    { id: 'courses', label: 'Courses' },
+    { id: 'notes', label: 'Lecture Notes' },
+    { id: 'ebooks', label: 'E-books' },
+    { id: 'datasets', label: 'Datasets' },
+    { id: 'others', label: 'Others' },
+  ].map((c) => ({
+    ...c,
+    count: c.id === 'all' ? allDownloads.length : allDownloads.filter((d) => d.category === c.id).length,
+  }));
+
+  // Storage usage — static values (6.8 GB used, 2.1 GB on Android) commented out.
+  const storageUsedGb = 0;
+  const storageTotalGb = 10;
+  const androidUsedGb = 0;
 
   // Sidebar Menu Items
   const sidebarMenuItems = [
@@ -227,19 +238,22 @@ export default function Downloads() {
                 );
               })}
 
-              <button
-                onClick={() => { logout(); navigate('/login'); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: '10px',
-                  fontSize: '0.82rem', fontWeight: 500,
-                  color: '#ef4444', background: 'transparent',
-                  border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
-                }}
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button
+                  onClick={() => { logout(); navigate('/login'); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    padding: '10px 12px', borderRadius: '10px',
+                    fontSize: '0.82rem', fontWeight: 500,
+                    color: '#ef4444', background: 'transparent',
+                    border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
+                  }}
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Bottom Sidebar Promo Banner ("Learn Offline, Anytime!") */}
@@ -384,6 +398,11 @@ export default function Downloads() {
 
               {/* Table Body Rows */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {filteredDownloads.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>
+                    No downloads yet.
+                  </p>
+                )}
                 {filteredDownloads.map((item) => (
                   <div
                     key={item.id}
@@ -472,7 +491,7 @@ export default function Downloads() {
                 padding: '14px 20px', background: isDark ? 'rgba(255,255,255,0.01)' : '#ffffff',
                 fontSize: '0.78rem', color: 'var(--text-muted)',
               }}>
-                <span>Showing 1 to {filteredDownloads.length} of 26 items</span>
+                <span>Showing {filteredDownloads.length} of {allDownloads.length} items</span>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <button
@@ -572,7 +591,7 @@ export default function Downloads() {
                       fill="none"
                       stroke="#4f46e5"
                       strokeWidth="3.8"
-                      strokeDasharray="68, 100"
+                      strokeDasharray={`${(storageUsedGb / storageTotalGb) * 100}, 100`}
                     />
                   </svg>
                   <div style={{
@@ -581,10 +600,10 @@ export default function Downloads() {
                     textAlign: 'center',
                   }}>
                     <strong style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
-                      6.8 GB
+                      {storageUsedGb} GB
                     </strong>
                     <span style={{ fontSize: '0.58rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                      of 10 GB used
+                      of {storageTotalGb} GB used
                     </span>
                   </div>
                 </div>
@@ -596,7 +615,7 @@ export default function Downloads() {
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#4f46e5' }} />
                       Used
                     </span>
-                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>6.8 GB</strong>
+                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{storageUsedGb} GB</strong>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -604,14 +623,14 @@ export default function Downloads() {
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#cbd5e1' }} />
                       Available
                     </span>
-                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>3.2 GB</strong>
+                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{storageTotalGb - storageUsedGb} GB</strong>
                   </div>
 
                   <div style={{ height: '1px', background: isDark ? 'rgba(255,255,255,0.08)' : '#eaecf0', margin: '2px 0' }} />
 
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--text-muted)' }}>Total</span>
-                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>10 GB</strong>
+                    <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{storageTotalGb} GB</strong>
                   </div>
                 </div>
               </div>
@@ -633,7 +652,7 @@ export default function Downloads() {
                     <span style={{ fontWeight: 600 }}>This Device</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>6.8 GB</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>{storageUsedGb} GB</span>
                     <CheckCircle2 size={14} color="#16a34a" />
                   </div>
                 </div>
@@ -644,7 +663,7 @@ export default function Downloads() {
                     <span style={{ fontWeight: 600 }}>Android App</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>2.1 GB</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>{androidUsedGb} GB</span>
                     <ChevronRight size={14} color="#94a3b8" />
                   </div>
                 </div>
@@ -686,6 +705,9 @@ export default function Downloads() {
 
               {/* Recent downloads list */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {allDownloads.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.74rem', margin: 0 }}>No recent downloads.</p>
+                )}
                 {allDownloads.slice(0, 5).map((rec) => (
                   <div key={rec.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>

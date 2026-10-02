@@ -16,88 +16,90 @@ import { useAuth } from '../../context/AuthContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
 
-const RETURNS = [
-  {
-    id: 'RET-2024-0008',
-    orderId: '#AL2024PYO0123',
-    course: 'Complete Python for AI & Data Science',
-    icon: '🐍', iconBg: '#1e293b',
-    reason: 'Course not as expected',
-    status: 'Under Review',
-    requestedOn: 'May 29, 2024\n11:20 AM',
-    amount: '₹899',
-  },
-  {
-    id: 'RET-2024-0007',
-    orderId: '#AL2024DL00087',
-    course: 'Introduction to Deep Learning',
-    icon: 'DL', iconBg: '#312e81',
-    reason: 'Technical issues',
-    status: 'Approved',
-    requestedOn: 'May 28, 2024\n04:15 PM',
-    amount: '₹1,299',
-  },
-  {
-    id: 'RET-2024-0006',
-    orderId: '#AL2024NLP00456',
-    course: 'NLP with Transformers',
-    icon: 'NLP', iconBg: '#0f766e',
-    reason: 'Not useful for me',
-    status: 'Refunded',
-    requestedOn: 'May 26, 2024\n09:40 AM',
-    amount: '₹1,499',
-  },
-  {
-    id: 'RET-2024-0005',
-    orderId: '#AL2024AI000074',
-    course: 'Artificial Intelligence for Beginners',
-    icon: 'AI', iconBg: '#831843',
-    reason: 'Purchased by mistake',
-    status: 'Rejected',
-    requestedOn: 'May 24, 2024\n02:30 PM',
-    amount: '₹699',
-  },
-  {
-    id: 'RET-2024-0004',
-    orderId: '#AL2024DVO028',
-    course: 'Data Visualization with Python',
-    icon: '📊', iconBg: '#1e1b4b',
-    reason: 'Course not as expected',
-    status: 'Approved',
-    requestedOn: 'May 22, 2024\n01:05 PM',
-    amount: '₹799',
-  },
-  {
-    id: 'RET-2024-0003',
-    orderId: '#AL2024ML0345',
-    course: 'Machine Learning Bootcamp',
-    icon: '💡', iconBg: '#1e293b',
-    reason: 'Technical issues',
-    status: 'Refunded',
-    requestedOn: 'May 20, 2024\n10:10 AM',
-    amount: '₹1,899',
-  },
-  {
-    id: 'RET-2024-0002',
-    orderId: '#AL2024DS0210',
-    course: 'Data Science with Python',
-    icon: '📑', iconBg: '#065f46',
-    reason: 'Not useful for me',
-    status: 'Rejected',
-    requestedOn: 'May 18, 2024\n05:25 PM',
-    amount: '₹899',
-  },
-  {
-    id: 'RET-2024-0001',
-    orderId: '#AL2024AI01101',
-    course: 'AI Fundamentals Course',
-    icon: '⚛️', iconBg: '#311b92',
-    reason: 'Course not as expected',
-    status: 'Refunded',
-    requestedOn: 'May 16, 2024\n11:00 AM',
-    amount: '₹499',
-  },
-];
+// TODO: Replace with API call — fetch user's return/refund requests from backend
+// const RETURNS = [
+//   {
+//     id: 'RET-2024-0008',
+//     orderId: '#AL2024PYO0123',
+//     course: 'Complete Python for AI & Data Science',
+//     icon: '🐍', iconBg: '#1e293b',
+//     reason: 'Course not as expected',
+//     status: 'Under Review',
+//     requestedOn: 'May 29, 2024\n11:20 AM',
+//     amount: '₹899',
+//   },
+//   {
+//     id: 'RET-2024-0007',
+//     orderId: '#AL2024DL00087',
+//     course: 'Introduction to Deep Learning',
+//     icon: 'DL', iconBg: '#312e81',
+//     reason: 'Technical issues',
+//     status: 'Approved',
+//     requestedOn: 'May 28, 2024\n04:15 PM',
+//     amount: '₹1,299',
+//   },
+//   {
+//     id: 'RET-2024-0006',
+//     orderId: '#AL2024NLP00456',
+//     course: 'NLP with Transformers',
+//     icon: 'NLP', iconBg: '#0f766e',
+//     reason: 'Not useful for me',
+//     status: 'Refunded',
+//     requestedOn: 'May 26, 2024\n09:40 AM',
+//     amount: '₹1,499',
+//   },
+//   {
+//     id: 'RET-2024-0005',
+//     orderId: '#AL2024AI000074',
+//     course: 'Artificial Intelligence for Beginners',
+//     icon: 'AI', iconBg: '#831843',
+//     reason: 'Purchased by mistake',
+//     status: 'Rejected',
+//     requestedOn: 'May 24, 2024\n02:30 PM',
+//     amount: '₹699',
+//   },
+//   {
+//     id: 'RET-2024-0004',
+//     orderId: '#AL2024DVO028',
+//     course: 'Data Visualization with Python',
+//     icon: '📊', iconBg: '#1e1b4b',
+//     reason: 'Course not as expected',
+//     status: 'Approved',
+//     requestedOn: 'May 22, 2024\n01:05 PM',
+//     amount: '₹799',
+//   },
+//   {
+//     id: 'RET-2024-0003',
+//     orderId: '#AL2024ML0345',
+//     course: 'Machine Learning Bootcamp',
+//     icon: '💡', iconBg: '#1e293b',
+//     reason: 'Technical issues',
+//     status: 'Refunded',
+//     requestedOn: 'May 20, 2024\n10:10 AM',
+//     amount: '₹1,899',
+//   },
+//   {
+//     id: 'RET-2024-0002',
+//     orderId: '#AL2024DS0210',
+//     course: 'Data Science with Python',
+//     icon: '📑', iconBg: '#065f46',
+//     reason: 'Not useful for me',
+//     status: 'Rejected',
+//     requestedOn: 'May 18, 2024\n05:25 PM',
+//     amount: '₹899',
+//   },
+//   {
+//     id: 'RET-2024-0001',
+//     orderId: '#AL2024AI01101',
+//     course: 'AI Fundamentals Course',
+//     icon: '⚛️', iconBg: '#311b92',
+//     reason: 'Course not as expected',
+//     status: 'Refunded',
+//     requestedOn: 'May 16, 2024\n11:00 AM',
+//     amount: '₹499',
+//   },
+// ];
+const RETURNS = []; // TODO: populate from API
 
 const STATUS_COLORS = {
   'Under Review': { bg: '#fef3c7', text: '#b45309' },
@@ -134,7 +136,7 @@ const TABS = [
 
 export default function ReturnsRefunds() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -144,6 +146,10 @@ export default function ReturnsRefunds() {
   const bg2 = isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc';
 
   const filtered = activeTab === 'all' ? RETURNS : RETURNS.filter(r => r.status === activeTab);
+  const countByStatus = (status) => RETURNS.filter(r => r.status === status).length;
+  const totalRefunded = RETURNS
+    .filter(r => r.status === 'Refunded')
+    .reduce((sum, r) => sum + (Number(String(r.amount || '').replace(/[^\d.]/g, '')) || 0), 0);
 
   return (
     <PageWrapper>
@@ -174,10 +180,13 @@ export default function ReturnsRefunds() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px' }}>
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px' }}>
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Promo Banner */}
@@ -275,10 +284,13 @@ export default function ReturnsRefunds() {
                   </div>
                 );
               })}
+              {filtered.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No return or refund requests yet.</p>
+              )}
 
               {/* Pagination */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                <span>Showing 1 to {filtered.length} of {RETURNS.length} requests</span>
+                <span>Showing {filtered.length ? 1 : 0} to {filtered.length} of {RETURNS.length} requests</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <button style={{ width: '28px', height: '28px', borderRadius: '6px', background: '#4f46e5', color: '#ffffff', border: 'none', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}>1</button>
                   <button style={{ width: '28px', height: '28px', borderRadius: '6px', background: 'transparent', color: 'var(--text-primary)', border: `1px solid ${border}`, fontSize: '0.78rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -296,12 +308,13 @@ export default function ReturnsRefunds() {
             <div style={{ background: card, border: `1px solid ${border}`, borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', boxShadow: '0 1px 3px rgba(16,24,40,0.04)' }}>
               <h3 style={{ color: 'var(--text-primary)', fontSize: '0.92rem', fontWeight: 700, margin: 0 }}>Returns Summary</h3>
               {[
-                { label: 'Total Requests', value: '8', icon: RotateCcw, color: '#4f46e5', bg: '#f5f3ff' },
-                { label: 'Under Review', value: '1', icon: Clock, color: '#d97706', bg: '#fef3c7' },
-                { label: 'Approved', value: '2', icon: CheckCircle2, color: '#16a34a', bg: '#dcfce7' },
-                { label: 'Refunded', value: '3', icon: DollarSign, color: '#1d4ed8', bg: '#dbeafe' },
-                { label: 'Rejected', value: '2', icon: XCircle, color: '#dc2626', bg: '#fee2e2' },
-                { label: 'Total Refunded', value: '₹3,297', icon: DollarSign, color: '#4f46e5', bg: '#f5f3ff' },
+                // was static: '8', '1', '2', '3', '2', '₹3,297'
+                { label: 'Total Requests', value: RETURNS.length, icon: RotateCcw, color: '#4f46e5', bg: '#f5f3ff' },
+                { label: 'Under Review', value: countByStatus('Under Review'), icon: Clock, color: '#d97706', bg: '#fef3c7' },
+                { label: 'Approved', value: countByStatus('Approved'), icon: CheckCircle2, color: '#16a34a', bg: '#dcfce7' },
+                { label: 'Refunded', value: countByStatus('Refunded'), icon: DollarSign, color: '#1d4ed8', bg: '#dbeafe' },
+                { label: 'Rejected', value: countByStatus('Rejected'), icon: XCircle, color: '#dc2626', bg: '#fee2e2' },
+                { label: 'Total Refunded', value: `₹${totalRefunded.toLocaleString('en-IN')}`, icon: DollarSign, color: '#4f46e5', bg: '#f5f3ff' },
               ].map(item => {
                 const Icon = item.icon;
                 return (

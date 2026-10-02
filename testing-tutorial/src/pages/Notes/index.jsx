@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast';
 
 export default function Notes() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState('all');
@@ -26,8 +26,9 @@ export default function Notes() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedNotes, setSelectedNotes] = useState([]);
 
-  // Mock Notes Data matching Reference Image
+  // Static mock notes — commented out until notes come from the backend.
   const [allNotes, setAllNotes] = useState([
+    /*
     {
       id: 1,
       title: 'Linear Regression - Key Concepts',
@@ -106,17 +107,19 @@ export default function Notes() {
       folder: 'dl',
       iconColor: { bg: '#e0f2fe', text: '#0284c7', border: '#7dd3fc' },
     },
+    */
   ]);
 
   // Folder Categories
+  // Static counts (6, 5, 3, 2, 1, 1) commented out — counts now come from the notes list.
   const folders = [
-    { id: 'ml', name: 'Machine Learning', count: 6 },
-    { id: 'python', name: 'Python', count: 5 },
-    { id: 'dl', name: 'Deep Learning', count: 3 },
-    { id: 'ds', name: 'Data Science', count: 2 },
-    { id: 'nlp', name: 'NLP', count: 1 },
-    { id: 'uncategorized', name: 'Uncategorized', count: 1 },
-  ];
+    { id: 'ml', name: 'Machine Learning' },
+    { id: 'python', name: 'Python' },
+    { id: 'dl', name: 'Deep Learning' },
+    { id: 'ds', name: 'Data Science' },
+    { id: 'nlp', name: 'NLP' },
+    { id: 'uncategorized', name: 'Uncategorized' },
+  ].map((f) => ({ ...f, count: allNotes.filter((n) => n.folder === f.id).length }));
 
   // Sidebar Menu Items
   const sidebarMenuItems = [
@@ -232,19 +235,22 @@ export default function Notes() {
                 );
               })}
 
-              <button
-                onClick={() => { logout(); navigate('/login'); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: '10px',
-                  fontSize: '0.82rem', fontWeight: 500,
-                  color: '#ef4444', background: 'transparent',
-                  border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
-                }}
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button
+                  onClick={() => { logout(); navigate('/login'); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    padding: '10px 12px', borderRadius: '10px',
+                    fontSize: '0.82rem', fontWeight: 500,
+                    color: '#ef4444', background: 'transparent',
+                    border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px',
+                  }}
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Bottom Sidebar Promo Banner ("Organize Your Notes") */}
@@ -312,10 +318,11 @@ export default function Notes() {
               {/* Underlined Tab Switcher */}
               <div className="tab-strip" style={{ display: 'flex', gap: '16px' }}>
                 {[
-                  { id: 'all', label: 'All Notes (18)' },
-                  { id: 'pinned', label: 'Pinned (4)' },
-                  { id: 'shared', label: 'Shared with Me (2)' },
-                  { id: 'trash', label: 'Trash (1)' },
+                  // Static counts (18, 4, 2, 1) commented out — counts now come from the notes list.
+                  { id: 'all', label: `All Notes (${allNotes.length})` },
+                  { id: 'pinned', label: `Pinned (${allNotes.filter((n) => n.pinned).length})` },
+                  { id: 'shared', label: `Shared with Me (${allNotes.filter((n) => n.category === 'shared').length})` },
+                  { id: 'trash', label: `Trash (${allNotes.filter((n) => n.category === 'trash').length})` },
                 ].map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -396,6 +403,11 @@ export default function Notes() {
 
               {/* Table Body Rows */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {filteredNotes.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>
+                    No notes yet.
+                  </p>
+                )}
                 {filteredNotes.map((note) => {
                   const isChecked = selectedNotes.includes(note.id);
                   return (
@@ -509,7 +521,7 @@ export default function Notes() {
                 padding: '14px 20px', background: isDark ? 'rgba(255,255,255,0.01)' : '#ffffff',
                 fontSize: '0.78rem', color: 'var(--text-muted)',
               }}>
-                <span>Showing 1 to {filteredNotes.length} of 18 notes</span>
+                <span>Showing {filteredNotes.length} of {allNotes.length} notes</span>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <button
@@ -612,7 +624,7 @@ export default function Notes() {
                     <Folder size={14} color={selectedFolder === 'all' ? '#4f46e5' : '#64748b'} />
                     <span>All Folders</span>
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>18</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{allNotes.length}</span>
                 </div>
 
                 {folders.map((f) => (
@@ -660,6 +672,9 @@ export default function Notes() {
 
               {/* Recent notes list */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {allNotes.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.74rem', margin: 0 }}>No recent notes.</p>
+                )}
                 {allNotes.slice(0, 5).map((rec) => (
                   <div key={rec.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>

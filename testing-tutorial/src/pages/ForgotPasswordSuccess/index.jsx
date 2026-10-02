@@ -91,12 +91,15 @@ export default function ForgotPasswordSuccess() {
               </Link>
             );
           })}
-          <button onClick={() => { logout(); navigate('/login'); }} style={{
-            display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
-            fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
-          }}>
-            <LogOut size={16} /><span>Logout</span>
-          </button>
+          {/* Show Logout only when a user is logged in */}
+          {user && (
+            <button onClick={() => { logout(); navigate('/login'); }} style={{
+              display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
+              fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
+            }}>
+              <LogOut size={16} /><span>Logout</span>
+            </button>
+          )}
 
           {/* Go Premium widget */}
           <div style={{

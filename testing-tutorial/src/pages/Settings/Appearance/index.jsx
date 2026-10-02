@@ -74,7 +74,7 @@ function Toggle({ checked, onChange }) {
 
 export default function Appearance() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [theme, setTheme] = useState('light');
@@ -150,12 +150,15 @@ export default function Appearance() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{
-                display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
-                fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
-              }}>
-                <LogOut size={16} /><span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{
+                  display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
+                  fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
+                }}>
+                  <LogOut size={16} /><span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Go Premium */}

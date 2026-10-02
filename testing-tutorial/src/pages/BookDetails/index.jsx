@@ -42,11 +42,13 @@ export default function BookDetails() {
   }
 
   // Sample page thumbnails for gallery
-  const sampleThumbnails = [
-    book.cover,
-    'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&auto=format&fit=crop',
-  ];
+  // TODO: Replace with API call — fetch book sample page images from backend
+  // const sampleThumbnails = [
+  //   book.cover,
+  //   'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop',
+  //   'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&auto=format&fit=crop',
+  // ];
+  const sampleThumbnails = [book.cover]; // TODO: populate from API (real cover kept)
 
   const handleBuyNow = () => {
     toast.success(`Redirecting to checkout for "${book.title}"...`);
@@ -74,49 +76,54 @@ export default function BookDetails() {
   };
 
   // Calculate discount percentage
-  const originalPrice = book.originalPrice || Math.round(book.price * 1.6);
-  const discountPercent = Math.round(((originalPrice - book.price) / originalPrice) * 100);
+  const originalPrice = book.originalPrice || Math.round((book.price ?? 0) * 1.6);
+  // Guarded: free books (price/originalPrice 0) previously produced NaN% OFF.
+  const discountPercent = originalPrice > 0 ? Math.round(((originalPrice - (book.price ?? 0)) / originalPrice) * 100) : 0;
 
   // Chapters mock data
-  const chapters = [
-    { title: '1. Introduction to Artificial Intelligence', page: '18' },
-    { title: '2. History and Evolution of AI', page: '24' },
-    { title: '3. How AI Works & Core Principles', page: '26' },
-    { title: '4. Machine Learning Basics & Fundamentals', page: '28' },
-    { title: '5. Supervised vs Unsupervised Learning', page: '34' },
-    { title: '6. Neural Networks & Deep Learning Essentials', page: '48' },
-    { title: '7. Natural Language Processing & ChatGPT', page: '64' },
-    { title: '8. Computer Vision & Image Recognition', page: '82' },
-    { title: '9. Prompt Engineering Techniques', page: '104' },
-    { title: '10. Building Real-World AI Projects', page: '130' },
-    { title: '11. Model Evaluation, Tuning & Metrics', page: '165' },
-    { title: '12. Ethics, Safety & Future of AI', page: '198' },
-  ];
+  // TODO: Replace with API call — fetch book chapters / table of contents from backend
+  // const chapters = [
+  //   { title: '1. Introduction to Artificial Intelligence', page: '18' },
+  //   { title: '2. History and Evolution of AI', page: '24' },
+  //   { title: '3. How AI Works & Core Principles', page: '26' },
+  //   { title: '4. Machine Learning Basics & Fundamentals', page: '28' },
+  //   { title: '5. Supervised vs Unsupervised Learning', page: '34' },
+  //   { title: '6. Neural Networks & Deep Learning Essentials', page: '48' },
+  //   { title: '7. Natural Language Processing & ChatGPT', page: '64' },
+  //   { title: '8. Computer Vision & Image Recognition', page: '82' },
+  //   { title: '9. Prompt Engineering Techniques', page: '104' },
+  //   { title: '10. Building Real-World AI Projects', page: '130' },
+  //   { title: '11. Model Evaluation, Tuning & Metrics', page: '165' },
+  //   { title: '12. Ethics, Safety & Future of AI', page: '198' },
+  // ];
+  const chapters = []; // TODO: populate from API
 
   // Student reviews mock data
-  const reviewsData = [
-    {
-      name: 'Aman Verma',
-      rating: 5,
-      comment: 'This book explains AI in the simplest way possible. Perfect for beginners!',
-      time: '2 weeks ago',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop',
-    },
-    {
-      name: 'Neha Patel',
-      rating: 5,
-      comment: 'Very helpful for students. Loved the projects and examples.',
-      time: '3 weeks ago',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop',
-    },
-    {
-      name: 'Rahul Singh',
-      rating: 5,
-      comment: 'Best AI book I have read so far. Highly recommended!',
-      time: '1 month ago',
-      avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop',
-    },
-  ];
+  // TODO: Replace with API call — fetch book reviews from backend
+  // const reviewsData = [
+  //   {
+  //     name: 'Aman Verma',
+  //     rating: 5,
+  //     comment: 'This book explains AI in the simplest way possible. Perfect for beginners!',
+  //     time: '2 weeks ago',
+  //     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop',
+  //   },
+  //   {
+  //     name: 'Neha Patel',
+  //     rating: 5,
+  //     comment: 'Very helpful for students. Loved the projects and examples.',
+  //     time: '3 weeks ago',
+  //     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop',
+  //   },
+  //   {
+  //     name: 'Rahul Singh',
+  //     rating: 5,
+  //     comment: 'Best AI book I have read so far. Highly recommended!',
+  //     time: '1 month ago',
+  //     avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop',
+  //   },
+  // ];
+  const reviewsData = []; // TODO: populate from API
 
   // FAQs mock data
   const faqs = [
@@ -127,13 +134,15 @@ export default function BookDetails() {
   ];
 
   // Related books
-  const relatedBooks = [
-    { id: '1', title: 'Machine Learning for Beginners', cover: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop', price: 549, originalPrice: 899, rating: 4.7, ratingsCount: 812 },
-    { id: '2', title: 'Deep Learning Fundamentals', cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop', price: 599, originalPrice: 999, rating: 4.8, ratingsCount: 1021 },
-    { id: '3', title: 'ChatGPT Mastery Guide', cover: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop', price: 399, originalPrice: 599, rating: 4.7, ratingsCount: 654 },
-    { id: '4', title: 'Python Programming for AI', cover: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&auto=format&fit=crop', price: 499, originalPrice: 799, rating: 4.6, ratingsCount: 1120 },
-    { id: '5', title: 'AI Projects Build & Learn', cover: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop', price: 499, originalPrice: 799, rating: 4.8, ratingsCount: 952 },
-  ];
+  // TODO: Replace with API call — fetch related books from backend
+  // const relatedBooks = [
+  //   { id: '1', title: 'Machine Learning for Beginners', cover: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop', price: 549, originalPrice: 899, rating: 4.7, ratingsCount: 812 },
+  //   { id: '2', title: 'Deep Learning Fundamentals', cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop', price: 599, originalPrice: 999, rating: 4.8, ratingsCount: 1021 },
+  //   { id: '3', title: 'ChatGPT Mastery Guide', cover: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop', price: 399, originalPrice: 599, rating: 4.7, ratingsCount: 654 },
+  //   { id: '4', title: 'Python Programming for AI', cover: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&auto=format&fit=crop', price: 499, originalPrice: 799, rating: 4.6, ratingsCount: 1120 },
+  //   { id: '5', title: 'AI Projects Build & Learn', cover: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop', price: 499, originalPrice: 799, rating: 4.8, ratingsCount: 952 },
+  // ];
+  const relatedBooks = []; // TODO: populate from API
 
   return (
     <PageWrapper>
@@ -188,7 +197,7 @@ export default function BookDetails() {
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 fontSize: '0.68rem', color: '#667085', fontWeight: 600, cursor: 'pointer', textAlign: 'center',
               }}>
-                <span>+6</span>
+                <span>+0</span>{/* was static '+6' */}
                 <span>More images</span>
               </div>
             </div>
@@ -234,20 +243,20 @@ export default function BookDetails() {
 
             {/* Subtitle */}
             <p style={{ color: '#475467', fontSize: '0.88rem', lineHeight: 1.5, margin: 0 }}>
-              {book.subtitle || 'A complete guide to understand AI from scratch with real-world examples and projects.'}
+              {book.subtitle ?? ''}{/* was static fallback 'A complete guide to understand AI from scratch with real-world examples and projects.' */}
             </p>
 
             {/* Ratings & Students Row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem' }}>
-              <span style={{ fontWeight: 800, color: '#101828' }}>{book.rating || 4.8}</span>
+              <span style={{ fontWeight: 800, color: '#101828' }}>{book.rating ?? 0}</span>{/* was static fallback 4.8 */}
               <div style={{ display: 'flex', gap: '2px' }}>
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={13} color="#fbbf24" fill="#fbbf24" />
                 ))}
               </div>
-              <span style={{ color: '#667085' }}>({(book.ratingsCount || 1248).toLocaleString()} reviews)</span>
+              <span style={{ color: '#667085' }}>({(book.ratingsCount ?? 0).toLocaleString()} reviews)</span>{/* was static fallback 1248 */}
               <span style={{ color: '#d0d5dd' }}>•</span>
-              <span style={{ color: '#475467', fontWeight: 500 }}>{(book.learnersCount || 10000).toLocaleString()}+ students</span>
+              <span style={{ color: '#475467', fontWeight: 500 }}>{(book.learnersCount ?? 0).toLocaleString()}+ students</span>{/* was static fallback 10000 */}
             </div>
 
             {/* Key Spec Badges Box (Language, Pages, Edition, ISBN) */}
@@ -264,7 +273,7 @@ export default function BookDetails() {
                   <Globe size={12} /> Language
                 </div>
                 <div style={{ color: '#101828', fontSize: '0.8rem', fontWeight: 600, marginTop: '2px' }}>
-                  English
+                  {book.language ?? 'English'}
                 </div>
               </div>
 
@@ -273,7 +282,7 @@ export default function BookDetails() {
                   <BookOpen size={12} /> Pages
                 </div>
                 <div style={{ color: '#101828', fontSize: '0.8rem', fontWeight: 600, marginTop: '2px' }}>
-                  320 Pages
+                  {book.pages ?? '—'} Pages{/* was static '320 Pages' */}
                 </div>
               </div>
 
@@ -291,7 +300,7 @@ export default function BookDetails() {
                   <Award size={12} /> ISBN
                 </div>
                 <div style={{ color: '#101828', fontSize: '0.75rem', fontWeight: 600, marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  978-01-987654-3-2
+                  {book.isbn ?? '—'}{/* was static '978-01-987654-3-2' */}
                 </div>
               </div>
             </div>
@@ -299,10 +308,10 @@ export default function BookDetails() {
             {/* Price Tag Row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '2px' }}>
               <span style={{ fontSize: '1.9rem', fontWeight: 800, color: '#101828' }}>
-                ₹{book.price || 499}
+                ₹{book.price ?? 0}{/* was static fallback 499 */}
               </span>
               <span style={{ fontSize: '0.95rem', color: '#98a2b3', textDecoration: 'line-through' }}>
-                ₹{originalPrice || 799}
+                ₹{originalPrice ?? 0}{/* was static fallback 799 */}
               </span>
               <span style={{
                 fontSize: '0.72rem', fontWeight: 700, color: '#027a48',
@@ -576,6 +585,7 @@ export default function BookDetails() {
                     What you will learn from this book:
                   </h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
+                    {/* Static list commented out — now read from the book's own whatYoullLearn field.
                     {[
                       'Understand AI concepts in simple, clear language',
                       'Master ChatGPT and Advanced Prompt Engineering',
@@ -584,6 +594,8 @@ export default function BookDetails() {
                       'Prepare for future high-paying AI career opportunities',
                       'Gain hands-on experience with Scikit-Learn & Python',
                     ].map((pt, i) => (
+                    */}
+                    {(book.whatYoullLearn ?? []).map((pt, i) => (
                       <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.84rem', color: '#344054', background: '#f8fafc', padding: '10px 14px', borderRadius: '8px', border: '1px solid #eaecf0' }}>
                         <span style={{ color: '#2563eb', fontWeight: 800 }}>✓</span>
                         <span>{pt}</span>
@@ -597,7 +609,7 @@ export default function BookDetails() {
                     onClick={() => setActiveTab('toc')}
                     style={{ border: 'none', background: 'none', color: '#2563eb', fontWeight: 600, fontSize: '0.84rem', cursor: 'pointer', padding: 0 }}
                   >
-                    View Table of Contents (12 Chapters) →
+                    View Table of Contents ({chapters.length} Chapters) →{/* was static '12 Chapters' */}
                   </button>
                   <button
                     onClick={() => setActiveTab('preview')}
@@ -616,11 +628,14 @@ export default function BookDetails() {
                     Table of Contents
                   </h3>
                   <span style={{ fontSize: '0.78rem', color: '#667085', background: '#f2f4f7', padding: '4px 10px', borderRadius: '6px', fontWeight: 600 }}>
-                    12 Chapters • 320 Pages
+                    {chapters.length} Chapters • {book.pages ?? '—'} Pages{/* was static '12 Chapters • 320 Pages' */}
                   </span>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '10px', marginTop: '4px' }}>
+                  {chapters.length === 0 && (
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0, gridColumn: '1 / -1' }}>No chapters listed yet.</p>
+                  )}
                   {chapters.map((ch, idx) => (
                     <div
                       key={idx}
@@ -720,6 +735,9 @@ export default function BookDetails() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {reviewsData.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No reviews yet.</p>
+              )}
               {reviewsData.map((rev, idx) => (
                 <div
                   key={idx}
@@ -817,9 +835,12 @@ export default function BookDetails() {
             gridTemplateColumns: 'repeat(5, 1fr)',
             gap: '16px',
           }}>
+            {relatedBooks.length === 0 && (
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0, gridColumn: '1 / -1' }}>No related books yet.</p>
+            )}
             {relatedBooks.map((relBook) => {
               const relOriginal = relBook.originalPrice || Math.round(relBook.price * 1.5);
-              const relDiscount = Math.round(((relOriginal - relBook.price) / relOriginal) * 100);
+              const relDiscount = relOriginal > 0 ? Math.round(((relOriginal - relBook.price) / relOriginal) * 100) : 0;
 
               return (
                 <div
@@ -855,8 +876,8 @@ export default function BookDetails() {
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', color: '#667085' }}>
                       <Star size={11} color="#fbbf24" fill="#fbbf24" />
-                      <span style={{ fontWeight: 700, color: '#101828' }}>{relBook.rating || 4.7}</span>
-                      <span>({(relBook.ratingsCount || 800).toLocaleString()})</span>
+                      <span style={{ fontWeight: 700, color: '#101828' }}>{relBook.rating ?? 0}</span>{/* was static fallback 4.7 */}
+                      <span>({(relBook.ratingsCount ?? 0).toLocaleString()})</span>{/* was static fallback 800 */}
                     </div>
                   </div>
                 </div>

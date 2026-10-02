@@ -13,19 +13,23 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 
-const featureCards = [
-  { icon: BookOpen, title: 'Beginner Friendly',  subtitle: 'Start from Scratch' },
-  { icon: Blocks,   title: 'Hands-on Projects',  subtitle: 'Build Real World Applications' },
-  { icon: Award,    title: 'Certificate Included', subtitle: 'Showcase Your Skills' },
-  { icon: Clock,    title: 'Lifetime Access',    subtitle: 'Learn Anytime, Anywhere' },
-];
+// TODO: Replace with API call — fetch feature highlights from backend
+// const featureCards = [
+//   { icon: BookOpen, title: 'Beginner Friendly',  subtitle: 'Start from Scratch' },
+//   { icon: Blocks,   title: 'Hands-on Projects',  subtitle: 'Build Real World Applications' },
+//   { icon: Award,    title: 'Certificate Included', subtitle: 'Showcase Your Skills' },
+//   { icon: Clock,    title: 'Lifetime Access',    subtitle: 'Learn Anytime, Anywhere' },
+// ];
+const featureCards = []; // TODO: populate from API
 
-const stats = [
-  { icon: Users,    value: '20,000+',      label: 'Happy Learners' },
-  { icon: BookOpen, value: '500+',         label: 'Expert Courses' },
-  { icon: Clock,    value: '10,000+',      label: 'Hours of Content' },
-  { icon: Award,    value: 'Certificates', label: 'Boost Your Career' },
-];
+// TODO: Replace with API call — fetch platform stats from backend
+// const stats = [
+//   { icon: Users,    value: '20,000+',      label: 'Happy Learners' },
+//   { icon: BookOpen, value: '500+',         label: 'Expert Courses' },
+//   { icon: Clock,    value: '10,000+',      label: 'Hours of Content' },
+//   { icon: Award,    value: 'Certificates', label: 'Boost Your Career' },
+// ];
+const stats = []; // TODO: populate from API
 
 const containerVar = {
   hidden: {},

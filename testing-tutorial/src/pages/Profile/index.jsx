@@ -44,17 +44,30 @@ export default function Profile() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  const [form, setForm] = useState({
-    name: user?.name || 'Shailendra Ahirwar',
-    email: user?.email || 'shailendra@example.com',
-    phone: '+91 98765 43210',
-    dob: '1995-08-15',
-    gender: 'Male',
-    country: 'India',
-    bio: 'AI Enthusiast | Lifelong Learner | Passionate about building intelligent solutions and sharing knowledge.',
-    profession: 'Software Developer',
-    organization: 'Tech Solutions Pvt. Ltd.',
+  // TODO: Replace with API call — fetch the user's profile details from backend
+  // const [form, setForm] = useState({
+  //   name: user?.name || 'Shailendra Ahirwar',
+  //   email: user?.email || 'shailendra@example.com',
+  //   phone: '+91 98765 43210',
+  //   dob: '1995-08-15',
+  //   gender: 'Male',
+  //   country: 'India',
+  //   bio: 'AI Enthusiast | Lifelong Learner | Passionate about building intelligent solutions and sharing knowledge.',
+  //   profession: 'Software Developer',
+  //   organization: 'Tech Solutions Pvt. Ltd.',
+  // });
+  const buildForm = () => ({
+    name: user?.name ?? '',
+    email: user?.email ?? '',
+    phone: user?.phone ?? '',
+    dob: user?.dob ?? '',
+    gender: user?.gender ?? '',
+    country: user?.country ?? '',
+    bio: user?.bio ?? '',
+    profession: user?.profession ?? '',
+    organization: user?.organization ?? '',
   });
+  const [form, setForm] = useState(buildForm); // TODO: populate from API
 
   const [avatarSrc, setAvatarSrc] = useState(user?.avatar || null);
   const bioMax = 200;
@@ -68,6 +81,12 @@ export default function Profile() {
       </div>
     );
   }
+
+  // Profile completion derived from filled fields (was static 80%)
+  const formValues = Object.values(form);
+  const profileCompletion = formValues.length > 0
+    ? Math.round((formValues.filter((v) => String(v ?? '').trim() !== '').length / formValues.length) * 100)
+    : 0;
 
   const handleChange = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
 
@@ -145,12 +164,15 @@ export default function Profile() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{
-                display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
-                fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
-              }}>
-                <LogOut size={16} /><span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{
+                  display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
+                  fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
+                }}>
+                  <LogOut size={16} /><span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Go Premium */}
@@ -264,7 +286,7 @@ export default function Profile() {
                       type="text"
                       value={form.name}
                       onChange={(e) => handleChange('name', e.target.value)}
-                      placeholder="Shailendra Ahirwar"
+                      placeholder="Your full name" /* was static 'Shailendra Ahirwar' */
                       style={inputStyle}
                       onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                       onBlur={(e) => e.target.style.borderColor = isDark ? 'rgba(255,255,255,0.12)' : '#d0d5dd'}
@@ -276,7 +298,7 @@ export default function Profile() {
                       type="email"
                       value={form.email}
                       onChange={(e) => handleChange('email', e.target.value)}
-                      placeholder="shailendra@example.com"
+                      placeholder="you@example.com" /* was static 'shailendra@example.com' */
                       style={{ ...inputStyle, color: isDark ? '#94a3b8' : '#667085' }}
                       onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                       onBlur={(e) => e.target.style.borderColor = isDark ? 'rgba(255,255,255,0.12)' : '#d0d5dd'}
@@ -292,7 +314,7 @@ export default function Profile() {
                       type="tel"
                       value={form.phone}
                       onChange={(e) => handleChange('phone', e.target.value)}
-                      placeholder="+91 98765 43210"
+                      placeholder="Phone number" /* was static '+91 98765 43210' */
                       style={inputStyle}
                       onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                       onBlur={(e) => e.target.style.borderColor = isDark ? 'rgba(255,255,255,0.12)' : '#d0d5dd'}
@@ -412,14 +434,15 @@ export default function Profile() {
                 }}>
                   <button
                     onClick={() => {
-                      setForm({
-                        name: user?.name || 'Shailendra Ahirwar',
-                        email: user?.email || 'shailendra@example.com',
-                        phone: '+91 98765 43210', dob: '1995-08-15',
-                        gender: 'Male', country: 'India',
-                        bio: 'AI Enthusiast | Lifelong Learner | Passionate about building intelligent solutions and sharing knowledge.',
-                        profession: 'Software Developer', organization: 'Tech Solutions Pvt. Ltd.',
-                      });
+                      // setForm({
+                      //   name: user?.name || 'Shailendra Ahirwar',
+                      //   email: user?.email || 'shailendra@example.com',
+                      //   phone: '+91 98765 43210', dob: '1995-08-15',
+                      //   gender: 'Male', country: 'India',
+                      //   bio: 'AI Enthusiast | Lifelong Learner | Passionate about building intelligent solutions and sharing knowledge.',
+                      //   profession: 'Software Developer', organization: 'Tech Solutions Pvt. Ltd.',
+                      // });
+                      setForm(buildForm());
                       toast('Changes discarded', { icon: '↩️' });
                     }}
                     style={{
@@ -468,11 +491,12 @@ export default function Profile() {
             <div style={{ ...card, padding: '16px' }}>
               <h4 style={{ color: 'var(--text-primary)', fontSize: '0.88rem', fontWeight: 700, margin: '0 0 12px' }}>Profile Completion</h4>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>80% Complete</span>
-                <span style={{ fontSize: '0.76rem', color: '#4f46e5', fontWeight: 700 }}>80%</span>
+                {/* was static '80%' — now computed from filled profile fields */}
+                <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>{profileCompletion}% Complete</span>
+                <span style={{ fontSize: '0.76rem', color: '#4f46e5', fontWeight: 700 }}>{profileCompletion}%</span>
               </div>
               <div style={{ width: '100%', height: '6px', borderRadius: '999px', background: isDark ? 'rgba(255,255,255,0.08)' : '#e2e8f0', overflow: 'hidden' }}>
-                <div style={{ width: '80%', height: '100%', background: 'linear-gradient(90deg,#4f46e5,#6366f1)', borderRadius: '999px' }} />
+                <div style={{ width: `${profileCompletion}%`, height: '100%', background: 'linear-gradient(90deg,#4f46e5,#6366f1)', borderRadius: '999px' }} />
               </div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.74rem', margin: '10px 0 0', lineHeight: 1.5 }}>Add a bio and organization to complete your profile.</p>
             </div>

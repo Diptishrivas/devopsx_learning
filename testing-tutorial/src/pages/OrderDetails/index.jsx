@@ -21,30 +21,57 @@ export default function OrderDetails() {
   const border = isDark ? 'rgba(255,255,255,0.08)' : '#eaecf0';
   const bg2 = isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc';
 
-  const order = {
-    orderId: '#AL2024PYO0123',
-    orderDate: 'May 26, 2024, 10:30 AM',
-    paymentStatus: 'Paid',
-    orderStatus: 'Completed',
-    course: 'Complete Python for AI & Data Science',
-    courseType: 'Digital Course',
-    courseIcon: '🐍',
+  // TODO: Replace with API call — fetch order details by id from backend
+  // const order = {
+  //   orderId: '#AL2024PYO0123',
+  //   orderDate: 'May 26, 2024, 10:30 AM',
+  //   paymentStatus: 'Paid',
+  //   orderStatus: 'Completed',
+  //   course: 'Complete Python for AI & Data Science',
+  //   courseType: 'Digital Course',
+  //   courseIcon: '🐍',
+  //   courseIconBg: '#1e293b',
+  //   price: '₹999',
+  //   quantity: 1,
+  //   total: '₹999',
+  //   subtotal: '₹999',
+  //   discount: '-₹150',
+  //   tax: '₹150',
+  //   finalTotal: '₹999',
+  //   paymentMethod: 'UPI',
+  //   transactionId: 'UPI20240526103045',
+  //   paidOn: 'May 26, 2024, 10:30 AM',
+  //   timeline: [
+  //     { step: 'Order Placed', date: 'May 26, 2024, 10:30 AM', desc: 'Your order has been placed.', done: true },
+  //     { step: 'Payment Successful', date: 'May 26, 2024, 10:30 AM', desc: 'Payment received via UPI.', done: true },
+  //     { step: 'Processing', date: 'May 26, 2024, 10:31 AM', desc: 'Your order is being processed.', done: true },
+  //     { step: 'Completed', date: 'May 26, 2024, 10:35 AM', desc: 'Your course is now available.', done: true },
+  //   ],
+  // };
+  const order = { // TODO: populate from API (placeholder keeps layout)
+    orderId: '—',
+    orderDate: '—',
+    paymentStatus: '—',
+    orderStatus: '—',
+    course: '—',
+    courseType: '—',
+    courseIcon: '',
     courseIconBg: '#1e293b',
-    price: '₹999',
-    quantity: 1,
-    total: '₹999',
-    subtotal: '₹999',
-    discount: '-₹150',
-    tax: '₹150',
-    finalTotal: '₹999',
-    paymentMethod: 'UPI',
-    transactionId: 'UPI20240526103045',
-    paidOn: 'May 26, 2024, 10:30 AM',
+    price: '₹0',
+    quantity: 0,
+    total: '₹0',
+    subtotal: '₹0',
+    discount: '₹0',
+    tax: '₹0',
+    finalTotal: '₹0',
+    paymentMethod: '—',
+    transactionId: '—',
+    paidOn: '—',
     timeline: [
-      { step: 'Order Placed', date: 'May 26, 2024, 10:30 AM', desc: 'Your order has been placed.', done: true },
-      { step: 'Payment Successful', date: 'May 26, 2024, 10:30 AM', desc: 'Payment received via UPI.', done: true },
-      { step: 'Processing', date: 'May 26, 2024, 10:31 AM', desc: 'Your order is being processed.', done: true },
-      { step: 'Completed', date: 'May 26, 2024, 10:35 AM', desc: 'Your course is now available.', done: true },
+      { step: 'Order Placed', date: '—', desc: 'Your order has been placed.', done: false },
+      { step: 'Payment Successful', date: '—', desc: 'Payment received.', done: false },
+      { step: 'Processing', date: '—', desc: 'Your order is being processed.', done: false },
+      { step: 'Completed', date: '—', desc: 'Your course is now available.', done: false },
     ],
   };
 
@@ -102,7 +129,7 @@ export default function OrderDetails() {
             {/* Items Section */}
             <div style={{ background: card, border: `1px solid ${border}`, borderRadius: '16px', overflow: 'hidden', boxShadow: '0 1px 3px rgba(16,24,40,0.04)' }}>
               <div style={{ padding: '18px 24px', borderBottom: `1px solid ${border}` }}>
-                <h3 style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>Items (1)</h3>
+                <h3 style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>Items ({order.quantity > 0 ? 1 : 0}){/* was static 'Items (1)' */}</h3>
               </div>
               {/* Table Header */}
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '10px 24px', background: isDark ? 'rgba(255,255,255,0.02)' : '#f9fafb', borderBottom: `1px solid ${border}`, fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>

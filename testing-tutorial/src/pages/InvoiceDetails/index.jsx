@@ -20,40 +20,68 @@ export default function InvoiceDetails() {
   const border = isDark ? 'rgba(255,255,255,0.08)' : '#eaecf0';
   const bg2 = isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc';
 
-  const invoice = {
-    invoiceId: 'INV-2024-0008',
-    orderId: '#AL2024PYO0123',
-    invoiceDate: 'May 26, 2024',
-    dueDate: 'May 26, 2024',
-    status: 'Paid',
-    paymentMethod: 'UPI',
-    transactionId: 'UPI20240526103045',
-    paidOn: 'May 26, 2024 10:30 AM',
-    amountPaid: '₹999',
+  // TODO: Replace with API call — fetch invoice by id from backend
+  // const invoice = {
+  //   invoiceId: 'INV-2024-0008',
+  //   orderId: '#AL2024PYO0123',
+  //   invoiceDate: 'May 26, 2024',
+  //   dueDate: 'May 26, 2024',
+  //   status: 'Paid',
+  //   paymentMethod: 'UPI',
+  //   transactionId: 'UPI20240526103045',
+  //   paidOn: 'May 26, 2024 10:30 AM',
+  //   amountPaid: '₹999',
+  //   billTo: {
+  //     name: 'Shailendra Kumar',
+  //     address: 'Khimlaas, Madhya Pradesh, India',
+  //     email: 'shailendraahirwar@gmail.com',
+  //     phone: '+91 62626 12345',
+  //   },
+  //   orderDetails: {
+  //     courseName: 'Complete Python for AI & Data Science',
+  //     orderDate: 'May 26, 2024, 10:30 AM',
+  //     paymentMethod: 'UPI',
+  //   },
+  //   items: [
+  //     {
+  //       name: 'Complete Python for AI & Data Science',
+  //       type: 'Digital Course',
+  //       icon: '🐍',
+  //       iconBg: '#1e293b',
+  //       amount: '₹999',
+  //     },
+  //   ],
+  //   subtotal: '₹999',
+  //   discount: '-₹150',
+  //   tax: '₹150',
+  //   totalAmount: '₹999',
+  // };
+  const invoice = { // TODO: populate from API (placeholder keeps layout)
+    invoiceId: '—',
+    orderId: '—',
+    invoiceDate: '—',
+    dueDate: '—',
+    status: '—',
+    paymentMethod: '—',
+    transactionId: '—',
+    paidOn: '—',
+    amountPaid: '₹0',
     billTo: {
-      name: 'Shailendra Kumar',
-      address: 'Khimlaas, Madhya Pradesh, India',
-      email: 'shailendraahirwar@gmail.com',
-      phone: '+91 62626 12345',
+      name: '—',
+      address: '—',
+      email: '—',
+      phone: '—',
     },
     orderDetails: {
-      courseName: 'Complete Python for AI & Data Science',
-      orderDate: 'May 26, 2024, 10:30 AM',
-      paymentMethod: 'UPI',
+      courseName: '—',
+      orderDate: '—',
+      paymentMethod: '—',
     },
-    items: [
-      {
-        name: 'Complete Python for AI & Data Science',
-        type: 'Digital Course',
-        icon: '🐍',
-        iconBg: '#1e293b',
-        amount: '₹999',
-      },
-    ],
-    subtotal: '₹999',
-    discount: '-₹150',
-    tax: '₹150',
-    totalAmount: '₹999',
+    items: [],
+    subtotal: '₹0',
+    discount: '₹0',
+    tax: '₹0',
+    totalAmount: '₹0',
   };
 
   return (
@@ -117,7 +145,7 @@ export default function InvoiceDetails() {
               <div style={{ textAlign: 'right' }}>
                 <div style={{ marginBottom: '8px' }}>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '4px 12px', borderRadius: '6px', background: '#dcfce7', color: '#15803d', fontSize: '0.78rem', fontWeight: 700 }}>
-                    <CheckCircle2 size={12} /> Paid
+                    <CheckCircle2 size={12} /> {invoice.status}{/* was static 'Paid' */}
                   </span>
                 </div>
                 <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>Invoice</div>
@@ -198,6 +226,9 @@ export default function InvoiceDetails() {
                   <div style={{ color: 'var(--text-primary)', fontSize: '0.84rem', fontWeight: 700, textAlign: 'right' }}>{item.amount}</div>
                 </div>
               ))}
+              {invoice.items.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No invoice items yet.</p>
+              )}
 
               {/* Totals */}
               <div style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>

@@ -23,7 +23,9 @@ import {
 import { useTheme } from '../../context/ThemeContext';
 import { toast } from 'react-hot-toast';
 
+// Static mock certificates — commented out until certificates come from the backend.
 const CERTIFICATES_DATA = [
+  /*
   {
     id: 'cert_1',
     type: 'course',
@@ -81,6 +83,7 @@ const CERTIFICATES_DATA = [
     accentColor: '#059669',
     borderFlourish: 'linear-gradient(135deg,#059669,#10b981)',
   },
+  */
 ];
 
 export default function Certificates() {
@@ -220,8 +223,9 @@ export default function Certificates() {
         >
           {[
             { id: 'all', label: `All Certificates (${CERTIFICATES_DATA.length})` },
-            { id: 'course', label: `Course Certificates (3)` },
-            { id: 'completion', label: `Completion Certificates (1)` },
+            // Static counts (3, 1) commented out — counts now come from the certificates list.
+            { id: 'course', label: `Course Certificates (${CERTIFICATES_DATA.filter((c) => c.type === 'course').length})` },
+            { id: 'completion', label: `Completion Certificates (${CERTIFICATES_DATA.filter((c) => c.type === 'completion').length})` },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -254,6 +258,11 @@ export default function Certificates() {
             marginBottom: '40px',
           }}
         >
+          {filteredCerts.length === 0 && (
+            <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center', padding: '32px 0', margin: 0 }}>
+              No certificates yet.
+            </p>
+          )}
           {filteredCerts.map((cert) => (
             <motion.div
               key={cert.id}

@@ -38,18 +38,24 @@ const SETTINGS_NAV = [
   { label: 'Refer & Earn', path: '/settings/refer', active: true },
 ];
 
-const TOP_REFERRERS = [
-  { rank: 1, name: 'Rohit Verma', referrals: 128, earnings: '₹8,650', avatar: '👨' },
-  { rank: 2, name: 'Priya Sharma', referrals: 98, earnings: '₹6,320', avatar: '👩' },
-  { rank: 3, name: 'Ankit Patel', referrals: 72, earnings: '₹4,200', avatar: '👨' },
-];
+// TODO: Replace with API call — fetch top referrers leaderboard from backend
+// const TOP_REFERRERS = [
+//   { rank: 1, name: 'Rohit Verma', referrals: 128, earnings: '₹8,650', avatar: '👨' },
+//   { rank: 2, name: 'Priya Sharma', referrals: 98, earnings: '₹6,320', avatar: '👩' },
+//   { rank: 3, name: 'Ankit Patel', referrals: 72, earnings: '₹4,200', avatar: '👨' },
+// ];
+const TOP_REFERRERS = []; // TODO: populate from API
 
 export default function ReferEarn() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const referralLink = 'https://ailearning.com/ref/shailendra25';
+  // TODO: Replace with API call — fetch the user's referral link from backend
+  // const referralLink = 'https://ailearning.com/ref/shailendra25';
+  const referralLink = '—'; // TODO: populate from API
+  // TODO: Replace with API call — fetch referral stats from backend (were static 24 / ₹1,240 / ₹320)
+  const referralStats = { totalReferrals: 0, totalEarnings: 0, availableBalance: 0 };
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -103,12 +109,15 @@ export default function ReferEarn() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{
-                display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
-                fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
-              }}>
-                <LogOut size={16} /><span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{
+                  display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
+                  fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left',
+                }}>
+                  <LogOut size={16} /><span>Logout</span>
+                </button>
+              )}
             </div>
             {/* Go Premium */}
             <div style={{
@@ -147,7 +156,7 @@ export default function ReferEarn() {
                   <Users size={22} color="#4f46e5" />
                 </div>
                 <div>
-                  <div style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1 }}>24</div>
+                  <div style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1 }}>{referralStats.totalReferrals}{/* was static '24' */}</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '2px' }}>Total Referrals</div>
                   <div style={{ color: '#16a34a', fontSize: '0.7rem', fontWeight: 600 }}>Friends joined</div>
                 </div>
@@ -159,7 +168,7 @@ export default function ReferEarn() {
                   <Gift size={22} color="#16a34a" />
                 </div>
                 <div>
-                  <div style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1 }}>₹1,240</div>
+                  <div style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1 }}>₹{referralStats.totalEarnings.toLocaleString('en-IN')}{/* was static '₹1,240' */}</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '2px' }}>Total Earnings</div>
                   <div style={{ color: '#16a34a', fontSize: '0.7rem', fontWeight: 600 }}>Lifetime rewards</div>
                 </div>
@@ -172,12 +181,12 @@ export default function ReferEarn() {
                     <Wallet size={22} color="#b45309" />
                   </div>
                   <div>
-                    <div style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1 }}>₹320</div>
+                    <div style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1 }}>₹{referralStats.availableBalance.toLocaleString('en-IN')}{/* was static '₹320' */}</div>
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.74rem', marginTop: '2px' }}>Available Balance</div>
                     <button onClick={() => toast.success('Showing earning history...')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#4f46e5', fontSize: '0.7rem', fontWeight: 600, padding: 0 }}>View History →</button>
                   </div>
                 </div>
-                <button onClick={() => toast.success('Withdrawing ₹320 earnings...')} style={{
+                <button onClick={() => toast.success(`Withdrawing ₹${referralStats.availableBalance.toLocaleString('en-IN')} earnings...`) /* was static '₹320' */} style={{
                   padding: '9px 16px', borderRadius: '8px',
                   background: 'linear-gradient(135deg,#4f46e5,#6366f1)', color: '#fff',
                   fontSize: '0.78rem', fontWeight: 700, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
@@ -308,6 +317,9 @@ export default function ReferEarn() {
                 }}>View Leaderboard</button>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+                {TOP_REFERRERS.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0, gridColumn: '1 / -1' }}>No referrers yet.</p>
+                )}
                 {TOP_REFERRERS.map((r) => (
                   <div key={r.rank} style={{
                     padding: '14px', borderRadius: '12px', textAlign: 'center',

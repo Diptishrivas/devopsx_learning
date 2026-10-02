@@ -180,35 +180,41 @@ const COMPARISON_ROWS = [
   { key: 'price', label: 'Price (Yearly)', Icon: Sparkles, basic: '₹3,588', pro: '₹7,188', premium: '₹11,988', lifetime: '₹14,999 (One-time)' },
 ];
 
-const TESTIMONIALS = [
-  {
-    id: 1,
-    name: 'Aman Verma',
-    role: 'Data Science Student',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop',
-    rating: 5,
-    review:
-      'This platform helped me go from zero to building my first machine learning project. Highly recommended!',
-  },
-  {
-    id: 2,
-    name: 'Neha Patel',
-    role: 'ML Engineer',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop',
-    rating: 5,
-    review:
-      'The content is easy to understand and the projects are very practical. Worth every penny!',
-  },
-  {
-    id: 3,
-    name: 'Rahul Singh',
-    role: 'Software Developer',
-    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop',
-    rating: 5,
-    review:
-      'I used the resources and projects in my internship and it really helped me stand out!',
-  },
-];
+// TODO: Replace with API call — fetch subscription testimonials from backend
+// const TESTIMONIALS = [
+//   {
+//     id: 1,
+//     name: 'Aman Verma',
+//     role: 'Data Science Student',
+//     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop',
+//     rating: 5,
+//     review:
+//       'This platform helped me go from zero to building my first machine learning project. Highly recommended!',
+//   },
+//   {
+//     id: 2,
+//     name: 'Neha Patel',
+//     role: 'ML Engineer',
+//     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop',
+//     rating: 5,
+//     review:
+//       'The content is easy to understand and the projects are very practical. Worth every penny!',
+//   },
+//   {
+//     id: 3,
+//     name: 'Rahul Singh',
+//     role: 'Software Developer',
+//     avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop',
+//     rating: 5,
+//     review:
+//       'I used the resources and projects in my internship and it really helped me stand out!',
+//   },
+// ];
+const TESTIMONIALS = []; // TODO: populate from API
+// Derived from TESTIMONIALS (was static '4.8/5' and '1,240+ Reviews')
+const TESTIMONIAL_AVG = TESTIMONIALS.length > 0
+  ? TESTIMONIALS.reduce((sum, t) => sum + (t.rating ?? 0), 0) / TESTIMONIALS.length
+  : 0;
 
 const FAQ_ITEMS = [
   {
@@ -1282,14 +1288,14 @@ export default function Subscription() {
                 gap: '8px',
               }}
             >
-              <Stars count={5} />
+              <Stars count={Math.round(TESTIMONIAL_AVG)} />
               <span
                 style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.9rem' }}
               >
-                4.8/5
+                {TESTIMONIAL_AVG.toFixed(1)}/5{/* was static '4.8/5' */}
               </span>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                (1,240+ Reviews)
+                ({TESTIMONIALS.length.toLocaleString()} Reviews){/* was static '(1,240+ Reviews)' */}
               </span>
             </div>
           </div>
@@ -1297,7 +1303,7 @@ export default function Subscription() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <button
               onClick={() =>
-                setTIdx((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)
+                setTIdx((i) => (TESTIMONIALS.length ? (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length : 0))
               }
               style={{
                 width: '38px',
@@ -1326,7 +1332,10 @@ export default function Subscription() {
                 gap: '16px',
               }}
             >
-              {[0, 1, 2].map((offset) => {
+              {TESTIMONIALS.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0, gridColumn: '1 / -1' }}>No reviews yet.</p>
+              )}
+              {(TESTIMONIALS.length > 0 ? [0, 1, 2] : []).map((offset) => {
                 const t = TESTIMONIALS[(tIdx + offset) % TESTIMONIALS.length];
                 return (
                   <motion.div
@@ -1396,7 +1405,7 @@ export default function Subscription() {
             </div>
 
             <button
-              onClick={() => setTIdx((i) => (i + 1) % TESTIMONIALS.length)}
+              onClick={() => setTIdx((i) => (TESTIMONIALS.length ? (i + 1) % TESTIMONIALS.length : 0))}
               style={{
                 width: '38px',
                 height: '38px',

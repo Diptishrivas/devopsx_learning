@@ -39,11 +39,13 @@ const SETTINGS_NAV = [
   { label: 'Refer & Earn', path: '/settings/refer' },
 ];
 
-const ACTIVE_SESSIONS = [
-  { device: 'Windows · Chrome', badge: 'This Device', location: 'India · IP 103.21.45.67', time: 'Active now', icon: 'chrome', isActive: true },
-  { device: 'Android · Mobile App', badge: null, location: 'India · IP 117.199.32.11', time: 'Yesterday, 08:45 PM', icon: 'mobile', isActive: false },
-  { device: 'MacOS · Safari', badge: null, location: 'India · IP 122.160.25.89', time: 'Jul 24, 2024, 11:20 AM', icon: 'desktop', isActive: false },
-];
+// TODO: Replace with API call — fetch active sessions from backend
+// const ACTIVE_SESSIONS = [
+//   { device: 'Windows · Chrome', badge: 'This Device', location: 'India · IP 103.21.45.67', time: 'Active now', icon: 'chrome', isActive: true },
+//   { device: 'Android · Mobile App', badge: null, location: 'India · IP 117.199.32.11', time: 'Yesterday, 08:45 PM', icon: 'mobile', isActive: false },
+//   { device: 'MacOS · Safari', badge: null, location: 'India · IP 122.160.25.89', time: 'Jul 24, 2024, 11:20 AM', icon: 'desktop', isActive: false },
+// ];
+const ACTIVE_SESSIONS = []; // TODO: populate from API
 
 function DeviceIcon({ type, size = 20 }) {
   if (type === 'mobile') return <Smartphone size={size} />;
@@ -52,7 +54,7 @@ function DeviceIcon({ type, size = 20 }) {
 
 export default function SecuritySettings() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [showCurrent, setShowCurrent] = useState(false);
@@ -112,16 +114,19 @@ export default function SecuritySettings() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{
-                display: 'flex', alignItems: 'center', gap: '10px',
-                padding: '10px 12px', borderRadius: '10px',
-                fontSize: '0.82rem', fontWeight: 500,
-                color: '#ef4444', background: 'transparent',
-                border: 'none', cursor: 'pointer', textAlign: 'left',
-              }}>
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  padding: '10px 12px', borderRadius: '10px',
+                  fontSize: '0.82rem', fontWeight: 500,
+                  color: '#ef4444', background: 'transparent',
+                  border: 'none', cursor: 'pointer', textAlign: 'left',
+                }}>
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Go Premium */}
@@ -278,6 +283,9 @@ export default function SecuritySettings() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+                {ACTIVE_SESSIONS.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No active sessions to show.</p>
+                )}
                 {ACTIVE_SESSIONS.map((session, i) => (
                   <div key={i} className="stack-row" style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',

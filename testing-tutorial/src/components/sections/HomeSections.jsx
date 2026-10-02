@@ -15,9 +15,11 @@ import {
 } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import CourseCard from '../cards/CourseCard';
-import { getFeaturedCourses } from '../../data/courses';
+import { getFeaturedCourses, courses as allCourses } from '../../data/courses';
 import { books } from '../../data/books';
-import { homeTestimonials } from '../../data/reviews';
+// TODO: Replace with API call — fetch home testimonials from backend
+// import { homeTestimonials } from '../../data/reviews';
+const homeTestimonials = []; // TODO: populate from API
 import { homeFaqs } from '../../data/assignments';
 import { useTheme } from '../../context/ThemeContext';
 import { trustedLogos } from '../ui/BrandMarks';
@@ -260,14 +262,23 @@ export function TrustedBy() {
 
 // ── 2. Explore Top Categories ────────────────────────────────
 
+// Static course counts (25, 18, 15, 12, 14, 20) commented out — counts now come from the courses list.
+// const topCategories = [
+//   { id: 1, icon: Network,      name: 'Machine Learning',           courses: 25, color: '#8b5cf6' },
+//   { id: 2, icon: BrainCircuit, name: 'Deep Learning',              courses: 18, color: '#10b981' },
+//   { id: 3, icon: MessageSquare,name: 'Natural Language Processing', courses: 15, color: '#f59e0b' },
+//   { id: 4, icon: Camera,       name: 'Computer Vision',            courses: 12, color: '#ef4444' },
+//   { id: 5, icon: Sparkles,     name: 'Generative AI',              courses: 14, color: '#8b5cf6' },
+//   { id: 6, icon: Users,        name: 'AI for Everyone',            courses: 20, color: '#3b82f6' },
+// ];
 const topCategories = [
-  { id: 1, icon: Network,      name: 'Machine Learning',           courses: 25, color: '#8b5cf6' },
-  { id: 2, icon: BrainCircuit, name: 'Deep Learning',              courses: 18, color: '#10b981' },
-  { id: 3, icon: MessageSquare,name: 'Natural Language Processing', courses: 15, color: '#f59e0b' },
-  { id: 4, icon: Camera,       name: 'Computer Vision',            courses: 12, color: '#ef4444' },
-  { id: 5, icon: Sparkles,     name: 'Generative AI',              courses: 14, color: '#8b5cf6' },
-  { id: 6, icon: Users,        name: 'AI for Everyone',            courses: 20, color: '#3b82f6' },
-];
+  { id: 1, icon: Network,      name: 'Machine Learning',           color: '#8b5cf6' },
+  { id: 2, icon: BrainCircuit, name: 'Deep Learning',              color: '#10b981' },
+  { id: 3, icon: MessageSquare,name: 'Natural Language Processing', color: '#f59e0b' },
+  { id: 4, icon: Camera,       name: 'Computer Vision',            color: '#ef4444' },
+  { id: 5, icon: Sparkles,     name: 'Generative AI',              color: '#8b5cf6' },
+  { id: 6, icon: Users,        name: 'AI for Everyone',            color: '#3b82f6' },
+].map((c) => ({ ...c, courses: (allCourses ?? []).filter((course) => course.category === c.name).length }));
 
 export function ExploreCategories() {
   const { isDark } = useTheme();
@@ -773,6 +784,9 @@ export function Testimonials() {
         linkLabel="View All Reviews"
       />
       <ScrollRow step={366}>
+        {homeTestimonials.length === 0 && (
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0, flex: '1 0 100%' }}>No reviews yet.</p>
+        )}
         {homeTestimonials.map((item, i) => (
           <TestimonialCard key={item.id} item={item} index={i} />
         ))}

@@ -15,112 +15,114 @@ import { useAuth } from '../../context/AuthContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
 
-const ORDERS = [
-  {
-    id: '#AL2024PYO0123',
-    course: 'Complete Python for AI & Data Science',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=80&auto=format&fit=crop',
-    date: 'May 26, 2024',
-    time: '10:30 AM',
-    items: 1,
-    amount: '₹989',
-    orderStatus: 'Completed',
-    paymentStatus: 'Paid',
-    paymentMethod: 'UPI',
-  },
-  {
-    id: '#AL2024DL00087',
-    course: 'Introduction to Deep Learning',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=80&auto=format&fit=crop',
-    date: 'May 28, 2024',
-    time: '02:15 PM',
-    items: 1,
-    amount: '₹1,299',
-    orderStatus: 'Processing',
-    paymentStatus: 'Paid',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    id: '#AL2024NLP00456',
-    course: 'NLP with Transformers',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=80&auto=format&fit=crop',
-    date: 'May 30, 2024',
-    time: '11:45 AM',
-    items: 1,
-    amount: '₹1,499',
-    orderStatus: 'Completed',
-    paymentStatus: 'Paid',
-    paymentMethod: 'UPI',
-  },
-  {
-    id: '#AL2024AI000074',
-    course: 'Artificial Intelligence for Beginners',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=80&auto=format&fit=crop',
-    date: 'May 24, 2024',
-    time: '09:10 AM',
-    items: 1,
-    amount: '₹699',
-    orderStatus: 'Completed',
-    paymentStatus: 'Paid',
-    paymentMethod: 'Razorpay',
-  },
-  {
-    id: '#AL2024DVO0211',
-    course: 'Data Visualization with Python',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&auto=format&fit=crop',
-    date: 'Jun 2, 2024',
-    time: '03:20 PM',
-    items: 1,
-    amount: '₹799',
-    orderStatus: 'Processing',
-    paymentStatus: 'Paid',
-    paymentMethod: 'Debit Card',
-  },
-  {
-    id: '#AL2024ML0345',
-    course: 'Machine Learning Bootcamp',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=80&auto=format&fit=crop',
-    date: 'Apr 18, 2024',
-    time: '10:10 AM',
-    items: 1,
-    amount: '₹1,899',
-    orderStatus: 'Completed',
-    paymentStatus: 'Paid',
-    paymentMethod: 'UPI',
-  },
-  {
-    id: '#AL2024DS0210',
-    course: 'Data Science with Python',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=80&auto=format&fit=crop',
-    date: 'Apr 10, 2024',
-    time: '05:25 PM',
-    items: 1,
-    amount: '₹999',
-    orderStatus: 'Completed',
-    paymentStatus: 'Paid',
-    paymentMethod: 'UPI',
-  },
-  {
-    id: '#AL2024AI01101',
-    course: 'AI Fundamentals Course',
-    type: 'Digital Course',
-    thumb: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=80&auto=format&fit=crop',
-    date: 'Mar 22, 2024',
-    time: '11:00 AM',
-    items: 1,
-    amount: '₹499',
-    orderStatus: 'Completed',
-    paymentStatus: 'Paid',
-    paymentMethod: 'UPI',
-  },
-];
+// TODO: Replace with API call — fetch user's orders from backend
+// const ORDERS = [
+//   {
+//     id: '#AL2024PYO0123',
+//     course: 'Complete Python for AI & Data Science',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=80&auto=format&fit=crop',
+//     date: 'May 26, 2024',
+//     time: '10:30 AM',
+//     items: 1,
+//     amount: '₹989',
+//     orderStatus: 'Completed',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'UPI',
+//   },
+//   {
+//     id: '#AL2024DL00087',
+//     course: 'Introduction to Deep Learning',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=80&auto=format&fit=crop',
+//     date: 'May 28, 2024',
+//     time: '02:15 PM',
+//     items: 1,
+//     amount: '₹1,299',
+//     orderStatus: 'Processing',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'Credit Card',
+//   },
+//   {
+//     id: '#AL2024NLP00456',
+//     course: 'NLP with Transformers',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=80&auto=format&fit=crop',
+//     date: 'May 30, 2024',
+//     time: '11:45 AM',
+//     items: 1,
+//     amount: '₹1,499',
+//     orderStatus: 'Completed',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'UPI',
+//   },
+//   {
+//     id: '#AL2024AI000074',
+//     course: 'Artificial Intelligence for Beginners',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=80&auto=format&fit=crop',
+//     date: 'May 24, 2024',
+//     time: '09:10 AM',
+//     items: 1,
+//     amount: '₹699',
+//     orderStatus: 'Completed',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'Razorpay',
+//   },
+//   {
+//     id: '#AL2024DVO0211',
+//     course: 'Data Visualization with Python',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&auto=format&fit=crop',
+//     date: 'Jun 2, 2024',
+//     time: '03:20 PM',
+//     items: 1,
+//     amount: '₹799',
+//     orderStatus: 'Processing',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'Debit Card',
+//   },
+//   {
+//     id: '#AL2024ML0345',
+//     course: 'Machine Learning Bootcamp',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=80&auto=format&fit=crop',
+//     date: 'Apr 18, 2024',
+//     time: '10:10 AM',
+//     items: 1,
+//     amount: '₹1,899',
+//     orderStatus: 'Completed',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'UPI',
+//   },
+//   {
+//     id: '#AL2024DS0210',
+//     course: 'Data Science with Python',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=80&auto=format&fit=crop',
+//     date: 'Apr 10, 2024',
+//     time: '05:25 PM',
+//     items: 1,
+//     amount: '₹999',
+//     orderStatus: 'Completed',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'UPI',
+//   },
+//   {
+//     id: '#AL2024AI01101',
+//     course: 'AI Fundamentals Course',
+//     type: 'Digital Course',
+//     thumb: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=80&auto=format&fit=crop',
+//     date: 'Mar 22, 2024',
+//     time: '11:00 AM',
+//     items: 1,
+//     amount: '₹499',
+//     orderStatus: 'Completed',
+//     paymentStatus: 'Paid',
+//     paymentMethod: 'UPI',
+//   },
+// ];
+const ORDERS = []; // TODO: populate from API
 
 const sidebarMenuItems = [
   { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
@@ -146,7 +148,7 @@ const STATUS_COLORS = {
 
 export default function Orders() {
   const { isDark } = useTheme();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -160,20 +162,21 @@ export default function Orders() {
     { id: 'all', label: 'All Orders', count: ORDERS.length },
     { id: 'Completed', label: 'Completed', count: ORDERS.filter(o => o.orderStatus === 'Completed').length },
     { id: 'Processing', label: 'Processing', count: ORDERS.filter(o => o.orderStatus === 'Processing').length },
-    { id: 'Cancelled', label: 'Cancelled', count: 0 },
-    { id: 'Refunded', label: 'Refunded', count: 0 },
+    { id: 'Cancelled', label: 'Cancelled', count: ORDERS.filter(o => o.orderStatus === 'Cancelled').length },
+    { id: 'Refunded', label: 'Refunded', count: ORDERS.filter(o => o.orderStatus === 'Refunded').length },
   ];
 
   const filtered = (activeTab === 'all' ? ORDERS : ORDERS.filter(o => o.orderStatus === activeTab))
-    .filter(o => o.course.toLowerCase().includes(searchQuery.toLowerCase()) || o.id.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter(o => (o.course || '').toLowerCase().includes(searchQuery.toLowerCase()) || (o.id || '').toLowerCase().includes(searchQuery.toLowerCase()));
 
   const summary = {
     total: ORDERS.length,
     completed: ORDERS.filter(o => o.orderStatus === 'Completed').length,
     processing: ORDERS.filter(o => o.orderStatus === 'Processing').length,
-    cancelled: 0,
-    refunded: 0,
-    totalSpent: '₹6,295',
+    cancelled: ORDERS.filter(o => o.orderStatus === 'Cancelled').length,
+    refunded: ORDERS.filter(o => o.orderStatus === 'Refunded').length,
+    // totalSpent: '₹6,295', // was static
+    totalSpent: '₹' + ORDERS.reduce((sum, o) => sum + (Number(String(o.amount || '').replace(/[^\d.]/g, '')) || 0), 0).toLocaleString('en-IN'),
   };
 
   return (
@@ -203,9 +206,12 @@ export default function Orders() {
                   </Link>
                 );
               })}
-              <button onClick={() => { logout(); navigate('/login'); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px' }}>
-                <LogOut size={16} /><span>Logout</span>
-              </button>
+              {/* Show Logout only when a user is logged in */}
+              {user && (
+                <button onClick={() => { logout(); navigate('/login'); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px' }}>
+                  <LogOut size={16} /><span>Logout</span>
+                </button>
+              )}
             </div>
 
             {/* Explore More Promo */}
@@ -316,10 +322,13 @@ export default function Orders() {
                   </div>
                 );
               })}
+              {filtered.length === 0 && (
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No orders yet.</p>
+              )}
 
               {/* Pagination */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                <span>Showing 1 to {filtered.length} of {ORDERS.length} orders</span>
+                <span>Showing {filtered.length ? 1 : 0} to {filtered.length} of {ORDERS.length} orders</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <button style={{ width: '28px', height: '28px', borderRadius: '6px', background: card, border: `1px solid ${border}`, color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <ChevronRight size={14} style={{ transform: 'rotate(180deg)' }} />

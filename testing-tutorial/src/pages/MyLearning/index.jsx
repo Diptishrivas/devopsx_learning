@@ -23,97 +23,101 @@ import {
 import { useTheme } from '../../context/ThemeContext';
 import { toast } from 'react-hot-toast';
 
-const COURSES_DATA = [
-  {
-    id: 'c1',
-    slug: 'complete-python-ai',
-    title: 'Complete Python for AI & Data Science',
-    author: 'by Ronak Patel',
-    cover: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&auto=format&fit=crop',
-    status: 'in_progress',
-    statusBadge: 'In Progress',
-    progress: 66,
-    sectionText: 'Section 7 of 12',
-    timeLeft: '8h 15m left',
-    lastAccessed: 'May 26, 2024',
-    buttonText: 'Continue',
-  },
-  {
-    id: 'c2',
-    slug: 'deep-learning-tensorflow',
-    title: 'Deep Learning with TensorFlow 2.0',
-    author: 'by Neha Sharma',
-    cover: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop',
-    status: 'in_progress',
-    statusBadge: 'In Progress',
-    progress: 43,
-    sectionText: 'Section 5 of 12',
-    timeLeft: '6h 30m left',
-    lastAccessed: 'May 24, 2024',
-    buttonText: 'Continue',
-  },
-  {
-    id: 'c3',
-    slug: 'ai-for-beginners',
-    title: 'Artificial Intelligence for Beginners',
-    author: 'by Shailendra Kumar',
-    cover: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&auto=format&fit=crop',
-    status: 'completed',
-    statusBadge: 'Completed',
-    progress: 100,
-    sectionText: 'All Sections Completed',
-    timeLeft: '4h 32m',
-    completedDate: 'Completed on May 24, 2024',
-    buttonText: 'Review Course',
-    hasCertificate: true,
-  },
-  {
-    id: 'c4',
-    slug: 'data-science-bootcamp',
-    title: 'Data Science & Analytics Bootcamp',
-    author: 'by Ankit Jain',
-    cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop',
-    status: 'not_started',
-    statusBadge: 'Not Started',
-    progress: 0,
-    sectionText: '0 of 10 Sections',
-    timeLeft: 'Duration 12h 45m',
-    buttonText: 'Start Now',
-  },
-];
+// TODO: Replace with API call — fetch enrolled courses for the current user from backend
+// const COURSES_DATA = [
+//   {
+//     id: 'c1',
+//     slug: 'complete-python-ai',
+//     title: 'Complete Python for AI & Data Science',
+//     author: 'by Ronak Patel',
+//     cover: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&auto=format&fit=crop',
+//     status: 'in_progress',
+//     statusBadge: 'In Progress',
+//     progress: 66,
+//     sectionText: 'Section 7 of 12',
+//     timeLeft: '8h 15m left',
+//     lastAccessed: 'May 26, 2024',
+//     buttonText: 'Continue',
+//   },
+//   {
+//     id: 'c2',
+//     slug: 'deep-learning-tensorflow',
+//     title: 'Deep Learning with TensorFlow 2.0',
+//     author: 'by Neha Sharma',
+//     cover: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&auto=format&fit=crop',
+//     status: 'in_progress',
+//     statusBadge: 'In Progress',
+//     progress: 43,
+//     sectionText: 'Section 5 of 12',
+//     timeLeft: '6h 30m left',
+//     lastAccessed: 'May 24, 2024',
+//     buttonText: 'Continue',
+//   },
+//   {
+//     id: 'c3',
+//     slug: 'ai-for-beginners',
+//     title: 'Artificial Intelligence for Beginners',
+//     author: 'by Shailendra Kumar',
+//     cover: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&auto=format&fit=crop',
+//     status: 'completed',
+//     statusBadge: 'Completed',
+//     progress: 100,
+//     sectionText: 'All Sections Completed',
+//     timeLeft: '4h 32m',
+//     completedDate: 'Completed on May 24, 2024',
+//     buttonText: 'Review Course',
+//     hasCertificate: true,
+//   },
+//   {
+//     id: 'c4',
+//     slug: 'data-science-bootcamp',
+//     title: 'Data Science & Analytics Bootcamp',
+//     author: 'by Ankit Jain',
+//     cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop',
+//     status: 'not_started',
+//     statusBadge: 'Not Started',
+//     progress: 0,
+//     sectionText: '0 of 10 Sections',
+//     timeLeft: 'Duration 12h 45m',
+//     buttonText: 'Start Now',
+//   },
+// ];
+const COURSES_DATA = []; // TODO: populate from API
 
-const RECOMMENDED_SIDEBAR = [
-  {
-    id: 1,
-    title: 'Machine Learning A-Z™: Hands-On',
-    cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&auto=format&fit=crop',
-    rating: 4.6,
-    reviews: '8.2K',
-    price: 1299,
-    originalPrice: 2499,
-    discountPct: 48,
-  },
-  {
-    id: 2,
-    title: 'Natural Language Processing in Python',
-    cover: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&auto=format&fit=crop',
-    rating: 4.5,
-    reviews: '5.6K',
-    price: 999,
-    originalPrice: 1999,
-    discountPct: 50,
-  },
-  {
-    id: 3,
-    title: 'Statistics for Data Science',
-    cover: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&auto=format&fit=crop',
-    rating: 4.7,
-    reviews: '7.1K',
-    price: 799,
-    originalPrice: 1499,
-    discountPct: 47,
-  },
-];
+// TODO: Replace with API call — fetch recommended courses from backend
+// const RECOMMENDED_SIDEBAR = [
+//   {
+//     id: 1,
+//     title: 'Machine Learning A-Z™: Hands-On',
+//     cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&auto=format&fit=crop',
+//     rating: 4.6,
+//     reviews: '8.2K',
+//     price: 1299,
+//     originalPrice: 2499,
+//     discountPct: 48,
+//   },
+//   {
+//     id: 2,
+//     title: 'Natural Language Processing in Python',
+//     cover: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&auto=format&fit=crop',
+//     rating: 4.5,
+//     reviews: '5.6K',
+//     price: 999,
+//     originalPrice: 1999,
+//     discountPct: 50,
+//   },
+//   {
+//     id: 3,
+//     title: 'Statistics for Data Science',
+//     cover: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&auto=format&fit=crop',
+//     rating: 4.7,
+//     reviews: '7.1K',
+//     price: 799,
+//     originalPrice: 1499,
+//     discountPct: 47,
+//   },
+// ];
+const RECOMMENDED_SIDEBAR = []; // TODO: populate from API
 
 export default function MyLearning() {
   const { isDark } = useTheme();
@@ -124,6 +128,15 @@ export default function MyLearning() {
 
   const border = isDark ? 'rgba(255,255,255,.08)' : '#eaecf0';
   const cardBg = isDark ? 'var(--bg-card)' : '#ffffff';
+
+  // Stats derived from COURSES_DATA (was static: 2 in progress / 1 completed / 1 not started / 4 total / 62% overall)
+  const inProgressCount = COURSES_DATA.filter((c) => c.status === 'in_progress').length;
+  const completedCount = COURSES_DATA.filter((c) => c.status === 'completed').length;
+  const notStartedCount = COURSES_DATA.filter((c) => c.status === 'not_started').length;
+  const overallProgress = COURSES_DATA.length
+    ? Math.round(COURSES_DATA.reduce((sum, c) => sum + (c.progress || 0), 0) / COURSES_DATA.length)
+    : 0;
+  const totalLearningTime = '0h 0m'; // static: '18h 47m' — TODO: populate from API
 
   const filteredCourses = COURSES_DATA.filter((course) => {
     const matchesTab =
@@ -195,9 +208,9 @@ export default function MyLearning() {
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {[
               { id: 'all', label: `All Courses (${COURSES_DATA.length})` },
-              { id: 'in_progress', label: 'In Progress (2)' },
-              { id: 'completed', label: 'Completed (1)' },
-              { id: 'not_started', label: 'Not Started (1)' },
+              { id: 'in_progress', label: `In Progress (${inProgressCount})` }, // static: 'In Progress (2)'
+              { id: 'completed', label: `Completed (${completedCount})` }, // static: 'Completed (1)'
+              { id: 'not_started', label: `Not Started (${notStartedCount})` }, // static: 'Not Started (1)'
             ].map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -283,6 +296,9 @@ export default function MyLearning() {
           {/* LEFT COLUMN: COURSE CARDS LIST + STAY CONSISTENT BANNER */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
+            {filteredCourses.length === 0 && (
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No courses yet.</p>
+            )}
             {filteredCourses.map((course) => (
               <motion.div
                 key={course.id}
@@ -564,7 +580,7 @@ export default function MyLearning() {
                       fill="none"
                       stroke="#6366f1"
                       strokeWidth="3.8"
-                      strokeDasharray="62, 100"
+                      strokeDasharray={`${overallProgress}, 100`} // static: "62, 100"
                     />
                   </svg>
                   <div
@@ -578,7 +594,7 @@ export default function MyLearning() {
                     }}
                   >
                     <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
-                      62%
+                      {overallProgress}%{/* was static '62%' */}
                     </span>
                     <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
                       Overall Progress
@@ -590,22 +606,22 @@ export default function MyLearning() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.74rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#6366f1' }} />
-                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>4</span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{COURSES_DATA.length}</span>{/* was static '4' */}
                     <span style={{ color: 'var(--text-muted)' }}>Total Courses</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#3b82f6' }} />
-                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>2</span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{inProgressCount}</span>{/* was static '2' */}
                     <span style={{ color: 'var(--text-muted)' }}>In Progress</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10b981' }} />
-                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>1</span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{completedCount}</span>{/* was static '1' */}
                     <span style={{ color: 'var(--text-muted)' }}>Completed</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#94a3b8' }} />
-                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>1</span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>{notStartedCount}</span>{/* was static '1' */}
                     <span style={{ color: 'var(--text-muted)' }}>Not Started</span>
                   </div>
                 </div>
@@ -645,7 +661,7 @@ export default function MyLearning() {
                   Total Learning Time
                 </span>
                 <strong style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', display: 'block', lineHeight: 1.2 }}>
-                  18h 47m
+                  {totalLearningTime}{/* was static '18h 47m' */}
                 </strong>
                 <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                   Time Spent Learning
@@ -676,6 +692,9 @@ export default function MyLearning() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {RECOMMENDED_SIDEBAR.length === 0 && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center', padding: '32px 20px', margin: 0 }}>No recommendations yet.</p>
+                )}
                 {RECOMMENDED_SIDEBAR.map((course) => (
                   <div
                     key={course.id}
