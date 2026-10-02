@@ -240,7 +240,8 @@ function HeroBook() {
 }
 
 // ── Preview Video Section ──
-function PreviewVideo({ isDark }) {
+// `compact` — smaller version that sits in the hero grid where the book was.
+function PreviewVideo({ isDark, compact = false }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const videoRef = useRef(null);
@@ -281,19 +282,19 @@ function PreviewVideo({ isDark }) {
       initial={{ opacity: 0, y: 32 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.65, ease: 'easeOut', delay: 0.3 }}
-      style={{ width: '100%', maxWidth: '1120px', margin: '0 auto' }}
+      style={{ width: '100%', maxWidth: compact ? '100%' : '1120px', margin: '0 auto' }}
     >
       {/* Section label */}
-      <div style={{ textAlign: 'center', marginBottom: '18px' }}>
+      <div style={{ textAlign: 'center', marginBottom: compact ? '10px' : '18px' }}>
         <span style={{
           display: 'inline-flex', alignItems: 'center', gap: '7px',
-          padding: '6px 14px', borderRadius: '8px',
+          padding: compact ? '4px 11px' : '6px 14px', borderRadius: '8px',
           background: isDark ? 'rgba(99,102,241,.15)' : '#eeecfd',
           color: isDark ? '#a5b4fc' : '#4f46e5',
-          fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.03em',
+          fontSize: compact ? '0.66rem' : '0.75rem', fontWeight: 700, letterSpacing: '0.03em',
           textTransform: 'uppercase',
         }}>
-          <PlayCircle size={14} />
+          <PlayCircle size={compact ? 12 : 14} />
           Course Preview
         </span>
       </div>
@@ -304,9 +305,9 @@ function PreviewVideo({ isDark }) {
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '820px',
+          maxWidth: compact ? '100%' : '820px',
           margin: '0 auto',
-          borderRadius: '18px',
+          borderRadius: compact ? '14px' : '18px',
           overflow: 'hidden',
           boxShadow: isDark
             ? '0 24px 64px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06)'
@@ -333,23 +334,25 @@ function PreviewVideo({ isDark }) {
             background: 'linear-gradient(160deg, rgba(10,15,30,.62) 0%, rgba(10,15,30,.38) 100%)',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
-            gap: '14px',
+            gap: compact ? '10px' : '14px',
           }}>
             {/* Glow ring + play button */}
             <motion.div
               animate={{ scale: [1, 1.07, 1] }}
               transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
               style={{
-                width: '72px', height: '72px', borderRadius: '50%',
+                width: compact ? '50px' : '72px', height: compact ? '50px' : '72px', borderRadius: '50%',
                 background: 'linear-gradient(135deg, #5b4fe0, #7c3aed)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 0 0 12px rgba(91,79,224,.22), 0 8px 28px rgba(91,79,224,.45)',
+                boxShadow: compact
+                  ? '0 0 0 8px rgba(91,79,224,.22), 0 6px 20px rgba(91,79,224,.45)'
+                  : '0 0 0 12px rgba(91,79,224,.22), 0 8px 28px rgba(91,79,224,.45)',
               }}
             >
-              <Play size={28} color="#fff" style={{ marginLeft: '4px' }} />
+              <Play size={compact ? 20 : 28} color="#fff" style={{ marginLeft: compact ? '3px' : '4px' }} />
             </motion.div>
             <span style={{
-              color: '#fff', fontSize: '0.82rem', fontWeight: 600,
+              color: '#fff', fontSize: compact ? '0.72rem' : '0.82rem', fontWeight: 600,
               letterSpacing: '0.02em', opacity: 0.92,
               textShadow: '0 1px 6px rgba(0,0,0,.4)',
             }}>
@@ -375,32 +378,33 @@ function PreviewVideo({ isDark }) {
       </div>
 
       {/* Full Video Button */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: compact ? '14px' : '24px' }}>
         <motion.button
           onClick={handleFullVideo}
           whileHover={{ scale: 1.035, y: -2 }}
           whileTap={{ scale: 0.97 }}
           style={{
-            display: 'inline-flex', alignItems: 'center', gap: '10px',
-            padding: '15px 36px', borderRadius: '12px',
+            display: 'inline-flex', alignItems: 'center', gap: compact ? '8px' : '10px',
+            padding: compact ? '11px 22px' : '15px 36px', borderRadius: compact ? '10px' : '12px',
             background: 'linear-gradient(135deg, #5b4fe0 0%, #7c3aed 100%)',
-            color: '#fff', fontSize: '0.97rem', fontWeight: 700,
+            color: '#fff', fontSize: compact ? '0.85rem' : '0.97rem', fontWeight: 700,
             border: 'none', cursor: 'pointer',
-            boxShadow: '0 10px 28px rgba(91,79,224,.40)',
+            boxShadow: compact ? '0 8px 22px rgba(91,79,224,.36)' : '0 10px 28px rgba(91,79,224,.40)',
             letterSpacing: '0.01em',
             transition: 'box-shadow 0.2s',
+            whiteSpace: 'nowrap',
           }}
         >
-          <PlayCircle size={20} />
+          <PlayCircle size={compact ? 17 : 20} />
           Watch Full Video
-          <ArrowRight size={17} />
+          <ArrowRight size={compact ? 15 : 17} />
         </motion.button>
       </div>
 
       {/* Sub-note under button */}
       <p style={{
-        textAlign: 'center', marginTop: '12px',
-        fontSize: '0.73rem', color: 'var(--text-muted)',
+        textAlign: 'center', marginTop: compact ? '8px' : '12px',
+        fontSize: compact ? '0.68rem' : '0.73rem', color: 'var(--text-muted)',
         letterSpacing: '0.01em',
       }}>
         {user
@@ -650,7 +654,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* ── CENTER: book ── */}
+        {/* ── CENTER: book (hidden for now — preview video shown here instead) ──
         <motion.div
           className="hero-book"
           initial={{ opacity: 0, scale: 0.9, y: 24 }}
@@ -660,6 +664,12 @@ export default function Hero() {
         >
           <HeroBook />
         </motion.div>
+        */}
+
+        {/* ── CENTER: preview video + Watch Full Video button ── */}
+        <div className="hero-book hero-preview">
+          <PreviewVideo isDark={isDark} compact />
+        </div>
 
         {/* ── RIGHT: feature cards ── */}
         <motion.div
@@ -711,10 +721,11 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ── Preview Video (below grid) ── */}
+      {/* ── Preview Video (below grid) — moved up into the hero grid ──
       <div style={{ marginTop: '52px' }}>
         <PreviewVideo isDark={isDark} />
       </div>
+      */}
 
       <style>{`
         .hero-grid {
@@ -842,6 +853,23 @@ export default function Hero() {
           .hero-title { font-size: clamp(1.18rem, 5.4vw, 1.5rem) !important; }
           .hero-subtitle { font-size: 0.78rem !important; }
           .hero-stats > * { padding: 9px 8px !important; }
+        }
+
+        /* ── Preview video in the book slot ── */
+        .hero-preview { width: 100%; min-width: 0; }
+        .hero-preview .hero-video-section { padding: 0; }
+
+        /* On mobile the slot beside the headline is too narrow for a video,
+           so give it its own full-width row right under the headline. */
+        @media (max-width: 900px) {
+          .hero-grid {
+            grid-template-areas:
+              "intro   intro"
+              "book    book"
+              "actions actions"
+              "feats   feats" !important;
+          }
+          .hero-preview { max-width: 460px; margin: 0 auto !important; }
         }
 
         /* ── Video section responsive ── */
