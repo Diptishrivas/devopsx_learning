@@ -65,8 +65,8 @@ export default function Footer() {
   const { isDark } = useTheme();
   const [email, setEmail] = useState('');
 
-  const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(15,23,42,.08)';
-  const accent = isDark ? '#818cf8' : '#4f46e5';
+  const border = isDark ? 'rgba(99,102,241,.16)' : 'rgba(15,23,42,.08)';
+  const accent = isDark ? '#8b5cf6' : '#4f46e5';
   const tile = isDark ? 'rgba(255,255,255,.06)' : '#f1f3f9';
   const linkColor = 'var(--text-muted)';
 
@@ -89,7 +89,7 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: isDark ? 'var(--bg-secondary)' : '#ffffff',
+        background: isDark ? 'var(--bg-primary)' : '#ffffff',
         borderTop: `1px solid ${border}`,
         width: '100%',
         boxSizing: 'border-box',
@@ -197,7 +197,7 @@ export default function Footer() {
             marginTop: 'clamp(32px, 5vw, 48px)',
             padding: 'clamp(22px, 4vw, 32px) clamp(16px, 4vw, 32px)',
             borderRadius: '12px',
-            background: isDark ? 'rgba(255,255,255,.04)' : '#f6f7fb',
+            background: isDark ? 'var(--bg-secondary)' : '#f6f7fb',
             border: `1px solid ${border}`,
             textAlign: 'center',
           }}

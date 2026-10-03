@@ -283,8 +283,8 @@ function PreviewVideo({ isDark, compact = false }) {
     }
   };
 
-  const cardBg  = isDark ? 'rgba(15,25,41,0.92)' : '#ffffff';
-  const cardBorder = isDark ? 'rgba(255,255,255,.08)' : 'rgba(15,23,42,.08)';
+  const cardBg  = isDark ? '#0b1224' : '#ffffff';
+  const cardBorder = isDark ? 'rgba(99,102,241,.2)' : 'rgba(15,23,42,.08)';
 
   return (
     <motion.div
@@ -411,10 +411,10 @@ function PreviewVideo({ isDark, compact = false }) {
 export default function Hero() {
   const { isDark } = useTheme();
 
-  const cardBg = isDark ? 'rgba(15,25,41,0.92)' : '#ffffff';
-  const cardBorder = isDark ? 'rgba(255,255,255,.08)' : 'rgba(15,23,42,.08)';
-  const iconTile = isDark ? 'rgba(99,102,241,.18)' : '#eeecfd';
-  const iconColor = isDark ? '#a5b4fc' : '#4f46e5';
+  const cardBg = isDark ? '#0b1224' : '#ffffff';
+  const cardBorder = isDark ? 'rgba(99,102,241,.2)' : 'rgba(15,23,42,.08)';
+  const iconTile = isDark ? 'rgba(139,92,246,.2)' : '#eeecfd';
+  const iconColor = isDark ? '#c4b5fd' : '#4f46e5';
 
   return (
     <section
@@ -425,6 +425,7 @@ export default function Hero() {
         boxSizing: 'border-box',
         padding: '38px 32px 52px',
         overflowX: 'clip',
+        background: isDark ? 'var(--gradient-hero)' : undefined,
       }}
     >
       {/* Background radial glow */}
@@ -435,7 +436,7 @@ export default function Hero() {
           transform: 'translateX(-50%)',
           width: '90%', maxWidth: '1200px', height: '80%',
           background: isDark
-            ? 'radial-gradient(ellipse 65% 50% at 50% 20%, rgba(99,102,241,.18) 0%, transparent 70%)'
+            ? 'radial-gradient(ellipse 65% 50% at 50% 20%, rgba(139,92,246,.16) 0%, rgba(34,211,238,.05) 45%, transparent 70%)'
             : 'radial-gradient(ellipse 65% 50% at 50% 20%, rgba(79,70,229,.09) 0%, transparent 70%)',
           pointerEvents: 'none',
           zIndex: 1,
@@ -481,7 +482,7 @@ export default function Hero() {
             Build Skills.<br />
             <span
               style={{
-                background: 'linear-gradient(95deg, #4f46e5, #7c3aed)',
+                background: 'var(--gradient-accent)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -581,19 +582,19 @@ export default function Hero() {
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '9px',
                 padding: '14px 27px', borderRadius: '10px',
-                background: '#5b4fe0',
+                background: isDark ? '#7c3aed' : '#5b4fe0',
                 color: '#fff', fontSize: '0.895rem', fontWeight: 600,
                 textDecoration: 'none',
                 boxShadow: '0 8px 22px rgba(91,79,224,.32)',
                 transition: 'all 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#4f46e5';
+                e.currentTarget.style.background = isDark ? '#6d28d9' : '#4f46e5';
                 e.currentTarget.style.transform = 'translateY(-2px)';
                 e.currentTarget.style.boxShadow = '0 12px 30px rgba(91,79,224,.42)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#5b4fe0';
+                e.currentTarget.style.background = isDark ? '#7c3aed' : '#5b4fe0';
                 e.currentTarget.style.transform = 'none';
                 e.currentTarget.style.boxShadow = '0 8px 22px rgba(91,79,224,.32)';
               }}

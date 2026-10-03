@@ -128,12 +128,12 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           background: isDark
-            ? (scrolled ? 'rgba(6,11,24,0.97)' : 'rgba(6,11,24,0.92)')
+            ? (scrolled ? 'rgba(15,19,35,0.97)' : 'rgba(15,19,35,0.94)')
             : (scrolled ? 'rgba(255,255,255,0.98)' : '#ffffff'),
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           borderBottom: isDark
-            ? '1px solid rgba(255,255,255,0.07)'
+            ? '1px solid rgba(99,102,241,0.14)'
             : '1px solid rgba(15,23,42,0.07)',
           boxShadow: scrolled
             ? (isDark ? '0 8px 32px rgba(0,0,0,.4)' : '0 2px 14px rgba(15,23,42,.06)')

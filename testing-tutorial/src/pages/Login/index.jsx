@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  ChevronRight, User, Eye, EyeOff, GraduationCap, Video,
+  User, Eye, EyeOff, GraduationCap, Video,
   Award, BookOpen, Heart, Download, FileText, Settings,
   HelpCircle, LogOut, Trophy, Bell, MessageCircle, ShoppingBag,
   Sparkles, Play, CheckCircle2, TrendingUp, Lock
@@ -13,6 +13,8 @@ import {
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import PageWrapper from '../../components/ui/PageWrapper';
+import BrandLogo from '../../components/ui/BrandLogo';
+import AuthBackground from '../../components/ui/AuthBackground';
 import { toast } from 'react-hot-toast';
 import { getRedirectTarget } from '../../routes/RouteGuards';
 
@@ -104,7 +106,8 @@ export default function Login() {
 
   return (
     <PageWrapper>
-      <div className="auth-layout" style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', display: 'flex', gap: '24px', alignItems: 'start', overflowX: 'hidden', boxSizing: 'border-box' }}>
+      <AuthBackground />
+      <div className="auth-layout" style={{ position: 'relative', zIndex: 1, maxWidth: '1280px', margin: '0 auto', width: '100%', display: 'flex', gap: '24px', alignItems: 'start', overflowX: 'hidden', boxSizing: 'border-box' }}>
 
         {/* LEFT SIDEBAR */}
         {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
@@ -167,15 +170,10 @@ export default function Login() {
         {/* MAIN CONTENT */}
         <div style={{ flex: 1, maxWidth: '460px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-          {/* Breadcrumb */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-            <Link to="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Home</Link>
-            <ChevronRight size={13} color="#98a2b3" />
-            <span style={{ color: '#4f46e5', fontWeight: 600 }}>Login</span>
-          </div>
-
-          <h1 style={{ color: 'var(--text-primary)', fontSize: '1.6rem', fontWeight: 800, margin: '0 0 2px', letterSpacing: '-0.02em' }}>Welcome Back!</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', margin: '0 0 8px' }}>Login to your account and continue your learning journey.</p>
+          {/* Brand — the way back to Home (auth pages have no navbar) */}
+          <Link to="/" aria-label="Go to home page" style={{ alignSelf: 'center', display: 'inline-flex', textDecoration: 'none', margin: '8px 0 4px' }}>
+            <BrandLogo size="lg" />
+          </Link>
 
           {/* Main Card (Split 2 Columns) */}
           <div className="auth-card-split" style={{ ...card, padding: '0', display: 'grid', gridTemplateColumns: '1fr', overflow: 'hidden' }}>
@@ -299,7 +297,10 @@ export default function Login() {
 
             {/* Right Column — Login Form */}
             <div style={{ padding: '36px 32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <h2 style={{ color: 'var(--text-primary)', fontSize: '1.25rem', fontWeight: 800, margin: '0 0 4px', letterSpacing: '-0.02em' }}>Login to Your Account</h2>
+              <div style={{ textAlign: 'center' }}>
+                <h1 style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 800, margin: '0 0 6px', letterSpacing: '-0.02em' }}>Welcome Back!</h1>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', margin: 0 }}>Login to your account and continue your learning journey.</p>
+              </div>
 
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* Email Address */}
