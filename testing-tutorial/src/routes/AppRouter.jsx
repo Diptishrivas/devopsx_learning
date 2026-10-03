@@ -6,6 +6,7 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { PageLoader } from '../components/ui/Skeleton';
 import MainLayout from '../layouts/MainLayout';
+import { ProtectedRoute, GuestRoute } from './RouteGuards';
 
 // Lazy load all pages for code splitting
 const Home = lazy(() => import('../pages/Home/index'));
@@ -82,69 +83,36 @@ export default function AppRouter() {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* Auth + Onboarding routes — full-screen, no Sidebar/Navbar */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/grade-select" element={<GradeSelect />} />
+        <Route element={<GuestRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/grade-select" element={<GradeSelect />} />
+        </Route>
 
         {/* All main app routes wrapped in MainLayout */}
         <Route element={<LayoutWrapper />}>
+          {/* Public — open to guests */}
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<AllCourses />} />
           <Route path="/courses/:slug" element={<CourseDetails />} />
           <Route path="/curriculum" element={<Curriculum />} />
-          {/* Lecture player — the page existed but had no route, so it was unreachable. */}
-          <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
-          <Route path="/player/:slug" element={<CoursePlayer />} />
           <Route path="/curriculum/:slug" element={<Curriculum />} />
           <Route path="/learn/:slug" element={<Curriculum />} />
           <Route path="/textbooks" element={<TextBooks />} />
           <Route path="/textbooks/:id" element={<BookDetails />} />
-          <Route path="/textbooks/:id/read" element={<BookReader />} />
-          <Route path="/cart" element={<Checkout />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/order-success" element={<OrderSuccess />} />
-          <Route path="/notes" element={<Notes />} />
-          <Route path="/assignments" element={<Assignments />} />
-          <Route path="/practice" element={<Practice />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/my-learning" element={<MyLearning />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/certificates" element={<Certificates />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/subscription" element={<Subscription />} />
-          <Route path="/downloads" element={<Downloads />} />
-          <Route path="/download" element={<Downloads />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/achievement" element={<Achievements />} />
           {/* Resources and Live Classes routes commented out — removed from the project.
           <Route path="/resources" element={<Resources />} />
           <Route path="/resource" element={<Resources />} />
           <Route path="/live-classes" element={<LiveClasses />} />
           <Route path="/live-class" element={<LiveClasses />} />
           */}
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/invoices" element={<Invoices />} />
-          <Route path="/orders/invoices/:id" element={<InvoiceDetails />} />
-          <Route path="/orders/returns" element={<ReturnsRefunds />} />
-          <Route path="/orders/returns/:id" element={<RefundDetails />} />
-          <Route path="/orders/:id/tracking" element={<OrderTracking />} />
-          <Route path="/orders/:id/refund" element={<RequestRefund />} />
-          <Route path="/orders/:id" element={<OrderDetails />} />
-          <Route path="/settings" element={<SettingsHome />} />
-          <Route path="/settings/security" element={<SecuritySettings />} />
-          <Route path="/settings/notifications" element={<NotificationSettings />} />
-          <Route path="/settings/refer" element={<ReferEarn />} />
-          <Route path="/settings/privacy" element={<PrivacyData />} />
-          <Route path="/settings/language" element={<LanguageSettings />} />
-          <Route path="/settings/payment" element={<PaymentMethods />} />
-          <Route path="/settings/downloads" element={<DownloadSettings />} />
-          <Route path="/settings/appearance" element={<AppearanceSettings />} />
-          <Route path="/settings/change-password" element={<ChangePassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/reset-password-success" element={<ResetPasswordSuccess />} />
           <Route path="/reset-password/success" element={<ResetPasswordSuccess />} />
@@ -153,6 +121,48 @@ export default function AppRouter() {
           <Route path="/forgot-password/sent" element={<ForgotPasswordSuccess />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<NotFound />} />
+
+          {/* Logged-in users only */}
+          <Route element={<ProtectedRoute />}>
+            {/* Lecture player — the page existed but had no route, so it was unreachable. */}
+            <Route path="/courses/:slug/learn" element={<CoursePlayer />} />
+            <Route path="/player/:slug" element={<CoursePlayer />} />
+            <Route path="/textbooks/:id/read" element={<BookReader />} />
+            <Route path="/cart" element={<Checkout />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/notes" element={<Notes />} />
+            <Route path="/assignments" element={<Assignments />} />
+            <Route path="/practice" element={<Practice />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/my-learning" element={<MyLearning />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/certificates" element={<Certificates />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/downloads" element={<Downloads />} />
+            <Route path="/download" element={<Downloads />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/achievement" element={<Achievements />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/invoices" element={<Invoices />} />
+            <Route path="/orders/invoices/:id" element={<InvoiceDetails />} />
+            <Route path="/orders/returns" element={<ReturnsRefunds />} />
+            <Route path="/orders/returns/:id" element={<RefundDetails />} />
+            <Route path="/orders/:id/tracking" element={<OrderTracking />} />
+            <Route path="/orders/:id/refund" element={<RequestRefund />} />
+            <Route path="/orders/:id" element={<OrderDetails />} />
+            <Route path="/settings" element={<SettingsHome />} />
+            <Route path="/settings/security" element={<SecuritySettings />} />
+            <Route path="/settings/notifications" element={<NotificationSettings />} />
+            <Route path="/settings/refer" element={<ReferEarn />} />
+            <Route path="/settings/privacy" element={<PrivacyData />} />
+            <Route path="/settings/language" element={<LanguageSettings />} />
+            <Route path="/settings/payment" element={<PaymentMethods />} />
+            <Route path="/settings/downloads" element={<DownloadSettings />} />
+            <Route path="/settings/appearance" element={<AppearanceSettings />} />
+            <Route path="/settings/change-password" element={<ChangePassword />} />
+          </Route>
         </Route>
       </Routes>
     </Suspense>

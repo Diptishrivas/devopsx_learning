@@ -72,10 +72,12 @@ export default function Navbar() {
   const resourcesRef = useRef(null);
   const profileRef = useRef(null);
   const notifRef = useRef(null);
+  const searchRef = useRef(null);
 
   useClickOutside(resourcesRef, () => setOpenMenu((m) => (m === 'resources' ? null : m)));
   useClickOutside(profileRef, () => setOpenMenu((m) => (m === 'profile' ? null : m)));
   useClickOutside(notifRef, () => setOpenMenu((m) => (m === 'notif' ? null : m)));
+  useClickOutside(searchRef, () => setOpenMenu((m) => (m === 'search' ? null : m)));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -106,6 +108,14 @@ export default function Navbar() {
 
   const accent = '#4f46e5';
 
+  // Borderless square icon button used in the right cluster
+  const iconBtn = {
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    width: '36px', height: '36px', borderRadius: '10px',
+    background: 'none', border: 'none', cursor: 'pointer',
+    color: 'var(--text-secondary)',
+  };
+
   return (
     <>
       <header
@@ -114,10 +124,9 @@ export default function Navbar() {
           top: 0, left: 0, right: 0,
           zIndex: 40,
           height: 'var(--navbar-height)',
-          padding: '0 clamp(8px, 3vw, 32px)',
+          padding: '0 clamp(12px, 3vw, 32px)',
           display: 'flex',
           alignItems: 'center',
-          gap: 'clamp(6px, 1.5vw, 20px)',
           background: isDark
             ? (scrolled ? 'rgba(6,11,24,0.97)' : 'rgba(6,11,24,0.92)')
             : (scrolled ? 'rgba(255,255,255,0.98)' : '#ffffff'),
@@ -133,6 +142,13 @@ export default function Navbar() {
           boxSizing: 'border-box',
         }}
       >
+        <div
+          className="nav-inner"
+          style={{
+            width: '100%', maxWidth: '1200px', margin: '0 auto', height: '100%',
+            display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 28px)',
+          }}
+        >
         {/* ── Brand ── */}
         <Link to="/" style={{ textDecoration: 'none', flexShrink: 0 }} className="nav-brand">
           <BrandLogo size="md" />
@@ -157,7 +173,7 @@ export default function Navbar() {
         {/* ── Primary nav ── */}
         <nav
           className="nav-links"
-          style={{ display: 'flex', alignItems: 'center', gap: '20px', marginLeft: '12px' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '30px', marginLeft: '16px' }}
         >
           {navLinks.map((item) => {
             const active = isActive(item.to);
@@ -241,17 +257,15 @@ export default function Navbar() {
                 key={item.label}
                 to={item.to}
                 style={{
-                  padding: '0 0 3px',
-                  fontSize: '0.86rem',
-                  fontWeight: active ? 700 : 600,
-                  color: active ? accent : 'var(--text-primary)',
+                  fontSize: '0.95rem',
+                  fontWeight: active ? 600 : 500,
+                  color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
                   textDecoration: 'none',
-                  borderBottom: `2px solid ${active ? accent : 'transparent'}`,
                   transition: 'color 0.15s',
                   whiteSpace: 'nowrap',
                 }}
-                onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = accent; }}
-                onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'var(--text-primary)'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
+                onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'var(--text-secondary)'; }}
               >
                 {item.label}
               </Link>
@@ -259,36 +273,49 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Center: Desktop Search Input Bar */}
-        <div className="nav-search" style={{ flex: 1, maxWidth: '320px', margin: '0 12px' }}>
-          <SearchBar size="md" className="w-full" placeholder="Search for books, courses..." />
-        </div>
 
         {/* ── Right cluster ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(6px, 1vw, 12px)', marginLeft: 'auto' }}>
 
-          {/* Theme Toggle Pill */}
+          {/* Search */}
+          <div ref={searchRef} style={{ position: 'relative' }}>
+            <button
+              onClick={() => setOpenMenu((m) => (m === 'search' ? null : 'search'))}
+              aria-label="Search"
+              style={iconBtn}
+            >
+              <Search size={18} />
+            </button>
+            <AnimatePresence>
+              {openMenu === 'search' && (
+                <motion.div
+                  {...dropDownMotion}
+                  style={{
+                    position: 'absolute', right: 0, top: 'calc(100% + 12px)',
+                    width: 'min(340px, calc(100vw - 32px))', padding: '10px',
+                    borderRadius: '14px', background: 'var(--bg-card)',
+                    border: isDark ? '1px solid rgba(255,255,255,.1)' : '1px solid rgba(15,23,42,.08)',
+                    boxShadow: isDark ? '0 20px 50px rgba(0,0,0,.6)' : '0 16px 40px rgba(15,23,42,.12)',
+                  }}
+                >
+                  <SearchBar size="md" className="w-full" placeholder="Search for books, courses..." />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
             title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '4px',
-              padding: '6px 8px', borderRadius: '999px',
-              background: isDark
-                ? 'linear-gradient(135deg, rgba(251,191,36,.12), rgba(251,191,36,.06))'
-                : 'linear-gradient(135deg, rgba(59,130,246,.12), rgba(6,182,212,.07))',
-              border: isDark ? '1px solid rgba(251,191,36,.25)' : '1px solid rgba(59,130,246,.25)',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-            }}
+            style={iconBtn}
           >
-            {isDark
-              ? <><Sun size={14} color="#fbbf24" /><span className="nav-theme-label" style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fbbf24' }}>Light</span></>
-              : <><Moon size={14} color="#3b82f6" /><span className="nav-theme-label" style={{ fontSize: '0.72rem', fontWeight: 700, color: '#3b82f6' }}>Dark</span></>}
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {/* Cart Icon */}
+          {/* Cart Icon — logged-in users only */}
+          {user && (
           <Link
             to="/checkout"
             aria-label="Cart"
@@ -315,6 +342,7 @@ export default function Navbar() {
               {cartCount}
             </span>
           </Link>
+          )}
 
           {/* User Logged In Menu */}
           {user ? (
@@ -442,7 +470,7 @@ export default function Navbar() {
                           { icon: Award,    label: 'Achievements', to: '/achievements' },
                           { icon: Award,    label: 'Certificates', to: '/certificates' },
                           { icon: Heart,    label: 'Wishlist',     to: '/wishlist' },
-                          { icon: Settings, label: 'Settings',     to: '/profile' },
+                          { icon: Settings, label: 'Settings',     to: '/settings' },
                         ].map(({ icon: Icon, label, to }) => (
                           <Link
                             key={label}
@@ -496,30 +524,41 @@ export default function Navbar() {
               </div>
             </>
           ) : (
-            <Link
-              to="/login"
-              style={{
-                padding: '8px 22px', borderRadius: '10px',
-                fontSize: '0.845rem', fontWeight: 600,
-                color: 'var(--text-primary)',
-                border: isDark ? '1px solid rgba(255,255,255,.14)' : '1px solid rgba(15,23,42,.14)',
-                textDecoration: 'none', whiteSpace: 'nowrap',
-                transition: 'all 0.15s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = accent;
-                e.currentTarget.style.color = accent;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,.14)' : 'rgba(15,23,42,.14)';
-                e.currentTarget.style.color = 'var(--text-primary)';
-              }}
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                to="/login"
+                className="nav-signin"
+                style={{
+                  padding: '8px 6px', fontSize: '0.95rem', fontWeight: 500,
+                  color: 'var(--text-primary)', textDecoration: 'none', whiteSpace: 'nowrap',
+                  transition: 'opacity 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.75'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="nav-cta"
+                style={{
+                  padding: '11px 22px', borderRadius: '10px',
+                  fontSize: '0.95rem', fontWeight: 600, whiteSpace: 'nowrap',
+                  color: '#fff', textDecoration: 'none',
+                  background: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+                  boxShadow: '0 6px 18px rgba(124,58,237,.35)',
+                  transition: 'transform 0.15s, box-shadow 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 10px 24px rgba(124,58,237,.45)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(124,58,237,.35)'; }}
+              >
+                Sign Up
+              </Link>
+            </>
           )}
 
-          {/* Mobile menu toggle */}
+          {/* Mobile menu toggle — logged-in users only */}
+          {user && (
           <button
             onClick={() => setMobileOpen((p) => !p)}
             className="nav-mobile-btn"
@@ -533,12 +572,14 @@ export default function Navbar() {
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
+          )}
+        </div>
         </div>
       </header>
 
       {/* ── MOBILE DRAWER OVERLAY ── */}
       <AnimatePresence>
-        {mobileOpen && (
+        {user && mobileOpen && (
           <>
             {/* Backdrop */}
             <motion.div

@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import { getCourseBySlug, courses } from '../../data/courses';
 import { useAuth } from '../../context/AuthContext';
+import { useRequireLogin } from '../../routes/RouteGuards';
 import { useTheme } from '../../context/ThemeContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
@@ -42,7 +43,8 @@ import { toast } from 'react-hot-toast';
 export default function CourseDetails() {
   const { slug } = useParams();
   const course = getCourseBySlug(slug);
-  const { user, isEnrolled, toggleWishlist, isWishlisted } = useAuth();
+  const { isEnrolled, toggleWishlist, isWishlisted } = useAuth();
+  const requireLogin = useRequireLogin();
   const { isDark } = useTheme();
   const navigate = useNavigate();
 
@@ -98,14 +100,21 @@ export default function CourseDetails() {
     .filter((c) => c.id !== course.id)
     .slice(0, 3);
 
-  const handleEnroll = () => {
+  const enrolled = isEnrolled(course.id);
+
+  // Enrolled learners go straight to the lectures; everyone else to checkout.
+  const handleEnroll = () => requireLogin(() => {
+    if (enrolled) {
+      navigate(`/courses/${course.slug}/learn`);
+      return;
+    }
     toast.success(`Enrolling in "${course.title}"...`);
     navigate('/checkout');
-  };
+  });
 
-  const handleAddToCart = () => {
+  const handleAddToCart = () => requireLogin(() => {
     toast.success(`Added "${course.title}" to your cart!`);
-  };
+  });
 
   const border = isDark ? 'rgba(255,255,255,.08)' : '#eaecf0';
 
@@ -426,7 +435,7 @@ export default function CourseDetails() {
                   transition: 'all .15s',
                 }}
               >
-                Enroll Now
+                {enrolled ? 'Go to Course' : 'Enroll Now'}
               </button>
 
               <button
@@ -454,7 +463,7 @@ export default function CourseDetails() {
               </button>
 
               <button
-                onClick={() => user && toggleWishlist(course.id)}
+                onClick={() => requireLogin(() => toggleWishlist(course.id))}
                 style={{
                   padding: '10px 14px',
                   borderRadius: '8px',
@@ -565,7 +574,7 @@ export default function CourseDetails() {
                 boxShadow: '0 6px 18px rgba(99,102,241,.35)',
               }}
             >
-              Enroll Now
+              {enrolled ? 'Go to Course' : 'Enroll Now'}
             </button>
 
             <button

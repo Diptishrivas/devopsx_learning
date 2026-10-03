@@ -10,7 +10,7 @@ import {
   SubscriptionBanner,
   // Testimonials,       // commented out — "What Our Learners Say" reviews section hidden
   FAQ,
-  Newsletter,
+  // Newsletter,        // commented out — "Stay Updated" banner hidden (footer has its own subscribe box)
 } from '../../components/sections/HomeSections';
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
       <SubscriptionBanner />
       {/* <Testimonials /> */}
       <FAQ />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </main>
   );
 }

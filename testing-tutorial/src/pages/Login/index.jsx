@@ -3,7 +3,7 @@
 // ============================================================
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   ChevronRight, User, Eye, EyeOff, GraduationCap, Video,
   Award, BookOpen, Heart, Download, FileText, Settings,
@@ -14,6 +14,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
+import { getRedirectTarget } from '../../routes/RouteGuards';
 
 const SIDEBAR_MENU = [
   { label: 'Overview', icon: BookOpen, path: '/dashboard' },
@@ -61,6 +62,7 @@ export default function Login() {
   const { isDark } = useTheme();
   const { user, login, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -77,7 +79,7 @@ export default function Login() {
     try {
       await login(form.email, form.password);
       toast.success('Welcome back!');
-      navigate('/dashboard');
+      navigate(getRedirectTarget(location), { replace: true });
     } catch {
       toast.error('Invalid credentials');
     }
@@ -399,7 +401,7 @@ export default function Login() {
               {/* Footer text */}
               <p style={{ textAlign: 'center', fontSize: '0.82rem', color: 'var(--text-muted)', margin: '4px 0 0' }}>
                 Don't have an account?{' '}
-                <Link to="/register" style={{ color: '#4f46e5', fontWeight: 700, textDecoration: 'none' }}>Sign up</Link>
+                <Link to="/register" state={location.state} style={{ color: '#4f46e5', fontWeight: 700, textDecoration: 'none' }}>Sign up</Link>
               </p>
             </div>
 

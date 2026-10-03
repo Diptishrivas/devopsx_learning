@@ -294,21 +294,6 @@ function PreviewVideo({ isDark, compact = false }) {
       transition={{ duration: 0.65, ease: 'easeOut', delay: 0.3 }}
       style={{ width: '100%', maxWidth: compact ? '100%' : '1120px', margin: '0 auto' }}
     >
-      {/* Section label */}
-      <div style={{ textAlign: 'center', marginBottom: compact ? '10px' : '18px' }}>
-        <span style={{
-          display: 'inline-flex', alignItems: 'center', gap: '7px',
-          padding: compact ? '4px 11px' : '6px 14px', borderRadius: '8px',
-          background: isDark ? 'rgba(99,102,241,.15)' : '#eeecfd',
-          color: isDark ? '#a5b4fc' : '#4f46e5',
-          fontSize: compact ? '0.66rem' : '0.75rem', fontWeight: 700, letterSpacing: '0.03em',
-          textTransform: 'uppercase',
-        }}>
-          <PlayCircle size={compact ? 12 : 14} />
-          Course Preview
-        </span>
-      </div>
-
       {/* Video wrapper */}
       <div
         className="hero-video-wrapper"
@@ -525,7 +510,8 @@ export default function Hero() {
 
           {/* Actions block — stats, CTAs, trust line (full width on mobile) */}
           <motion.div className="hero-actions" variants={containerVar}>
-          {/* Stats card */}
+          {/* Stats card — hidden until stats come from the API */}
+          {stats.length > 0 && (
           <motion.div
             variants={itemVar}
             className="hero-stats"
@@ -582,6 +568,7 @@ export default function Hero() {
               </div>
             ))}
           </motion.div>
+          )}
 
           {/* CTAs */}
           <motion.div
@@ -743,7 +730,7 @@ export default function Hero() {
           width: 100%;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 500px) 190px;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 600px) 190px;
           gap: 26px;
           align-items: center;
         }
@@ -774,7 +761,7 @@ export default function Hero() {
         }
 
         @media (max-width: 1180px) {
-          .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 440px); }
+          .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); }
           .hero-features {
             grid-column: 1 / -1;
             flex-direction: row !important;
@@ -877,7 +864,7 @@ export default function Hero() {
               "actions actions"
               "feats   feats" !important;
           }
-          .hero-preview { max-width: 640px; margin: 0 auto !important; }
+          .hero-preview { max-width: 760px; margin: 0 auto !important; }
         }
 
         /* ── Video section responsive ── */

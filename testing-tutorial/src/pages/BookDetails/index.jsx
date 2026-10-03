@@ -13,12 +13,14 @@ import { books, getBookById } from '../../data/books';
 import { useTheme } from '../../context/ThemeContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
+import { useRequireLogin } from '../../routes/RouteGuards';
 
 export default function BookDetails() {
   const { id } = useParams();
   const book = getBookById(id);
   const { isDark } = useTheme();
   const navigate = useNavigate();
+  const requireLogin = useRequireLogin();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('about');
@@ -55,14 +57,14 @@ export default function BookDetails() {
     navigate('/checkout');
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = () => requireLogin(() => {
     toast.success(`Added "${book.title}" to your cart!`);
-  };
+  });
 
-  const handleToggleWishlist = () => {
+  const handleToggleWishlist = () => requireLogin(() => {
     setIsWishlisted(!isWishlisted);
     toast.success(isWishlisted ? `Removed from wishlist` : `Added "${book.title}" to wishlist!`);
-  };
+  });
 
   const handleDownloadSample = () => {
     // Prefer the attached PDF; fall back to the legacy downloadUrl field.

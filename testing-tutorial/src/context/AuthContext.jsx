@@ -43,41 +43,44 @@ export function AuthProvider({ children }) {
 
   // Real backend MongoDB login
   const login = async (email, password) => {
+    let res;
     try {
-      const res = await fetch(`${API_BASE}/login`, {
+      res = await fetch(`${API_BASE}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Invalid email or password');
-
-      const userData = {
-        id: data.user.id,
-        name: data.user.name,
-        email: data.user.email,
-        role: data.user.role,
-        token: data.token,
-        enrolledCourses: [1, 2, 5],
-        wishlist: [],
-        certificates: [],
-      };
-
-      setUser(userData);
-      localStorage.setItem('devopsx_user', JSON.stringify(userData));
-      localStorage.setItem('devopsx_token', data.token);
-      return userData;
     } catch (err) {
-      // Fallback to mock login if backend server is unreachable
-      const found = MOCK_USERS.find((u) => u.email === email && u.password === password);
-      if (found) {
-        const { password: _pwd, ...safeUser } = found;
-        setUser(safeUser);
-        localStorage.setItem('devopsx_user', JSON.stringify(safeUser));
-        return safeUser;
-      }
-      throw err;
+      // Backend unreachable — fall back to mock users, in development only.
+      // A server that answered (even with 401) must never be bypassed.
+      const found = import.meta.env.DEV
+        && MOCK_USERS.find((u) => u.email === email && u.password === password);
+      if (!found) throw err;
+      const { password: _pwd, ...safeUser } = found;
+      setUser(safeUser);
+      localStorage.setItem('devopsx_user', JSON.stringify(safeUser));
+      return safeUser;
     }
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.message || 'Invalid email or password');
+
+    const userData = {
+      id: data.user.id,
+      name: data.user.name,
+      email: data.user.email,
+      role: data.user.role,
+      token: data.token,
+      // TODO: fetch enrolled courses / wishlist / certificates from backend
+      enrolledCourses: data.user.enrolledCourses ?? [],
+      wishlist: data.user.wishlist ?? [],
+      certificates: data.user.certificates ?? [],
+    };
+
+    setUser(userData);
+    localStorage.setItem('devopsx_user', JSON.stringify(userData));
+    localStorage.setItem('devopsx_token', data.token);
+    return userData;
   };
 
   // Real backend MongoDB signup
@@ -114,6 +117,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('devopsx_user');
+    localStorage.removeItem('devopsx_token');
   };
 
   const updateProfile = (updates) => {

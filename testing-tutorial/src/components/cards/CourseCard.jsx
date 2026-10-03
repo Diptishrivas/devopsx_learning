@@ -6,10 +6,12 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star, Heart, Play, Clock, BarChart2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useRequireLogin } from '../../routes/RouteGuards';
 import { useTheme } from '../../context/ThemeContext';
 
 export default function CourseCard({ course, index = 0 }) {
-  const { user, toggleWishlist, isWishlisted } = useAuth();
+  const { toggleWishlist, isWishlisted } = useAuth();
+  const requireLogin = useRequireLogin();
   const { isDark } = useTheme();
 
   const wishlisted = isWishlisted(course.id);
@@ -114,7 +116,7 @@ export default function CourseCard({ course, index = 0 }) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            user && toggleWishlist(course.id);
+            requireLogin(() => toggleWishlist(course.id));
           }}
           style={{
             position: 'absolute',

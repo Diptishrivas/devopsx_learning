@@ -3,7 +3,7 @@
 // ============================================================
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   ChevronRight, User, Mail, Lock, Eye, EyeOff, GraduationCap, Video,
   Award, Tag, BookOpen, Heart, Download, FileText,
@@ -14,6 +14,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import PageWrapper from '../../components/ui/PageWrapper';
 import { toast } from 'react-hot-toast';
+import { getRedirectTarget } from '../../routes/RouteGuards';
 
 const SIDEBAR_MENU = [
   { label: 'Overview', icon: BookOpen, path: '/dashboard' },
@@ -61,6 +62,7 @@ export default function Register() {
   const { isDark } = useTheme();
   const { user, register, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [showPw, setShowPw] = useState(false);
@@ -89,8 +91,9 @@ export default function Register() {
     setLoading(true);
     try {
       await register({ name: form.name, email: form.email, password: form.password });
-      toast.success('Account created successfully in MongoDB!');
-      navigate('/dashboard');
+      toast.success('Account created successfully!');
+      // New users set up interests first, unless they were heading somewhere specific.
+      navigate(getRedirectTarget(location, '/onboarding'), { replace: true });
     } catch (err) {
       toast.error(err.message || 'Registration failed');
     }
@@ -401,7 +404,7 @@ export default function Register() {
               {/* Footer text */}
               <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', margin: '2px 0 0' }}>
                 Already have an account?{' '}
-                <Link to="/login" style={{ color: '#4f46e5', fontWeight: 700, textDecoration: 'none' }}>Login</Link>
+                <Link to="/login" state={location.state} style={{ color: '#4f46e5', fontWeight: 700, textDecoration: 'none' }}>Login</Link>
               </p>
             </div>
 
