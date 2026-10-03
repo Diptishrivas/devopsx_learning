@@ -125,7 +125,7 @@ export default function Achievements() {
   const sidebarMenuItems = [
     { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'My Courses', icon: BookOpen, path: '/my-learning' },
-    { label: 'Live Classes', icon: Video, path: '/courses' },
+    // { label: 'Live Classes', icon: Video, path: '/courses' },
     { label: 'Certificates', icon: Award, path: '/certificates' },
     { label: 'Wishlist', icon: Heart, path: '/wishlist' },
     { label: 'Downloads', icon: Download, path: '/downloads' },
@@ -159,12 +159,13 @@ export default function Achievements() {
         {/* ── 3-COLUMN MAIN DASHBOARD PORTAL LAYOUT ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '220px 1fr 280px',
+          gridTemplateColumns: '1fr 280px',
           gap: '24px',
           alignItems: 'start',
         }}>
 
           {/* ── COLUMN 1: LEFT USER PORTAL SIDEBAR ── */}
+          {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
           <div style={{
             background: isDark ? '#0f172a' : '#ffffff',
             border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : '#eaecf0'}`,
@@ -175,7 +176,7 @@ export default function Achievements() {
             gap: '16px',
             boxShadow: '0 1px 3px rgba(16, 24, 40, 0.04)',
           }}>
-            {/* Menu List */}
+            {/* Menu List *\/}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
               {sidebarMenuItems.map((item) => {
                 const Icon = item.icon;
@@ -208,7 +209,7 @@ export default function Achievements() {
                 );
               })}
 
-              {/* Show Logout only when a user is logged in */}
+              {/* Show Logout only when a user is logged in *\/}
               {user && (
                 <button
                   onClick={() => { logout(); navigate('/login'); }}
@@ -226,7 +227,7 @@ export default function Achievements() {
               )}
             </div>
 
-            {/* Bottom Sidebar Promo Banner ("Celebrate Your Learning Journey!") */}
+            {/* Bottom Sidebar Promo Banner ("Celebrate Your Learning Journey!") *\/}
             <div style={{
               background: isDark ? 'linear-gradient(135deg, #1e1b4b, #311b92)' : 'linear-gradient(135deg, #f5f3ff, #ede9fe)',
               border: `1px solid ${isDark ? 'rgba(99,102,241,0.3)' : '#ddd6fe'}`,
@@ -268,6 +269,7 @@ export default function Achievements() {
               </button>
             </div>
           </div>
+          */}
 
           {/* ── COLUMN 2: CENTER MY ACHIEVEMENTS & STATS BAR ── */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

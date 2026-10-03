@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast';
 const SIDEBAR_MENU = [
   { label: 'Overview', icon: BookOpen, path: '/dashboard' },
   { label: 'My Courses', icon: BookOpen, path: '/my-learning' },
-  { label: 'Live Classes', icon: Video, path: '/live-classes' },
+  // { label: 'Live Classes', icon: Video, path: '/live-classes' },
   { label: 'Certificates', icon: Award, path: '/certificates' },
   { label: 'Wishlist', icon: Heart, path: '/wishlist' },
   { label: 'Downloads', icon: Download, path: '/downloads' },
@@ -90,6 +90,7 @@ export default function ForgotPassword() {
       <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', display: 'flex', gap: '24px', alignItems: 'start' }}>
 
         {/* LEFT SIDEBAR */}
+        {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
         <div className="auth-sidebar" style={{ width: '200px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {SIDEBAR_MENU.map((item) => {
             const Icon = item.icon;
@@ -106,7 +107,7 @@ export default function ForgotPassword() {
               </Link>
             );
           })}
-          {/* Show Logout only when a user is logged in */}
+          {/* Show Logout only when a user is logged in *\/}
           {user && (
             <button onClick={() => { logout(); navigate('/login'); }} style={{
               display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
@@ -116,7 +117,7 @@ export default function ForgotPassword() {
             </button>
           )}
 
-          {/* Learn Without Limits widget */}
+          {/* Learn Without Limits widget *\/}
           <div style={{
             marginTop: '16px',
             background: isDark ? 'linear-gradient(135deg,#1e1b4b,#311b92)' : 'linear-gradient(135deg,#f5f3ff,#ede9fe)',
@@ -144,6 +145,7 @@ export default function ForgotPassword() {
             }}>Go Premium</button>
           </div>
         </div>
+        */}
 
         {/* MAIN CONTENT */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>

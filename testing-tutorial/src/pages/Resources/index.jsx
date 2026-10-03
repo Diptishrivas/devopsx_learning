@@ -200,13 +200,14 @@ export default function Resources() {
           className="resources-portal-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '220px 1fr 280px',
+            gridTemplateColumns: '1fr 280px',
             gap: '24px',
             alignItems: 'start',
           }}
         >
 
           {/* ── COLUMN 1: LEFT USER PORTAL SIDEBAR ── */}
+          {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
           <div
             className="resources-left-sidebar"
             style={{
@@ -220,7 +221,7 @@ export default function Resources() {
               boxShadow: '0 1px 3px rgba(16, 24, 40, 0.04)',
             }}
           >
-            {/* Menu List */}
+            {/* Menu List *\/}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
               {sidebarMenuItems.map((item) => {
                 const Icon = item.icon;
@@ -253,7 +254,7 @@ export default function Resources() {
                 );
               })}
 
-              {/* Show Logout only when a user is logged in */}
+              {/* Show Logout only when a user is logged in *\/}
               {user && (
                 <button
                   onClick={() => { logout(); navigate('/login'); }}
@@ -271,7 +272,7 @@ export default function Resources() {
               )}
             </div>
 
-            {/* Bottom Sidebar Promo Banner ("Access 1000+ Premium Resources") */}
+            {/* Bottom Sidebar Promo Banner ("Access 1000+ Premium Resources") *\/}
             <div style={{
               background: isDark ? 'linear-gradient(135deg, #1e1b4b, #311b92)' : 'linear-gradient(135deg, #f5f3ff, #ede9fe)',
               border: `1px solid ${isDark ? 'rgba(99,102,241,0.3)' : '#ddd6fe'}`,
@@ -313,6 +314,7 @@ export default function Resources() {
               </button>
             </div>
           </div>
+          */}
 
           {/* ── COLUMN 2: CENTER RESOURCES CONTENT ── */}
           <div className="resources-center-col" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

@@ -112,7 +112,7 @@ const STATUS_COLORS = {
 const sidebarMenuItems = [
   { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
   { label: 'My Courses', icon: BookOpen, path: '/my-learning' },
-  { label: 'Live Classes', icon: Video, path: '/courses' },
+  // { label: 'Live Classes', icon: Video, path: '/courses' },
   { label: 'Certificates', icon: Award, path: '/certificates' },
   { label: 'Orders', icon: ShoppingBag, path: '/orders' },
   { label: 'Invoices', icon: FileText, path: '/orders/invoices' },
@@ -165,9 +165,10 @@ export default function ReturnsRefunds() {
         </div>
 
         {/* 3-COLUMN LAYOUT */}
-        <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 280px', gap: '24px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '24px', alignItems: 'start' }}>
 
           {/* LEFT SIDEBAR */}
+          {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
           <div style={{ background: card, border: `1px solid ${border}`, borderRadius: '16px', padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: '16px', boxShadow: '0 1px 3px rgba(16,24,40,0.04)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
               {sidebarMenuItems.map(item => {
@@ -180,7 +181,7 @@ export default function ReturnsRefunds() {
                   </Link>
                 );
               })}
-              {/* Show Logout only when a user is logged in */}
+              {/* Show Logout only when a user is logged in *\/}
               {user && (
                 <button onClick={() => { logout(); navigate('/login'); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 500, color: '#ef4444', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', marginTop: '4px' }}>
                   <LogOut size={16} />
@@ -189,7 +190,7 @@ export default function ReturnsRefunds() {
               )}
             </div>
 
-            {/* Promo Banner */}
+            {/* Promo Banner *\/}
             <div style={{ background: isDark ? 'linear-gradient(135deg,#1e1b4b,#311b92)' : 'linear-gradient(135deg,#f5f3ff,#ede9fe)', border: `1px solid ${isDark ? 'rgba(99,102,241,0.3)' : '#ddd6fe'}`, borderRadius: '14px', padding: '18px 14px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '10px' }}>
               <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#ffffff', boxShadow: '0 4px 12px rgba(79,70,229,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <RotateCcw size={22} color="#4f46e5" />
@@ -203,6 +204,7 @@ export default function ReturnsRefunds() {
               </button>
             </div>
           </div>
+          */}
 
           {/* CENTER COLUMN */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

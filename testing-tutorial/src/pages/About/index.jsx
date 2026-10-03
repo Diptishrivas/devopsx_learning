@@ -257,6 +257,7 @@ export default function About() {
       </section>
 
       {/* ── MEET OUR INSTRUCTORS ── */}
+      {/* Meet Our Instructors section commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
       <section style={{ background: 'var(--bg-secondary)', padding: '64px 24px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <h2
@@ -345,6 +346,7 @@ export default function About() {
           </div>
         </div>
       </section>
+      */}
 
     </div>
   );

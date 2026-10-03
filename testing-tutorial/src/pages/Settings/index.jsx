@@ -20,11 +20,11 @@ import { toast } from 'react-hot-toast';
 const SIDEBAR_MENU = [
   { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
   { label: 'My Courses', icon: BookOpen, path: '/my-learning' },
-  { label: 'Live Classes', icon: Video, path: '/live-classes' },
+  // { label: 'Live Classes', icon: Video, path: '/live-classes' },
   { label: 'Certificates', icon: Award, path: '/certificates' },
   { label: 'Orders', icon: ShoppingBag, path: '/orders' },
   { label: 'Invoices', icon: Receipt, path: '/orders/invoices' },
-  { label: 'Resources', icon: FileText, path: '/resources' },
+  // { label: 'Resources', icon: FileText, path: '/resources' },
   { label: 'Wishlist', icon: Heart, path: '/wishlist' },
   { label: 'Downloads', icon: Download, path: '/downloads' },
   { label: 'Notes', icon: FileText, path: '/notes' },
@@ -153,6 +153,7 @@ export default function SettingsPage() {
       <div className="settings-layout" style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', display: 'flex', gap: '24px', alignItems: 'start' }}>
 
         {/* LEFT SIDEBAR */}
+        {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
         <div className="settings-sidebar" style={{ width: '200px', flexShrink: 0 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             {SIDEBAR_MENU.map((item) => {
@@ -171,7 +172,7 @@ export default function SettingsPage() {
                 </Link>
               );
             })}
-            {/* Show Logout only when a user is logged in */}
+            {/* Show Logout only when a user is logged in *\/}
             {user && (
               <button onClick={() => { logout(); navigate('/login'); }} style={{
                 display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
@@ -182,7 +183,7 @@ export default function SettingsPage() {
             )}
           </div>
 
-          {/* Customize widget */}
+          {/* Customize widget *\/}
           <div style={{
             marginTop: '20px',
             background: isDark ? 'linear-gradient(135deg,#1e1b4b,#311b92)' : 'linear-gradient(135deg,#f5f3ff,#ede9fe)',
@@ -190,7 +191,7 @@ export default function SettingsPage() {
             borderRadius: '14px', padding: '16px 14px',
             display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '10px',
           }}>
-            {/* Illustration */}
+            {/* Illustration *\/}
             <div style={{ fontSize: '2.4rem' }}>⚙️</div>
             <div>
               <h4 style={{ color: isDark ? '#fff' : '#1e1b4b', fontSize: '0.82rem', fontWeight: 800, margin: '0 0 4px' }}>Customize your experience</h4>
@@ -203,6 +204,7 @@ export default function SettingsPage() {
             }}>Explore Now</button>
           </div>
         </div>
+        */}
 
         {/* CENTER + RIGHT */}
         <div className="settings-inner-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 280px', gap: '24px', alignItems: 'start', minWidth: 0 }}>

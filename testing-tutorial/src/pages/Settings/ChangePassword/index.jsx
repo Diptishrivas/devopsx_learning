@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast';
 const SIDEBAR_MENU = [
   { label: 'Overview', icon: BookOpen, path: '/dashboard' },
   { label: 'My Courses', icon: BookOpen, path: '/my-learning' },
-  { label: 'Live Classes', icon: Video, path: '/live-classes' },
+  // { label: 'Live Classes', icon: Video, path: '/live-classes' },
   { label: 'Certificates', icon: Award, path: '/certificates' },
   { label: 'Wishlist', icon: Heart, path: '/wishlist' },
   { label: 'Downloads', icon: Download, path: '/downloads' },
@@ -109,9 +109,10 @@ export default function ChangePassword() {
           <span style={{ color: '#4f46e5', fontWeight: 600 }}>Change Password</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '24px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px', alignItems: 'start' }}>
 
           {/* LEFT SIDEBAR */}
+          {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
           <div style={{ ...card, padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
               {SIDEBAR_MENU.map((item) => {
@@ -133,7 +134,7 @@ export default function ChangePassword() {
                   </Link>
                 );
               })}
-              {/* Show Logout only when a user is logged in */}
+              {/* Show Logout only when a user is logged in *\/}
               {user && (
                 <button onClick={() => { logout(); navigate('/login'); }} style={{
                   display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px',
@@ -144,7 +145,7 @@ export default function ChangePassword() {
               )}
             </div>
 
-            {/* Go Premium */}
+            {/* Go Premium *\/}
             <div style={{
               background: isDark ? 'linear-gradient(135deg,#1e1b4b,#311b92)' : 'linear-gradient(135deg,#f5f3ff,#ede9fe)',
               border: `1px solid ${isDark ? 'rgba(99,102,241,0.3)' : '#ddd6fe'}`,
@@ -165,6 +166,7 @@ export default function ChangePassword() {
               }}>Upgrade Now</button>
             </div>
           </div>
+          */}
 
           {/* CENTER — Change Password Form */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

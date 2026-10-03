@@ -4,11 +4,11 @@
 
 import Hero from '../../components/sections/Hero';
 import {
-  TrustedBy,
-  ExploreCategories,
+  // TrustedBy,          // commented out — "Trusted by Learners" section hidden
+  // ExploreCategories,  // commented out — "Explore Top Categories" section hidden
   FeaturedBooksAndCourses,
   SubscriptionBanner,
-  Testimonials,
+  // Testimonials,       // commented out — "What Our Learners Say" reviews section hidden
   FAQ,
   Newsletter,
 } from '../../components/sections/HomeSections';
@@ -17,11 +17,11 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <TrustedBy />
-      <ExploreCategories />
+      {/* <TrustedBy /> */}
+      {/* <ExploreCategories /> */}
       <FeaturedBooksAndCourses />
       <SubscriptionBanner />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <FAQ />
       <Newsletter />
     </main>

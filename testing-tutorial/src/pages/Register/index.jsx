@@ -18,7 +18,7 @@ import { toast } from 'react-hot-toast';
 const SIDEBAR_MENU = [
   { label: 'Overview', icon: BookOpen, path: '/dashboard' },
   { label: 'My Courses', icon: BookOpen, path: '/my-learning' },
-  { label: 'Live Classes', icon: Video, path: '/live-classes' },
+  // { label: 'Live Classes', icon: Video, path: '/live-classes' },
   { label: 'Certificates', icon: Award, path: '/certificates' },
   { label: 'Wishlist', icon: Heart, path: '/wishlist' },
   { label: 'Downloads', icon: Download, path: '/downloads' },
@@ -118,6 +118,7 @@ export default function Register() {
       <div className="auth-layout" style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', display: 'flex', gap: '24px', alignItems: 'start', overflowX: 'hidden', boxSizing: 'border-box' }}>
 
         {/* LEFT SIDEBAR */}
+        {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
         <div className="auth-sidebar" style={{ width: '200px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {SIDEBAR_MENU.map((item) => {
             const Icon = item.icon;
@@ -134,7 +135,7 @@ export default function Register() {
               </Link>
             );
           })}
-          {/* Show Logout only when a user is logged in */}
+          {/* Show Logout only when a user is logged in *\/}
           {user && (
             <button onClick={() => { logout(); navigate('/login'); }} style={{
               display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 12px', borderRadius: '10px',
@@ -144,7 +145,7 @@ export default function Register() {
             </button>
           )}
 
-          {/* Join AI Learning Today! widget */}
+          {/* Join AI Learning Today! widget *\/}
           <div style={{
             marginTop: '16px',
             background: isDark ? 'linear-gradient(135deg,#1e1b4b,#311b92)' : 'linear-gradient(135deg,#f5f3ff,#ede9fe)',
@@ -172,9 +173,10 @@ export default function Register() {
             }}>Sign Up Now</button>
           </div>
         </div>
+        */}
 
         {/* MAIN CONTENT */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ flex: 1, maxWidth: '460px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
           {/* Breadcrumb */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
@@ -187,9 +189,10 @@ export default function Register() {
           <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', margin: '0 0 8px' }}>Join AI Learning and start your AI learning journey today.</p>
 
           {/* Main Card (Split 2 Columns) */}
-          <div className="auth-card-split" style={{ ...card, padding: '0', display: 'grid', gridTemplateColumns: '1fr 420px', overflow: 'hidden' }}>
+          <div className="auth-card-split" style={{ ...card, padding: '0', display: 'grid', gridTemplateColumns: '1fr', overflow: 'hidden' }}>
 
             {/* Left Column — Feature Highlights */}
+            {/* Content column commented out so only the form shows. To restore: remove this comment wrapper, turn each "*\/" back into a normal comment ending, and set the card's gridTemplateColumns back to two columns.
             <div style={{
               padding: '40px 36px',
               background: isDark ? 'rgba(79,70,229,0.04)' : '#f8f9ff',
@@ -206,7 +209,7 @@ export default function Register() {
                   Join thousands of learners and unlock endless opportunities with AI Learning.
                 </p>
 
-                {/* Features List */}
+                {/* Features List *\/}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                   {[
                     { icon: GraduationCap, title: 'Expert-Led Courses', desc: 'Learn from industry experts and enhance your skills.', bg: '#e0e7ff', color: '#4f46e5' },
@@ -230,7 +233,7 @@ export default function Register() {
                 </div>
               </div>
 
-              {/* Social Proof Box (Clean Badges) */}
+              {/* Social Proof Box (Clean Badges) *\/}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: '12px',
@@ -253,6 +256,7 @@ export default function Register() {
                 </div>
               </div>
             </div>
+            */}
 
             {/* Right Column — Sign Up Form */}
             <div style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: '18px' }}>

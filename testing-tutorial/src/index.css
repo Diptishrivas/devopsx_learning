@@ -1116,9 +1116,12 @@ html.light .hero-bg {
   .auth-card-split {
     grid-template-columns: 1fr !important;
   }
+  /* Content column is commented out in Login/Register, so the form is now the
+     first child — this rule would hide it. Restore it with the content column.
   .auth-card-split > :first-child {
-    display: none !important; /* Hide left marketing panel on mobile to keep auth form clean & focused */
+    display: none !important;
   }
+  */
 }
 
 @media (max-width: 500px) {
@@ -1230,7 +1233,7 @@ html.light .hero-bg {
 /* ≤1100px: collapse to 2-col, hide right sidebar */
 @media (max-width: 1100px) {
   .resources-portal-grid {
-    grid-template-columns: 200px 1fr !important;
+    grid-template-columns: 1fr !important;
   }
   .resources-right-sidebar {
     display: none !important;
@@ -1498,7 +1501,7 @@ html.light .hero-bg {
 /* ≤1100px: collapse to 2-col, hide right sidebar */
 @media (max-width: 1100px) {
   .live-portal-grid {
-    grid-template-columns: 200px 1fr !important;
+    grid-template-columns: 1fr !important;
   }
   .live-right-sidebar {
     display: none !important;
@@ -1679,10 +1682,12 @@ html.light .hero-bg {
   .auth-card-split {
     grid-template-columns: 1fr !important;
   }
-  /* Hide the left "features" column — show only the form */
+  /* Hide the left "features" column — commented out along with that column,
+     since the form is now the first child and this would hide it.
   .auth-card-split > div:first-child {
     display: none !important;
   }
+  */
   /* Form column — remove border, reduce padding */
   .auth-card-split > div:last-child {
     padding: 24px 20px !important;

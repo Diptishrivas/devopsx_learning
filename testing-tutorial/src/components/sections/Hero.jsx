@@ -7,7 +7,7 @@ import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight, BookOpen, Users, Clock, Award, Blocks, RotateCcw,
-  Play, PlayCircle,
+  Play, PlayCircle, Volume2, VolumeX,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
@@ -249,8 +249,10 @@ function PreviewVideo({ isDark, compact = false }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(true);
+  // Starts autoplaying on load; browsers only allow autoplay while muted,
+  // so it begins muted and the viewer can unmute with the speaker button.
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const PREVIEW_URL =
     'https://ml-video-cdn-bucket-dipti.s3.us-east-1.amazonaws.com/30+sec+video+preview+clip+.mp4';
@@ -260,13 +262,17 @@ function PreviewVideo({ isDark, compact = false }) {
     if (!vid) return;
     if (vid.paused) {
       vid.play();
-      setIsPlaying(true);
-      setShowOverlay(false);
     } else {
       vid.pause();
-      setIsPlaying(false);
-      setShowOverlay(true);
     }
+  };
+
+  const handleToggleMute = (e) => {
+    e.stopPropagation();
+    const vid = videoRef.current;
+    if (!vid) return;
+    vid.muted = !vid.muted;
+    setIsMuted(vid.muted);
   };
 
   const handleFullVideo = () => {
@@ -326,9 +332,13 @@ function PreviewVideo({ isDark, compact = false }) {
           ref={videoRef}
           src={PREVIEW_URL}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          preload="metadata"
+          autoPlay
+          muted
           playsInline
-          onEnded={() => { setIsPlaying(false); setShowOverlay(true); }}
+          preload="auto"
+          onPlay={() => setShowOverlay(false)}
+          onPause={() => setShowOverlay(true)}
+          onEnded={() => setShowOverlay(true)}
         />
 
         {/* Play overlay */}
@@ -355,30 +365,24 @@ function PreviewVideo({ isDark, compact = false }) {
             >
               <Play size={compact ? 20 : 28} color="#fff" style={{ marginLeft: compact ? '3px' : '4px' }} />
             </motion.div>
-            <span style={{
-              color: '#fff', fontSize: compact ? '0.72rem' : '0.82rem', fontWeight: 600,
-              letterSpacing: '0.02em', opacity: 0.92,
-              textShadow: '0 1px 6px rgba(0,0,0,.4)',
-            }}>
-              Click to play preview
-            </span>
           </div>
         )}
 
-        {/* Pause icon when playing */}
-        {isPlaying && (
-          <div
-            style={{
-              position: 'absolute', top: '14px', right: '14px',
-              background: 'rgba(0,0,0,.45)', borderRadius: '8px',
-              padding: '6px 10px',
-              color: '#fff', fontSize: '0.7rem', fontWeight: 600,
-              backdropFilter: 'blur(6px)',
-            }}
-          >
-            29s Preview
-          </div>
-        )}
+        {/* Mute / unmute toggle */}
+        <button
+          type="button"
+          onClick={handleToggleMute}
+          aria-label={isMuted ? 'Unmute preview' : 'Mute preview'}
+          style={{
+            position: 'absolute', bottom: '14px', right: '14px',
+            width: '38px', height: '38px', borderRadius: '50%',
+            background: 'rgba(0,0,0,.5)', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#fff', backdropFilter: 'blur(6px)',
+          }}
+        >
+          {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+        </button>
       </div>
 
       {/* Full Video Button */}
@@ -735,11 +739,11 @@ export default function Hero() {
         .hero-grid {
           position: relative;
           z-index: 2;
-          max-width: 1120px;
+          max-width: 1280px;
           width: 100%;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: minmax(0, 1fr) 300px 190px;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 500px) 190px;
           gap: 26px;
           align-items: center;
         }
@@ -770,7 +774,7 @@ export default function Hero() {
         }
 
         @media (max-width: 1180px) {
-          .hero-grid { grid-template-columns: minmax(0, 1fr) 260px; }
+          .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 440px); }
           .hero-features {
             grid-column: 1 / -1;
             flex-direction: row !important;
@@ -873,7 +877,7 @@ export default function Hero() {
               "actions actions"
               "feats   feats" !important;
           }
-          .hero-preview { max-width: 460px; margin: 0 auto !important; }
+          .hero-preview { max-width: 640px; margin: 0 auto !important; }
         }
 
         /* ── Video section responsive ── */

@@ -591,6 +591,7 @@ export default function Dashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
             {/* WIDGET 1: UPCOMING LIVE CLASSES */}
+            {/* Live Classes widget commented out — removed from the project. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
             <div
               style={{
                 background: cardBg,
@@ -627,7 +628,7 @@ export default function Dashboard() {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
-                      {/* Date Badge Box */}
+                      {/* Date Badge Box *\/}
                       <div
                         style={{
                           width: '42px',
@@ -693,6 +694,7 @@ export default function Dashboard() {
                 ))}
               </div>
             </div>
+            */}
 
             {/* WIDGET 2: RECENT ACHIEVEMENTS */}
             <div

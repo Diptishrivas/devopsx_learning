@@ -14,9 +14,10 @@ const columns = [
     links: [
       { label: 'Books',        to: '/textbooks' },
       { label: 'Courses',      to: '/courses' },
-      { label: 'Live Classes', to: '/curriculum' },
-      { label: 'Resources',    to: '/resources' },
-      { label: 'Blog',         to: '/resources' },
+      // Live Classes, Resources and Blog commented out — removed from the project.
+      // { label: 'Live Classes', to: '/curriculum' },
+      // { label: 'Resources',    to: '/resources' },
+      // { label: 'Blog',         to: '/resources' },
     ],
   },
   {

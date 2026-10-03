@@ -1,6 +1,6 @@
 // ============================================================
 // Navbar — DevOpsX Learning (matches reference design)
-// Layout:  [logo] [Home Books Courses Live Classes Resources▾ Blog]
+// Layout:  [logo] [Home Books Courses]  (Live Classes, Resources▾, Blog commented out)
 //          ......................... [search] [cart] [Login]
 // ============================================================
 
@@ -29,21 +29,22 @@ const navLinks = [
   { label: 'Home',         to: '/',            icon: Home },
   { label: 'Books',        to: '/textbooks',   icon: BookOpen },
   { label: 'Courses',      to: '/courses',     icon: LayoutGrid },
-  { label: 'Live Classes', to: '/live-classes', icon: Radio },
-  {
-    label: 'Resources',
-    to: '/resources',
-    icon: Folder,
-    children: [
-      { label: 'Notes & PDFs',       to: '/notes' },
-      { label: 'Assignments',        to: '/assignments' },
-      { label: 'Practice Questions', to: '/practice' },
-      { label: 'Downloads',          to: '/downloads' },
-      { label: 'Achievements',       to: '/achievements' },
-      { label: 'Certificates',       to: '/certificates' },
-    ],
-  },
-  { label: 'Blog', to: '/resources', icon: FileText },
+  // Live Classes, Resources and Blog commented out — removed from the project.
+  // { label: 'Live Classes', to: '/live-classes', icon: Radio },
+  // {
+    // label: 'Resources',
+    // to: '/resources',
+    // icon: Folder,
+    // children: [
+      // { label: 'Notes & PDFs',       to: '/notes' },
+      // { label: 'Assignments',        to: '/assignments' },
+      // { label: 'Practice Questions', to: '/practice' },
+      // { label: 'Downloads',          to: '/downloads' },
+      // { label: 'Achievements',       to: '/achievements' },
+      // { label: 'Certificates',       to: '/certificates' },
+    // ],
+  // },
+  // { label: 'Blog', to: '/resources', icon: FileText },
 ];
 
 function useClickOutside(ref, handler) {
@@ -137,7 +138,7 @@ export default function Navbar() {
           <BrandLogo size="md" />
         </Link>
 
-        {/* Browse Categories Dropdown */}
+        {/* Browse Categories button commented out.
         <Link
           to="/categories"
           className="nav-browse"
@@ -151,6 +152,7 @@ export default function Navbar() {
         >
           Browse <ChevronDown size={14} />
         </Link>
+        */}
 
         {/* ── Primary nav ── */}
         <nav
@@ -434,8 +436,8 @@ export default function Navbar() {
                         {[
                           { icon: User,     label: 'Profile',      to: '/profile' },
                           { icon: BookOpen, label: 'My Learning',  to: '/my-learning' },
-                          { icon: Video,    label: 'Live Classes', to: '/live-classes' },
-                          { icon: Folder,   label: 'Resources',    to: '/resources' },
+                          // { icon: Video,    label: 'Live Classes', to: '/live-classes' },
+                          // { icon: Folder,   label: 'Resources',    to: '/resources' },
                           { icon: Download, label: 'Downloads',    to: '/downloads' },
                           { icon: Award,    label: 'Achievements', to: '/achievements' },
                           { icon: Award,    label: 'Certificates', to: '/certificates' },

@@ -186,13 +186,14 @@ export default function LiveClasses() {
           className="live-portal-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '220px 1fr 280px',
+            gridTemplateColumns: '1fr 280px',
             gap: '24px',
             alignItems: 'start',
           }}
         >
 
           {/* ── COLUMN 1: LEFT USER PORTAL SIDEBAR ── */}
+          {/* Left sidebar commented out. To restore: remove this comment wrapper and turn each "*\/" back into a normal comment ending.
           <div
             className="live-left-sidebar"
             style={{
@@ -206,7 +207,7 @@ export default function LiveClasses() {
               boxShadow: '0 1px 3px rgba(16, 24, 40, 0.04)',
             }}
           >
-            {/* Menu List */}
+            {/* Menu List *\/}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
               {sidebarMenuItems.map((item) => {
                 const Icon = item.icon;
@@ -239,7 +240,7 @@ export default function LiveClasses() {
                 );
               })}
 
-              {/* Show Logout only when a user is logged in */}
+              {/* Show Logout only when a user is logged in *\/}
               {user && (
                 <button
                   onClick={() => { logout(); navigate('/login'); }}
@@ -257,7 +258,7 @@ export default function LiveClasses() {
               )}
             </div>
 
-            {/* Bottom Sidebar Promo Banner ("Never Miss a Class!") */}
+            {/* Bottom Sidebar Promo Banner ("Never Miss a Class!") *\/}
             <div style={{
               background: isDark ? 'linear-gradient(135deg, #1e1b4b, #311b92)' : 'linear-gradient(135deg, #f5f3ff, #ede9fe)',
               border: `1px solid ${isDark ? 'rgba(99,102,241,0.3)' : '#ddd6fe'}`,
@@ -301,6 +302,7 @@ export default function LiveClasses() {
               </button>
             </div>
           </div>
+          */}
 
           {/* ── COLUMN 2: CENTER LIVE CLASSES & SCHEDULE ── */}
           <div className="live-center-col" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
