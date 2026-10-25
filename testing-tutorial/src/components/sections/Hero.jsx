@@ -427,6 +427,12 @@ export default function Hero() {
         // on one screen without heavy scrolling.
         padding: '26px 32px 30px',
         overflowX: 'clip',
+        // The Hero is now the only section on the home page, so let it grow to
+        // fill the leftover height and centre itself vertically — otherwise a
+        // blank strip is left between the hero and the footer.
+        flex: '1 0 auto',
+        display: 'flex',
+        alignItems: 'center',
         background: isDark ? 'var(--gradient-hero)' : undefined,
       }}
     >
@@ -472,9 +478,9 @@ export default function Hero() {
             className="hero-title"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.4rem, 5vw, 4.1rem)',
+              fontSize: 'clamp(2.6rem, 5.4vw, 4.6rem)',
               fontWeight: 800,
-              lineHeight: 1.1,
+              lineHeight: 1.08,
               letterSpacing: '-0.033em',
               color: 'var(--text-primary)',
               margin: '18px 0 0',
@@ -500,10 +506,10 @@ export default function Hero() {
             className="hero-subtitle"
             style={{
               color: 'var(--text-secondary)',
-              fontSize: '1.08rem',
-              lineHeight: 1.65,
-              margin: '18px 0 0',
-              maxWidth: '480px',
+              fontSize: '1.18rem',
+              lineHeight: 1.6,
+              margin: '20px 0 0',
+              maxWidth: '520px',
             }}
           >
             Access top-quality books, expert-led courses, hands-on projects,
@@ -738,13 +744,20 @@ export default function Hero() {
         .hero-grid {
           position: relative;
           z-index: 2;
-          max-width: 1340px;
+          max-width: 1400px;
           width: 100%;
           margin: 0 auto;
           display: grid;
           grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-          gap: 30px;
+          gap: 36px;
           align-items: center;
+        }
+
+        /* Hero is the only section on the page, so let it own the viewport.
+           Dropped back to auto on small screens, where a tall forced height
+           would just add dead space under the content. */
+        @media (min-width: 901px) {
+          .hero-section { min-height: calc(100vh - var(--navbar-height) - 100px); }
         }
 
         .hero-book-wrapper {

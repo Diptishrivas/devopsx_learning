@@ -230,7 +230,9 @@ export default function CourseCard({ course, index = 0 }) {
           </span>
         </div>
 
-        {/* Price Row */}
+        {/* Price Row COMMENTED OUT — every course is free right now, so the
+            ₹1,499 / ₹2,999 strike-through made no sense. Shows "Free" instead.
+            Un-comment this block (and drop the Free label) when pricing returns.
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
           <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
             ₹{course.price.toLocaleString()}
@@ -246,6 +248,13 @@ export default function CourseCard({ course, index = 0 }) {
               ₹{course.originalPrice.toLocaleString()}
             </span>
           )}
+        </div>
+        */}
+
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+          <span style={{ fontSize: '1rem', fontWeight: 800, color: '#10b981' }}>
+            Free
+          </span>
         </div>
       </div>
     </motion.article>

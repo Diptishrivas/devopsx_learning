@@ -32,13 +32,22 @@ export default function MainLayout({ children }) {
       {/* <Sidebar /> */}
 
       {/* Main content — shifts right for sidebar or takes full width when sidebar is hidden */}
+      {/* NOTE: the Tailwind plugin is not wired into vite.config.js, so utility
+          classes like `flex flex-col` / `flex-1` generate no CSS at all. The
+          sticky-footer layout is therefore done with real inline styles — that
+          is what keeps the footer pinned to the bottom of short pages instead
+          of leaving a blank strip under it. */}
       <motion.div
         animate={{ marginLeft: sidebarWidth }}
         transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-        className="flex flex-col"
-        style={{ minHeight: '100vh', paddingTop: 'var(--navbar-height)' }}
+        style={{
+          minHeight: '100vh',
+          paddingTop: 'var(--navbar-height)',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
-        <main className="flex-1">
+        <main style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column' }}>
           {children}
         </main>
         {/* <Footer /> */}
