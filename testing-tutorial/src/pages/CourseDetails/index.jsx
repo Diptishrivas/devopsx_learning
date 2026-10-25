@@ -80,8 +80,10 @@ export default function CourseDetails() {
   }
 
   const wishlisted = isWishlisted(course.id);
-  const originalPrice = course.originalPrice || Math.round(course.price * 2);
-  const discountPercent = Math.round(((originalPrice - course.price) / originalPrice) * 100);
+  // Price maths COMMENTED OUT — only the price header used these, and that is
+  // commented out too (everything is free right now).
+  // const originalPrice = course.originalPrice || Math.round(course.price * 2);
+  // const discountPercent = Math.round(((originalPrice - course.price) / originalPrice) * 100);
 
   // TODO: Replace with API call — fetch learning outcomes from backend (part of course object)
   // const whatYoullLearn = [
@@ -102,19 +104,20 @@ export default function CourseDetails() {
 
   const enrolled = isEnrolled(course.id);
 
-  // Enrolled learners go straight to the lectures; everyone else to checkout.
+  // All courses are FREE right now, so enrolling no longer goes through
+  // checkout/payment — logged-in users are taken straight to the lectures.
+  // Old paid flow (restore when payments are switched back on):
+  //   toast.success(`Enrolling in "${course.title}"...`);
+  //   navigate('/checkout');
   const handleEnroll = () => requireLogin(() => {
-    if (enrolled) {
-      navigate(`/courses/${course.slug}/learn`);
-      return;
-    }
-    toast.success(`Enrolling in "${course.title}"...`);
-    navigate('/checkout');
+    navigate(`/courses/${course.slug}/learn`);
   });
 
-  const handleAddToCart = () => requireLogin(() => {
-    toast.success(`Added "${course.title}" to your cart!`);
-  });
+  // Add-to-cart is COMMENTED OUT at the call sites below — nothing is paid, so
+  // there is no cart flow to put a course into.
+  // const handleAddToCart = () => requireLogin(() => {
+  //   toast.success(`Added "${course.title}" to your cart!`);
+  // });
 
   const border = isDark ? 'rgba(255,255,255,.08)' : '#eaecf0';
 
@@ -435,9 +438,12 @@ export default function CourseDetails() {
                   transition: 'all .15s',
                 }}
               >
-                {enrolled ? 'Go to Course' : 'Enroll Now'}
+                {enrolled ? 'Go to Course' : 'Start Learning — Free'}
               </button>
 
+              {/* Add to Cart COMMENTED OUT — all courses are free right now, so
+                  there is no cart / payment step. Un-comment when paid courses
+                  come back.
               <button
                 onClick={handleAddToCart}
                 style={{
@@ -461,6 +467,7 @@ export default function CourseDetails() {
               >
                 <ShoppingCart size={15} style={{ flexShrink: 0 }} /> Add to Cart
               </button>
+              */}
 
               <button
                 onClick={() => requireLogin(() => toggleWishlist(course.id))}
@@ -523,7 +530,10 @@ export default function CourseDetails() {
                 : '0 10px 30px rgba(99,102,241,.12)',
             }}
           >
-            {/* Price Header */}
+            {/* Price Header COMMENTED OUT — ₹1,499 / ₹2,999 / "50% OFF" made no
+                sense once payments were removed. Every course is free right
+                now, so we show a plain "Free" label instead. Un-comment this
+                block (and delete the Free label) when pricing returns.
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
               <span
                 style={{
@@ -557,8 +567,26 @@ export default function CourseDetails() {
                 {discountPercent}% OFF
               </span>
             </div>
+            */}
 
-            {/* Full-width Enroll & Add to Cart */}
+            {/* Free label — stand-in for the price header above */}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1.8rem',
+                  fontWeight: 800,
+                  color: 'var(--text-primary)',
+                }}
+              >
+                Free
+              </span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                Full access, no payment needed
+              </span>
+            </div>
+
+            {/* Full-width Enroll button */}
             <button
               onClick={handleEnroll}
               style={{
@@ -574,9 +602,11 @@ export default function CourseDetails() {
                 boxShadow: '0 6px 18px rgba(99,102,241,.35)',
               }}
             >
-              {enrolled ? 'Go to Course' : 'Enroll Now'}
+              {enrolled ? 'Go to Course' : 'Start Learning — Free'}
             </button>
 
+            {/* Add to Cart + "30-Day Money Back Guarantee" COMMENTED OUT —
+                both are payment messaging, and nothing is paid right now.
             <button
               onClick={handleAddToCart}
               style={{
@@ -608,6 +638,7 @@ export default function CourseDetails() {
             >
               30-Day Money Back Guarantee
             </p>
+            */}
 
             <div style={{ height: '1px', background: border }} />
 
@@ -980,6 +1011,7 @@ export default function CourseDetails() {
                       <Star size={9} color="#f59e0b" fill="#f59e0b" />
                       <span>({(rel.ratingCount / 1000).toFixed(1)}K)</span>
                     </div>
+                    {/* Prices COMMENTED OUT — all courses are free right now.
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                       <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                         ₹{rel.price.toLocaleString()}
@@ -994,6 +1026,10 @@ export default function CourseDetails() {
                         ₹{rel.originalPrice.toLocaleString()}
                       </span>
                     </div>
+                    */}
+                    <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#10b981' }}>
+                      Free
+                    </span>
                   </div>
                 </div>
               ))}

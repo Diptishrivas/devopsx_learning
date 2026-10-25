@@ -290,8 +290,13 @@ export default function CoursePlayer() {
                   >
                     {activeLesson.title}
                   </h2>
+                  {/* "Instructor: ..." removed — it fell back to a hard-coded
+                      dummy name when the course had no instructor. Only the
+                      duration is shown now. Old line kept for reference:
+                      Duration: {activeLesson.duration} &nbsp;•&nbsp; Instructor: {course.instructor?.name || 'Shailendra Kumar'}
+                  */}
                   <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                    Duration: {activeLesson.duration} &nbsp;•&nbsp; Instructor: {course.instructor?.name || 'Shailendra Kumar'}
+                    Duration: {activeLesson.duration}
                   </span>
                 </div>
 
@@ -323,7 +328,12 @@ export default function CoursePlayer() {
                 </button>
               </div>
 
-              {/* TABS HEADER BAR (Overview | Resources & Code | Q&A | Notes) */}
+              {/* TABS HEADER BAR (Overview | Resources & Code | Q&A | Notes)
+                  COMMENTED OUT — all four tabs are hidden for now to keep the
+                  lesson page simple. activeTab stays on its default 'overview',
+                  so the "About this Lesson" block below still renders; the
+                  resources / discussion / notes blocks just become unreachable.
+                  Un-comment this whole bar to bring the tabs back.
               <div
                 className="course-player-tabs-bar"
                 style={{
@@ -370,6 +380,7 @@ export default function CoursePlayer() {
                   );
                 })}
               </div>
+              */}
 
               {/* TAB CONTENT DETAILS */}
               <div style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>

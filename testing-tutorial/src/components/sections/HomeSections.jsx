@@ -44,7 +44,8 @@ function HomeSection({ children, bg = 'transparent', style = {} }) {
       style={{
         width: '100%',
         boxSizing: 'border-box',
-        padding: 'clamp(20px, 4vw, 30px) clamp(16px, 4vw, 32px)',
+        // Tightened (was clamp(20px, 4vw, 30px)) so the page scrolls less.
+        padding: 'clamp(16px, 2.5vw, 24px) clamp(16px, 4vw, 32px)',
         background: bg,
         overflowX: 'clip',
         ...style,
@@ -83,7 +84,7 @@ function SectionHeading({ title, subtitle, center, link, linkLabel, extra }) {
         <h2
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(1.3rem, 2.4vw, 1.6rem)',
+            fontSize: 'clamp(1.45rem, 2.6vw, 1.85rem)',
             fontWeight: 800,
             color: 'var(--text-primary)',
             letterSpacing: '-0.025em',
@@ -96,7 +97,7 @@ function SectionHeading({ title, subtitle, center, link, linkLabel, extra }) {
       </div>
 
       {subtitle && (
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.855rem', margin: 0 }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', margin: 0 }}>
           {subtitle}
         </p>
       )}
@@ -106,7 +107,7 @@ function SectionHeading({ title, subtitle, center, link, linkLabel, extra }) {
           to={link}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '6px',
-            fontSize: '0.815rem', fontWeight: 600,
+            fontSize: '0.92rem', fontWeight: 600,
             color: isDark ? '#818cf8' : ACCENT,
             textDecoration: 'none', flexShrink: 0,
           }}
@@ -378,7 +379,7 @@ function BookFeaturedCard({ book, index = 0 }) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ delay: index * 0.05, duration: 0.32 }}
       style={{
-        flex: '0 0 168px',
+        flex: '0 0 186px',
         background: 'var(--bg-card)',
         border: `1px solid ${border}`,
         borderRadius: '12px',
@@ -419,7 +420,7 @@ function BookFeaturedCard({ book, index = 0 }) {
         <div style={{ padding: '11px 11px 12px' }}>
           <h4
             style={{
-              color: 'var(--text-primary)', fontSize: '0.755rem', fontWeight: 700,
+              color: 'var(--text-primary)', fontSize: '0.84rem', fontWeight: 700,
               lineHeight: 1.34, margin: '0 0 3px', minHeight: '2.02em',
               display: '-webkit-box', WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical', overflow: 'hidden',
@@ -427,14 +428,14 @@ function BookFeaturedCard({ book, index = 0 }) {
           >
             {book.title}
           </h4>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.655rem', margin: '0 0 7px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.74rem', margin: '0 0 7px' }}>
             {book.author}
           </p>
           <Stars rating={book.rating} count={book.ratingsCount} />
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px' }}>
-              <span style={{ fontSize: '0.925rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                 ₹{book.price.toLocaleString()}
               </span>
               {discounted && (
@@ -443,6 +444,8 @@ function BookFeaturedCard({ book, index = 0 }) {
                 </span>
               )}
             </div>
+            {/* Cart badge COMMENTED OUT — cart is switched off for now
+                (nothing is paid). It was decorative only (aria-hidden).
             <span
               aria-hidden="true"
               style={{
@@ -454,6 +457,7 @@ function BookFeaturedCard({ book, index = 0 }) {
             >
               <ShoppingCart size={13} color={ACCENT} />
             </span>
+            */}
           </div>
         </div>
       </Link>
@@ -468,7 +472,7 @@ export function FeaturedBooksAndCourses() {
 
   const tab = (name) => ({
     background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-    fontFamily: 'inherit', fontSize: '0.855rem',
+    fontFamily: 'inherit', fontSize: '0.95rem',
     fontWeight: activeTab === name ? 700 : 500,
     color: activeTab === name ? (isDark ? '#818cf8' : ACCENT) : 'var(--text-muted)',
     transition: 'color .15s',
@@ -554,6 +558,12 @@ function CapOnBookArt() {
   );
 }
 
+// NOTE: this banner ("Unlimited Learning. Unlimited Possibilities." + the
+// subscription feature list + "View Plans / Starting from ₹299/month") is
+// currently COMMENTED OUT at the call site in pages/Home/index.jsx.
+// Reason: the landing page was too long and too loud — we are keeping it short
+// and simple, and not pushing subscription plans on the home page for now.
+// The component is intentionally left here so it can be re-enabled later.
 export function SubscriptionBanner() {
   const { isDark } = useTheme();
 
@@ -829,7 +839,7 @@ function FAQItem({ faq, index }) {
       >
         <span
           className="faq-question-text"
-          style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.79rem', lineHeight: 1.4, flex: 1, minWidth: 0 }}
+          style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.9rem', lineHeight: 1.4, flex: 1, minWidth: 0 }}
         >
           {faq.question}
         </span>
@@ -851,7 +861,7 @@ function FAQItem({ faq, index }) {
             borderTop: `1px solid ${isDark ? 'rgba(255,255,255,.06)' : 'rgba(15,23,42,.06)'}`,
           }}
         >
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.775rem', lineHeight: 1.65, margin: 0 }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.6, margin: 0 }}>
             {faq.answer}
           </p>
         </div>

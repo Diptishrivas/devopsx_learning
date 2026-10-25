@@ -135,7 +135,7 @@ export default function InvoiceDetails() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>Email: support@ailearning.com</span>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>Email: contact@devopsx.ai</span>
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>Phone: +91 98765 43210</span>
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.74rem' }}>Website: www.ailearning.com</span>
                 </div>

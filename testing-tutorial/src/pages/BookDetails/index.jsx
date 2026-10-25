@@ -378,6 +378,8 @@ export default function BookDetails() {
                 Buy Now
               </button>
 
+              {/* Add to Cart COMMENTED OUT — cart is switched off for now
+                  (nothing is paid). Un-comment when payments come back.
               <button
                 onClick={handleAddToCart}
                 style={{
@@ -403,6 +405,7 @@ export default function BookDetails() {
               >
                 <ShoppingCart size={15} style={{ flexShrink: 0 }} /> Add to Cart
               </button>
+              */}
 
               <button
                 onClick={handleToggleWishlist}

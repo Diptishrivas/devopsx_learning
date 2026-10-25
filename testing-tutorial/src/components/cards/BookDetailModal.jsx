@@ -212,6 +212,8 @@ export default function BookDetailModal({ book, isOpen, onClose }) {
                   <Download size={17} /> Download PDF
                 </button>
 
+                {/* Add To Cart COMMENTED OUT — cart is switched off for now
+                    (nothing is paid). Un-comment when payments come back.
                 <button
                   onClick={handleAddToCart}
                   style={{
@@ -226,6 +228,7 @@ export default function BookDetailModal({ book, isOpen, onClose }) {
                 >
                   <ShoppingCart size={16} /> Add To Cart
                 </button>
+                */}
 
                 <button
                   onClick={handleWatchVideo}

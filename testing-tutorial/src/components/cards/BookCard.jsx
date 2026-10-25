@@ -109,7 +109,8 @@ export default function BookCard({ book, index = 0 }) {
             )}
           </div>
 
-          {/* Cart Button */}
+          {/* Cart Button COMMENTED OUT — cart is switched off for now (nothing
+              is paid). It had no onClick handler anyway.
           <button
             onClick={(e) => { e.stopPropagation(); }}
             style={{
@@ -124,6 +125,7 @@ export default function BookCard({ book, index = 0 }) {
           >
             <ShoppingCart size={13} color="#6366f1" />
           </button>
+          */}
         </div>
       </div>
     </motion.article>

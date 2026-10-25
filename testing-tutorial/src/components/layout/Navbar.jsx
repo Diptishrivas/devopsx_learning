@@ -88,7 +88,7 @@ export default function Navbar() {
   // Close menus on navigation
   useEffect(() => { setOpenMenu(null); setMobileOpen(false); }, [pathname]);
 
-  const cartCount = 0;
+  // const cartCount = 0; // commented out with the cart icon below — no cart while everything is free
   const unreadCount = 3;
 
   const notifications = [
@@ -314,7 +314,10 @@ export default function Navbar() {
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {/* Cart Icon — logged-in users only */}
+          {/* Cart Icon COMMENTED OUT — everything on the platform is free right
+              now, so there is no cart and no checkout. The badge was also stuck
+              at a hard-coded 0. Un-comment this (and cartCount above) when
+              payments are switched back on.
           {user && (
           <Link
             to="/checkout"
@@ -343,6 +346,7 @@ export default function Navbar() {
             </span>
           </Link>
           )}
+          */}
 
           {/* User Logged In Menu */}
           {user ? (
@@ -413,11 +417,30 @@ export default function Navbar() {
                     cursor: 'pointer',
                   }}
                 >
+                  {/* Avatar image COMMENTED OUT — users coming from the real
+                      backend have no `avatar` field, so this rendered as a
+                      broken-image icon in the navbar. Un-comment once the API
+                      returns a real avatar URL.
                   <img
                     src={user.avatar}
                     alt={user.name}
                     style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
                   />
+                  */}
+                  {/* Initials circle instead — pure CSS, so it can never break.
+                      Also keeps the button from going empty on mobile, where
+                      .nav-username is hidden. */}
+                  <span
+                    style={{
+                      width: '28px', height: '28px', borderRadius: '50%', flexShrink: 0,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      background: isDark ? 'rgba(139,92,246,.25)' : '#eeecfd',
+                      color: isDark ? '#c4b5fd' : '#4f46e5',
+                      fontSize: '0.78rem', fontWeight: 700, lineHeight: 1,
+                    }}
+                  >
+                    {user.name?.trim()?.charAt(0)?.toUpperCase() || 'U'}
+                  </span>
                   <span
                     className="nav-username"
                     style={{ color: 'var(--text-primary)', fontSize: '0.8rem', fontWeight: 600 }}
@@ -794,7 +817,22 @@ export default function Navbar() {
                   <>
                     {/* Logged in — user info + logout */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                      {/* Avatar image COMMENTED OUT — same broken-image issue as
+                          the navbar pill above (backend users have no avatar).
                       <img src={user.avatar} alt={user.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(79,70,229,0.35)' }} />
+                      */}
+                      <span
+                        style={{
+                          width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          background: isDark ? 'rgba(139,92,246,.25)' : '#eeecfd',
+                          color: isDark ? '#c4b5fd' : '#4f46e5',
+                          fontSize: '0.95rem', fontWeight: 700, lineHeight: 1,
+                          border: '2px solid rgba(79,70,229,0.35)',
+                        }}
+                      >
+                        {user.name?.trim()?.charAt(0)?.toUpperCase() || 'U'}
+                      </span>
                       <div>
                         <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{user.name}</p>
                         <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', margin: 0 }}>{user.email}</p>

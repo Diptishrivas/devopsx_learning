@@ -7,7 +7,11 @@ import { useLocation } from 'react-router-dom';
 import { useSidebar } from '../context/SidebarContext';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
-import Footer from '../components/layout/Footer';
+// Old Footer commented out — it was far too heavy (4 link columns + socials +
+// newsletter card + legal bar). Replaced with the slim NewFooter below.
+// Swap this import back in if the full footer is ever needed again.
+// import Footer from '../components/layout/Footer';
+import NewFooter from '../components/layout/NewFooter';
 import ChatWidget from '../components/ui/ChatWidget';
 
 export default function MainLayout({ children }) {
@@ -37,7 +41,8 @@ export default function MainLayout({ children }) {
         <main className="flex-1">
           {children}
         </main>
-        <Footer />
+        {/* <Footer /> */}
+        <NewFooter />
       </motion.div>
 
       <ChatWidget />

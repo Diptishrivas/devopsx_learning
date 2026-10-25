@@ -24,10 +24,15 @@ export default function Contact() {
     setLoading(false);
   };
 
+  // NOTE: Phone and Address are COMMENTED OUT for now.
+  // Reason: those were placeholder/dummy values ('+91 98765 43210' and
+  // 'Koramangala, Bangalore 560034') — we don't have a real support number or
+  // office address to publish yet, so email is the only contact channel we
+  // show. Un-comment these two lines once the real details are confirmed.
   const contactInfo = [
-    { icon: Mail,   label: 'Email',         value: 'hello@devopsx.io',               href: 'mailto:hello@devopsx.io' },
-    { icon: Phone,  label: 'Phone',         value: '+91 98765 43210',                href: 'tel:+919876543210' },
-    { icon: MapPin, label: 'Address',       value: 'Koramangala, Bangalore 560034',  href: '#' },
+    { icon: Mail,   label: 'Email',         value: 'contact@devopsx.ai',             href: 'mailto:contact@devopsx.ai' },
+    // { icon: Phone,  label: 'Phone',         value: '+91 98765 43210',                href: 'tel:+919876543210' },
+    // { icon: MapPin, label: 'Address',       value: 'Koramangala, Bangalore 560034',  href: '#' },
     { icon: Clock,  label: 'Support Hours', value: 'Mon–Sat, 9AM–6PM IST',           href: '#' },
   ];
 

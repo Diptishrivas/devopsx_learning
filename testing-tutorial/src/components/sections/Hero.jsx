@@ -378,9 +378,9 @@ function PreviewVideo({ isDark, compact = false }) {
           whileTap={{ scale: 0.97 }}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: compact ? '8px' : '10px',
-            padding: compact ? '11px 22px' : '15px 36px', borderRadius: compact ? '10px' : '12px',
+            padding: compact ? '13px 28px' : '15px 36px', borderRadius: compact ? '10px' : '12px',
             background: 'linear-gradient(135deg, #5b4fe0 0%, #7c3aed 100%)',
-            color: '#fff', fontSize: compact ? '0.85rem' : '0.97rem', fontWeight: 700,
+            color: '#fff', fontSize: compact ? '0.97rem' : '0.97rem', fontWeight: 700,
             border: 'none', cursor: 'pointer',
             boxShadow: compact ? '0 8px 22px rgba(91,79,224,.36)' : '0 10px 28px rgba(91,79,224,.40)',
             letterSpacing: '0.01em',
@@ -397,7 +397,7 @@ function PreviewVideo({ isDark, compact = false }) {
       {/* Sub-note under button */}
       <p style={{
         textAlign: 'center', marginTop: compact ? '8px' : '12px',
-        fontSize: compact ? '0.68rem' : '0.73rem', color: 'var(--text-muted)',
+        fontSize: compact ? '0.82rem' : '0.82rem', color: 'var(--text-muted)',
         letterSpacing: '0.01em',
       }}>
         {user
@@ -423,7 +423,9 @@ export default function Hero() {
         position: 'relative',
         width: '100%',
         boxSizing: 'border-box',
-        padding: '38px 32px 52px',
+        // Tightened from '38px 32px 52px' so the hero + the next section fit
+        // on one screen without heavy scrolling.
+        padding: '26px 32px 30px',
         overflowX: 'clip',
         background: isDark ? 'var(--gradient-hero)' : undefined,
       }}
@@ -457,7 +459,7 @@ export default function Hero() {
                 padding: '6px 13px', borderRadius: '7px',
                 background: isDark ? 'rgba(99,102,241,.16)' : '#eeecfd',
                 color: isDark ? '#a5b4fc' : '#4f46e5',
-                fontSize: '0.755rem', fontWeight: 600, letterSpacing: '0.005em',
+                fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.005em',
               }}
             >
               #1 Platform to Learn AI Online
@@ -470,12 +472,12 @@ export default function Hero() {
             className="hero-title"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.1rem, 4.7vw, 3.75rem)',
+              fontSize: 'clamp(2.4rem, 5vw, 4.1rem)',
               fontWeight: 800,
-              lineHeight: 1.11,
+              lineHeight: 1.1,
               letterSpacing: '-0.033em',
               color: 'var(--text-primary)',
-              margin: '20px 0 0',
+              margin: '18px 0 0',
             }}
           >
             Learn AI.<br />
@@ -498,10 +500,10 @@ export default function Hero() {
             className="hero-subtitle"
             style={{
               color: 'var(--text-secondary)',
-              fontSize: '0.94rem',
-              lineHeight: 1.72,
-              margin: '20px 0 0',
-              maxWidth: '430px',
+              fontSize: '1.08rem',
+              lineHeight: 1.65,
+              margin: '18px 0 0',
+              maxWidth: '480px',
             }}
           >
             Access top-quality books, expert-led courses, hands-on projects,
@@ -581,9 +583,9 @@ export default function Hero() {
               to="/courses"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '9px',
-                padding: '14px 27px', borderRadius: '10px',
+                padding: '15px 30px', borderRadius: '10px',
                 background: isDark ? '#7c3aed' : '#5b4fe0',
-                color: '#fff', fontSize: '0.895rem', fontWeight: 600,
+                color: '#fff', fontSize: '1rem', fontWeight: 600,
                 textDecoration: 'none',
                 boxShadow: '0 8px 22px rgba(91,79,224,.32)',
                 transition: 'all 0.2s',
@@ -606,10 +608,10 @@ export default function Hero() {
               to="/textbooks"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '9px',
-                padding: '14px 25px', borderRadius: '10px',
+                padding: '15px 28px', borderRadius: '10px',
                 background: cardBg,
                 border: `1px solid ${cardBorder}`,
-                color: 'var(--text-primary)', fontSize: '0.895rem', fontWeight: 600,
+                color: 'var(--text-primary)', fontSize: '1rem', fontWeight: 600,
                 textDecoration: 'none', transition: 'all 0.2s',
                 boxShadow: isDark ? 'none' : '0 1px 3px rgba(15,23,42,.05)',
               }}
@@ -626,7 +628,11 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          {/* Trust line */}
+          {/* Trust line — COMMENTED OUT.
+              Reason: "7-Day Money Back Guarantee" / "Cancel Anytime" is
+              subscription messaging, and we are not pushing subscriptions on
+              the landing page right now. Dropping it also keeps the hero short
+              so the page fits on one screen.
           <motion.div
             variants={itemVar}
             style={{ display: 'flex', flexWrap: 'wrap', gap: '22px', alignItems: 'center', margin: '22px 0 0' }}
@@ -647,6 +653,7 @@ export default function Hero() {
               </span>
             ))}
           </motion.div>
+          */}
           </motion.div>
         </motion.div>
 
@@ -673,7 +680,9 @@ export default function Hero() {
           variants={containerVar}
           initial="hidden"
           animate="visible"
-          style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
+          // Hidden entirely while featureCards is empty, otherwise it leaves an
+          // empty grid row and extra blank space under the hero.
+          style={{ display: featureCards.length ? 'flex' : 'none', flexDirection: 'column', gap: '11px' }}
         >
           {featureCards.map(({ icon: Icon, title, subtitle }) => (
             <motion.div
@@ -724,15 +733,17 @@ export default function Hero() {
       */}
 
       <style>{`
+        /* Video column widened (was minmax(0, 600px) with a 190px feature-card
+           column) so the preview video is the dominant element on page one. */
         .hero-grid {
           position: relative;
           z-index: 2;
-          max-width: 1280px;
+          max-width: 1340px;
           width: 100%;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 600px) 190px;
-          gap: 26px;
+          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+          gap: 30px;
           align-items: center;
         }
 
@@ -762,7 +773,7 @@ export default function Hero() {
         }
 
         @media (max-width: 1180px) {
-          .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); }
+          .hero-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
           .hero-features {
             grid-column: 1 / -1;
             flex-direction: row !important;
@@ -800,13 +811,13 @@ export default function Hero() {
           }
           .hero-features { grid-area: feats; }
 
-          .hero-badge { font-size: 0.66rem !important; padding: 5px 10px !important; }
+          .hero-badge { font-size: 0.78rem !important; padding: 6px 12px !important; }
           .hero-title {
-            font-size: clamp(1.32rem, 5.6vw, 2.15rem) !important;
+            font-size: clamp(1.75rem, 6.4vw, 2.6rem) !important;
             margin-top: 14px !important;
           }
           .hero-subtitle {
-            font-size: 0.82rem !important;
+            font-size: 0.98rem !important;
             line-height: 1.6 !important;
             margin-top: 12px !important;
           }
@@ -846,8 +857,8 @@ export default function Hero() {
         @media (max-width: 400px) {
           .hero-section { padding: 16px 12px 26px !important; }
           .hero-grid { grid-template-columns: minmax(0, 1fr) 42%; column-gap: 10px; }
-          .hero-title { font-size: clamp(1.18rem, 5.4vw, 1.5rem) !important; }
-          .hero-subtitle { font-size: 0.78rem !important; }
+          .hero-title { font-size: clamp(1.55rem, 6.2vw, 1.9rem) !important; }
+          .hero-subtitle { font-size: 0.92rem !important; }
           .hero-stats > * { padding: 9px 8px !important; }
         }
 

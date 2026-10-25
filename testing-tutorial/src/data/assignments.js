@@ -125,7 +125,7 @@ export const faqs = [
   {
     id: 6,
     question: 'Is there a refund policy for paid courses?',
-    answer: 'Yes. We offer a 30-day money-back guarantee for all paid courses. If you\'re not satisfied, contact support@devopsx.io within 30 days of purchase and we\'ll process a full refund — no questions asked.',
+    answer: 'Yes. We offer a 30-day money-back guarantee for all paid courses. If you\'re not satisfied, contact contact@devopsx.ai within 30 days of purchase and we\'ll process a full refund — no questions asked.',
   },
   {
     id: 7,

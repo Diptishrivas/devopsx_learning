@@ -140,7 +140,10 @@ html.light {
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  /* Base bumped 16px → 17px. Almost every size in this project is written in
+     rem, so this lifts the whole site's typography in one place to match the
+     larger, more readable type used on airtap.ai. */
+  font-size: 17px;
   -webkit-text-size-adjust: 100%;
   /* smooth theme transitions */
   transition: background-color 0.25s ease, color 0.25s ease;
