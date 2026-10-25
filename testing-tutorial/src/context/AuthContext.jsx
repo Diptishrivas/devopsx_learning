@@ -17,6 +17,7 @@ const MOCK_USERS = [
     role: 'student',
     enrolledCourses: [1, 2, 5],
     wishlist: [3, 7],
+    
     certificates: [1],
     joinedAt: '2024-01-15',
   },

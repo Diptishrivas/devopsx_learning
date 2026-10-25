@@ -163,14 +163,17 @@ export default function BookDetails() {
           </span>
         </div>
 
-        {/* ── TOP HERO PRODUCT SECTION (3-COLUMN DITTO LAYOUT) ── */}
+        {/* ── TOP HERO PRODUCT SECTION (2-COLUMN LAYOUT) ──
+             Was 3 columns; the third one (Secure Checkout box) is commented out
+             below, so the grid is down to 2. Restore the third track —
+             `minmax(240px, 280px)` — together with that column. */}
         <div style={{
           background: '#ffffff',
           border: '1px solid #eaecf0',
           borderRadius: '16px',
           padding: '28px 32px',
           display: 'grid',
-          gridTemplateColumns: 'minmax(280px, 340px) 1fr minmax(240px, 280px)',
+          gridTemplateColumns: 'minmax(280px, 340px) 1fr',
           gap: '32px',
           alignItems: 'start',
           boxShadow: '0 1px 3px rgba(16, 24, 40, 0.04)',
@@ -353,8 +356,12 @@ export default function BookDetails() {
               </button>
             )}
 
-            {/* Action Buttons Stack (Buy Now, Add to Cart, Wishlist) */}
+            {/* Action Buttons Stack (Wishlist) */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px', flexWrap: 'wrap' }}>
+              {/* Buy Now COMMENTED OUT — every book is free right now, and this
+                  button sent the user to /checkout, which no longer applies.
+                  "Read Now" above is the only action needed. Un-comment when
+                  payments come back.
               <button
                 onClick={handleBuyNow}
                 style={{
@@ -377,6 +384,7 @@ export default function BookDetails() {
               >
                 Buy Now
               </button>
+              */}
 
               {/* Add to Cart COMMENTED OUT — cart is switched off for now
                   (nothing is paid). Un-comment when payments come back.
@@ -430,7 +438,11 @@ export default function BookDetails() {
               </button>
             </div>
 
-            {/* Shipping & Return Badges Bar */}
+            {/* Shipping & Return Badges Bar — COMMENTED OUT.
+                Reason: "Free Shipping / On all orders", "7 Days Return" and
+                "Secure Payment" are all e-commerce messaging. These are digital
+                books (nothing ships) and everything is free right now, so there
+                is no order, no return and no payment to secure.
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               paddingTop: '12px', borderTop: '1px solid #eaecf0',
@@ -460,10 +472,17 @@ export default function BookDetails() {
                 </div>
               </div>
             </div>
+            */}
 
           </div>
 
-          {/* COLUMN 3: Secure Checkout Box & Value Props */}
+          {/* COLUMN 3: Secure Checkout Box & Value Props — COMMENTED OUT.
+              Reason: the whole card is payment/e-commerce messaging — "Secure
+              Checkout", the VISA / Mastercard / RuPay / UPI badges, plus
+              "On-time Delivery" and "Easy Returns" (these are digital books,
+              nothing ships). Everything is free right now, so none of it
+              applies. Un-comment this block — and restore the third grid track
+              on the hero container above — when payments come back.
           <div style={{
             background: '#ffffff',
             border: '1px solid #eaecf0',
@@ -471,7 +490,7 @@ export default function BookDetails() {
             display: 'flex', flexDirection: 'column', gap: '16px',
             boxShadow: '0 1px 2px rgba(16, 24, 40, 0.04)',
           }}>
-            {/* Secure Checkout Title */}
+            // Secure Checkout Title
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <ShieldCheck size={17} color="#344054" />
               <h3 style={{ color: '#101828', fontSize: '0.9rem', fontWeight: 700, margin: 0 }}>
@@ -479,7 +498,7 @@ export default function BookDetails() {
               </h3>
             </div>
 
-            {/* We accept icons */}
+            // We accept icons
             <div>
               <span style={{ fontSize: '0.7rem', color: '#667085', display: 'block', marginBottom: '8px' }}>
                 We accept
@@ -495,7 +514,7 @@ export default function BookDetails() {
 
             <div style={{ height: '1px', background: '#eaecf0' }} />
 
-            {/* 4 Value Props List */}
+            // 4 Value Props List
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <BookOpen size={15} color="#667085" style={{ flexShrink: 0, marginTop: '2px' }} />
@@ -530,6 +549,7 @@ export default function BookDetails() {
               </div>
             </div>
           </div>
+          */}
 
         </div>
 
@@ -891,7 +911,11 @@ export default function BookDetails() {
           </div>
         </div>
 
-        {/* ── BOTTOM TRUST FOOTER BANNER (4 SEPARATE EVEN CARD BOXES) ── */}
+        {/* ── BOTTOM TRUST FOOTER BANNER (4 SEPARATE EVEN CARD BOXES) ──
+             COMMENTED OUT — same reason as the badges bar higher up the page:
+             "Free Shipping / On all orders", "7 Days Return" and "Secure
+             Payment" are e-commerce messaging. Nothing ships (digital books)
+             and nothing is paid for right now.
         <div className="trust-banner-grid keep-grid">
           <div
             style={{
@@ -989,6 +1013,7 @@ export default function BookDetails() {
             <span style={{ fontSize: '0.68rem', color: '#667085', lineHeight: 1.3, whiteSpace: 'normal', wordBreak: 'break-word', display: 'block' }}>100% protected</span>
           </div>
         </div>
+        */}
 
 
       </div>
