@@ -391,7 +391,7 @@ export default function CoursePlayer() {
                     </h4>
                     <p style={{ margin: '0 0 14px' }}>
                       In this lesson, we explore <strong>what Artificial Intelligence (AI) is, how it works, and
-                      how it is becoming a part of our everyday lives</strong>. Students will discover how AI helps
+                        how it is becoming a part of our everyday lives</strong>. Students will discover how AI helps
                       machines learn from information, recognize voices, answer questions, and make smart
                       decisions through simple, real-life examples.
                     </p>
